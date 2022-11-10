@@ -48592,11 +48592,11 @@
             "parentId": "page",
             "childIndex": 151,
             "point": [
-              1691.15,
-              -659.23
+              1721.8,
+              -494.53
             ],
             "rotation": 0,
-            "bend": 0,
+            "bend": -0.000013763574244994663,
             "handles": {
               "start": {
                 "id": "start",
@@ -48606,14 +48606,14 @@
                   0
                 ],
                 "canBind": true,
-                "bindingId": "68f790d8-d481-40ac-2b3f-0564befe2075"
+                "bindingId": "b87c7f8b-355c-416b-0386-0527af8f82a6"
               },
               "end": {
                 "id": "end",
                 "index": 1,
                 "point": [
-                  658.27,
-                  424.71
+                  627.62,
+                  260.01
                 ],
                 "canBind": true
               },
@@ -48621,8 +48621,8 @@
                 "id": "bend",
                 "index": 2,
                 "point": [
-                  329.14,
-                  212.36
+                  313.81,
+                  130.01
                 ]
               }
             },
@@ -49171,8 +49171,8 @@
             "parentId": "page",
             "childIndex": 162,
             "point": [
-              236.73,
-              -214.82
+              160.73,
+              -280.82
             ],
             "rotation": 0,
             "text": "LOGIN PAGE\n- login component",
@@ -49181,9 +49181,221 @@
               "size": "small",
               "isFilled": false,
               "dash": "draw",
-              "scale": 1,
+              "scale": 1.878787878787879,
               "font": "script",
-              "textAlign": "middle"
+              "textAlign": "start"
+            }
+          },
+          "2085f3db-293a-44b8-08ec-7692e17d69d7": {
+            "id": "2085f3db-293a-44b8-08ec-7692e17d69d7",
+            "type": "text",
+            "name": "Text",
+            "parentId": "page",
+            "childIndex": 163,
+            "point": [
+              1132.06,
+              -1566.15
+            ],
+            "rotation": 0,
+            "text": "Profile Page\n-Profile component\n- Sign out Button\n- Tabs Section\n-Avatar display\n-History display",
+            "style": {
+              "color": "lightGray",
+              "size": "small",
+              "isFilled": false,
+              "dash": "draw",
+              "scale": 2.0211238720262523,
+              "font": "script",
+              "textAlign": "start"
+            }
+          },
+          "6a233af1-1fea-4e21-1900-866ae3cb3837": {
+            "id": "6a233af1-1fea-4e21-1900-866ae3cb3837",
+            "type": "text",
+            "name": "Text",
+            "parentId": "page",
+            "childIndex": 164,
+            "point": [
+              657.23,
+              -1218.82
+            ],
+            "rotation": 0,
+            "text": "Avatar Display\n- Avatar\n-Stats\n- Items Display - Item Cards",
+            "style": {
+              "color": "lightGray",
+              "size": "small",
+              "isFilled": false,
+              "dash": "draw",
+              "scale": 1.5245901639344261,
+              "font": "script",
+              "textAlign": "start"
+            }
+          },
+          "8f35859e-a857-4b07-2167-998d1d355cf6": {
+            "id": "8f35859e-a857-4b07-2167-998d1d355cf6",
+            "type": "text",
+            "name": "Text",
+            "parentId": "page",
+            "childIndex": 165,
+            "point": [
+              -49.47,
+              -677.47
+            ],
+            "rotation": 0,
+            "text": "GLOBAL\n-Header - Profile\n                - Menu",
+            "style": {
+              "color": "lightGray",
+              "size": "small",
+              "isFilled": false,
+              "dash": "draw",
+              "scale": 2.382978723404255,
+              "font": "script",
+              "textAlign": "start"
+            }
+          },
+          "803c0bdc-4fe5-43ef-1c4f-45c469b267d9": {
+            "id": "803c0bdc-4fe5-43ef-1c4f-45c469b267d9",
+            "type": "text",
+            "name": "Text",
+            "parentId": "page",
+            "childIndex": 166,
+            "point": [
+              2856.53,
+              -281.47
+            ],
+            "rotation": 0,
+            "text": "Viewed Quest Page\n- Quest Info\n- Accept Quest\n ",
+            "style": {
+              "color": "lightGray",
+              "size": "small",
+              "isFilled": false,
+              "dash": "draw",
+              "scale": 2.0327868852459017,
+              "font": "script",
+              "textAlign": "start"
+            }
+          },
+          "7698c8c9-e63a-4894-390b-ed19e78f2e28": {
+            "id": "7698c8c9-e63a-4894-390b-ed19e78f2e28",
+            "type": "arrow",
+            "name": "Arrow",
+            "parentId": "page",
+            "childIndex": 167,
+            "point": [
+              876.08,
+              -1301.12
+            ],
+            "rotation": 0,
+            "bend": 0,
+            "handles": {
+              "start": {
+                "id": "start",
+                "index": 0,
+                "point": [
+                  242.6,
+                  0
+                ],
+                "canBind": true
+              },
+              "end": {
+                "id": "end",
+                "index": 1,
+                "point": [
+                  0,
+                  74.3
+                ],
+                "canBind": true,
+                "bindingId": "3c3e4d34-88b8-4c2b-3a92-f10b7b57f905"
+              },
+              "bend": {
+                "id": "bend",
+                "index": 2,
+                "point": [
+                  121.3,
+                  37.15
+                ]
+              }
+            },
+            "decorations": {
+              "end": "arrow"
+            },
+            "style": {
+              "color": "lightGray",
+              "size": "small",
+              "isFilled": false,
+              "dash": "draw",
+              "scale": 1,
+              "textAlign": "start"
+            },
+            "label": "",
+            "labelPoint": [
+              0.5,
+              0.5
+            ]
+          },
+          "d395ef1d-68f8-4777-2f62-290b391b6e3e": {
+            "id": "d395ef1d-68f8-4777-2f62-290b391b6e3e",
+            "type": "text",
+            "name": "Text",
+            "parentId": "page",
+            "childIndex": 168,
+            "point": [
+              3165.84,
+              948.53
+            ],
+            "rotation": 0,
+            "text": "Current Quest Page\n- Quest Info Componet\n- Submit Quest Update Component - Opens Camera/ Updates You Location\n- SOS Button\n- Cancel Quest Button",
+            "style": {
+              "color": "lightGray",
+              "size": "small",
+              "isFilled": false,
+              "dash": "draw",
+              "scale": 1.8533333333333333,
+              "font": "script",
+              "textAlign": "start"
+            }
+          },
+          "46156339-6005-4ea8-2d45-eb64a4bb142f": {
+            "id": "46156339-6005-4ea8-2d45-eb64a4bb142f",
+            "type": "text",
+            "name": "Text",
+            "parentId": "page",
+            "childIndex": 169,
+            "point": [
+              2075.84,
+              1734.53
+            ],
+            "rotation": 0,
+            "text": "Current Quest\n- Map Comonent\n- Cancel Quest Button",
+            "style": {
+              "color": "lightGray",
+              "size": "small",
+              "isFilled": false,
+              "dash": "draw",
+              "scale": 2.2127659574468086,
+              "font": "script",
+              "textAlign": "start"
+            }
+          },
+          "324f89ae-230f-4af9-0426-277da98c9daf": {
+            "id": "324f89ae-230f-4af9-0426-277da98c9daf",
+            "type": "text",
+            "name": "Text",
+            "parentId": "page",
+            "childIndex": 170,
+            "point": [
+              1103.84,
+              774.53
+            ],
+            "rotation": 0,
+            "text": "Map Page\n- Pins \n- Pin Cards - Quest Info\n                     - Read More\n                     - Accept Button",
+            "style": {
+              "color": "lightGray",
+              "size": "small",
+              "isFilled": false,
+              "dash": "draw",
+              "scale": 2.5353535353535355,
+              "font": "script",
+              "textAlign": "start"
             }
           }
         },
@@ -49308,18 +49520,6 @@
             ],
             "distance": 16
           },
-          "68f790d8-d481-40ac-2b3f-0564befe2075": {
-            "id": "68f790d8-d481-40ac-2b3f-0564befe2075",
-            "type": "arrow",
-            "fromId": "82c8cccd-9053-43c7-0f52-9f5e529f42c3",
-            "toId": "7af72de7-510c-4649-03ea-9a03683c7095",
-            "handleId": "start",
-            "point": [
-              0.5,
-              0.5
-            ],
-            "distance": 16
-          },
           "15ff1947-5ecd-45b8-0ab0-14f6480c9663": {
             "id": "15ff1947-5ecd-45b8-0ab0-14f6480c9663",
             "type": "arrow",
@@ -49353,6 +49553,30 @@
             "point": [
               0.48,
               0.52
+            ],
+            "distance": 16
+          },
+          "3c3e4d34-88b8-4c2b-3a92-f10b7b57f905": {
+            "id": "3c3e4d34-88b8-4c2b-3a92-f10b7b57f905",
+            "type": "arrow",
+            "fromId": "7698c8c9-e63a-4894-390b-ed19e78f2e28",
+            "toId": "6a233af1-1fea-4e21-1900-866ae3cb3837",
+            "handleId": "end",
+            "point": [
+              0.11,
+              0.28
+            ],
+            "distance": 8
+          },
+          "b87c7f8b-355c-416b-0386-0527af8f82a6": {
+            "id": "b87c7f8b-355c-416b-0386-0527af8f82a6",
+            "type": "arrow",
+            "fromId": "82c8cccd-9053-43c7-0f52-9f5e529f42c3",
+            "toId": "4e1c2912-8513-4af1-036a-d59138585881",
+            "handleId": "start",
+            "point": [
+              0.73,
+              0.34
             ],
             "distance": 16
           }
