@@ -49281,7 +49281,7 @@
             "parentId": "page",
             "childIndex": 167,
             "point": [
-              1628.08,
+              1628.05,
               -1275.12
             ],
             "rotation": 0,
@@ -49291,7 +49291,7 @@
                 "id": "start",
                 "index": 0,
                 "point": [
-                  242.6,
+                  242.69,
                   0
                 ],
                 "canBind": true
@@ -49310,7 +49310,7 @@
                 "id": "bend",
                 "index": 2,
                 "point": [
-                  121.3,
+                  121.35,
                   37.15
                 ]
               }
