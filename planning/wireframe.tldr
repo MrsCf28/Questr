@@ -31848,8 +31848,8 @@
             "parentId": "page",
             "childIndex": 116,
             "point": [
-              2414.93,
-              326.12
+              2410.93,
+              238.12
             ],
             "rotation": 0,
             "text": "Completion Tasks",
@@ -49154,6 +49154,28 @@
             ],
             "rotation": 0,
             "text": "items",
+            "style": {
+              "color": "lightGray",
+              "size": "small",
+              "isFilled": false,
+              "dash": "draw",
+              "scale": 1,
+              "font": "script",
+              "textAlign": "middle"
+            }
+          },
+          "559a9656-30cf-4272-2219-1c5c3da8473f": {
+            "id": "559a9656-30cf-4272-2219-1c5c3da8473f",
+            "type": "text",
+            "name": "Text",
+            "parentId": "page",
+            "childIndex": 162,
+            "point": [
+              236.73,
+              -214.82
+            ],
+            "rotation": 0,
+            "text": "LOGIN PAGE\n- login component",
             "style": {
               "color": "lightGray",
               "size": "small",
