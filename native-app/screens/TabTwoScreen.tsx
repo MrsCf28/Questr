@@ -1,13 +1,18 @@
-import React from 'react'
+import React from "react";
 import { useState, useEffect } from "react";
 import MapView, { Marker } from "react-native-maps";
 import { StyleSheet, Text, View, Dimensions } from "react-native";
 import * as Location from "expo-location"; //library used to get the location from the phone
 
 export default function TabTwoScreen() {
-  const [location, setLocation] = useState(null);
+  const [location, setLocation] = useState({});
   const [loading, setLoading] = useState(true);
-  const [currentLocation, setCurrentLocation] = useState({});
+  const [currentLocation, setCurrentLocation] = useState({
+    latitude: 0,
+    longitude: 0,
+    latitudeDelta: 0.01,
+    longitudeDelta: 0.01,
+  });
 
   useEffect(() => {
     (async () => {
@@ -16,13 +21,16 @@ export default function TabTwoScreen() {
         return;
       }
       let location = await Location.getLastKnownPositionAsync({}); //gets the last known location this is quicker than  requesting the current location the alternative is to use Location.getCurrentPositionAsync(options)
-      setLocation(location);
-      setCurrentLocation({
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
-        latitudeDelta: 0.01,
-        longitudeDelta: 0.01,
-      });
+      if (location !== null) {
+        setLocation(location);
+        setCurrentLocation({
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+          latitudeDelta: 0.01,
+          longitudeDelta: 0.01,
+        });
+      }
+
       setLoading(false);
     })();
   }, [location]);
