@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import MapView, { Marker } from "react-native-maps";
-import { StyleSheet, Text, View, Dimensions } from "react-native";
+import MapView, { Callout, Marker } from "react-native-maps";
+import { StyleSheet, Text, View, Dimensions, Pressable } from "react-native";
 import * as Location from "expo-location"; //library used to get the location from the phone
 
 export default function TabTwoScreen() {
@@ -50,11 +50,31 @@ export default function TabTwoScreen() {
         initialRegion={currentLocation}
         showsMyLocationButton={true}>
         <Marker //marker is the pin on the map
-          coordinate={currentLocation}>
+          coordinate={currentLocation}
+          anchor={ {x: 0.5, y: 0.5} }>
           <View //is where we can style the marker
-            style={{ backgroundColor: "red", borderRadius: 50, padding: 15 }}>
+            style={{ backgroundColor: "red", borderRadius: 50, padding: 5 }}>
             <Text>You</Text>
           </View>
+        </Marker>
+        <Marker //marker is the pin on the map
+          coordinate={{
+            latitude: 53.7958,
+            longitude: -1.54535,
+          }}
+          anchor={ {x: 0.5, y: 0.5} }>
+          <View //is where we can style the marker
+            style={{ backgroundColor: "green", borderRadius: 50, padding: 5 }}>
+            <Text>Quest</Text>
+          </View>
+          <Callout>
+            <View style={styles.marker}>
+              <Text>Example Quest</Text>
+              <Pressable>
+                <Text>See Details</Text>
+              </Pressable>
+            </View>
+          </Callout>
         </Marker>
       </MapView>
     </View>
@@ -80,4 +100,9 @@ const styles = StyleSheet.create({
     width: Dimensions.get("window").width,
     height: Dimensions.get("window").height,
   },
+  marker: {
+    flex: 1,
+    width: 200,
+    height: 200
+  }
 });

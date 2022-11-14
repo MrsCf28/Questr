@@ -18,8 +18,8 @@ import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 import ModalScreen from "../screens/ModalScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
-import TabOneScreen from "../screens/TabOneScreen";
-import TabTwoScreen from "../screens/TabTwoScreen";
+import TabOneScreen from "../screens/ProfilePage";
+import TabTwoScreen from "../screens/MainMapScreen";
 import {
   RootStackParamList,
   RootTabParamList,
@@ -66,6 +66,12 @@ function RootNavigator() {
           component={ModalScreen}
         />
       </Stack.Group>
+      <Stack.Group screenOptions={{ presentation: "modal" }}>
+        <Stack.Screen
+          name="Quest"
+          component={ModalScreen}
+        />
+      </Stack.Group>
     </Stack.Navigator>
   );
 }
@@ -90,7 +96,7 @@ function BottomTabNavigator() {
         name="TabOne"
         component={TabOneScreen}
         options={({ navigation }: RootTabScreenProps<"TabOne">) => ({
-          title: "Tab One",
+          title: "Profile",
           tabBarIcon: ({ color }) => (
             <TabBarIcon
               name="code"
@@ -117,7 +123,7 @@ function BottomTabNavigator() {
         name="TabTwo"
         component={TabTwoScreen}
         options={{
-          title: "Tab Two",
+          title: "Map",
           tabBarIcon: ({ color }) => (
             <TabBarIcon
               name="code"
