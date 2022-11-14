@@ -6,7 +6,7 @@ interface tabProp {
   selectedTab: string;
 }
 
-export function HistoryScreen({ selectedTab }: tabProp) {
+export function ItemsScreen({ selectedTab }: tabProp) {
   const [completedQuests, setCompletedQuests] = useState([
     {
       cordinate: {
@@ -14,7 +14,7 @@ export function HistoryScreen({ selectedTab }: tabProp) {
         longitude: -1.54535,
       },
       id: 1,
-      title: "Slay a dragon",
+      title: "knife",
       category: "adventure",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam aliquam libero quis ipsum fringilla pretium. Cras condimentum augue",
@@ -28,7 +28,7 @@ export function HistoryScreen({ selectedTab }: tabProp) {
         longitude: -1.5012,
       },
       id: 2,
-      title: "Defeat the wizard at checkers",
+      title: "Sword",
       category: "minigame",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam aliquam libero quis ipsum fringilla pretium. Cras condimentum augue",
@@ -42,7 +42,7 @@ export function HistoryScreen({ selectedTab }: tabProp) {
     <View
       style={[
         styles.container,
-        selectedTab === "history" ? null : styles.hidden,
+        selectedTab === "items" ? null : styles.hidden,
       ]}>
       <ScrollView style={styles.scrollableArea}>
         {completedQuests.map((quest) => {

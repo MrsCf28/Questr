@@ -30,7 +30,7 @@ export default function AcceptQuestScreen({route}) {
         <Text>{quest.description}</Text>
         <View style={styles.container}>
           {quest.questObjectives.map((objective:string) => {
-            return <Text>{objective}</Text>
+            return <Text key={objective}>{objective}</Text>
           })}
         </View>
       </View>

@@ -12,8 +12,10 @@ export function QuestMarker({quest}) {
     return (
         <Marker //marker is the pin on the map
           coordinate={quest.cordinate}
-          anchor={{ x: 0.5, y: 0.5 }}>
-          <View>
+        anchor={{ x: 0.5, y: 0.5 }}
+      style={{backgroundColor: 'blue'}}>
+        <View>
+          <Text style={{color:'white'}}>{quest.title}</Text>
           </View>
           <Callout onPress={() => navigation.navigate("AcceptQuest", quest)}>
             <View style={styles.marker}>

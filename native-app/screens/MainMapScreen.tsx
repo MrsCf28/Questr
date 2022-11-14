@@ -1,14 +1,13 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import MapView, { Callout, Marker } from "react-native-maps";
-import { StyleSheet, Text, View, Dimensions, Pressable } from "react-native";
+import { StyleSheet, Text, View, Dimensions, Pressable, Image } from "react-native";
 import * as Location from "expo-location"; //library used to get the location from the phone
 import { useNavigation } from "@react-navigation/native";
 import { QuestMarker } from "../components/QuestMarker";
 
-
 export default function TabTwoScreen() {
-  const navigation = useNavigation()
+  const navigation = useNavigation();
   const [location, setLocation] = useState({});
   const [loading, setLoading] = useState(true);
   const [currentLocation, setCurrentLocation] = useState({
@@ -19,28 +18,35 @@ export default function TabTwoScreen() {
   });
 
   const [quests, setQuests] = useState([
-    {cordinate:{
-      latitude: 53.7958,
-      longitude: -1.54535,
-    }, 
-    title: 'Slay a dragon',
-    category: 'adventure',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam aliquam libero quis ipsum fringilla pretium. Cras condimentum augue',
-    rewards: {xp: 100, coins: 10},
-    timeLimit: '1 hour',
-    questObjectives: ['go to location', 'slay dragon', 'find gold'] 
-  },
-  {cordinate:{
-    latitude: 53.7102,
-    longitude: -1.5012,
-  }, 
-  title: 'Defeat the wizard at checkers',
-  category: 'minigame',
-  description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam aliquam libero quis ipsum fringilla pretium. Cras condimentum augue',
-  rewards: {xp: 50, coins: 20},
-  timeLimit: '2 hour',
-  questObjectives: ['find wizard', 'play checkers', 'win at checkers'] 
-}])
+    {
+      cordinate: {
+        latitude: 53.7958,
+        longitude: -1.54535,
+      },
+      id: 1,
+      title: "Slay a dragon",
+      category: "adventure",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam aliquam libero quis ipsum fringilla pretium. Cras condimentum augue",
+      rewards: { xp: 100, coins: 10 },
+      timeLimit: "1 hour",
+      questObjectives: ["go to location", "slay dragon", "find gold"],
+    },
+    {
+      cordinate: {
+        latitude: 53.7102,
+        longitude: -1.5012,
+      },
+      id: 2,
+      title: "Defeat the wizard at checkers",
+      category: "minigame",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam aliquam libero quis ipsum fringilla pretium. Cras condimentum augue",
+      rewards: { xp: 50, coins: 20 },
+      timeLimit: "2 hour",
+      questObjectives: ["find wizard", "play checkers", "win at checkers"],
+    },
+  ]);
 
   useEffect(() => {
     (async () => {
@@ -82,11 +88,19 @@ export default function TabTwoScreen() {
           anchor={{ x: 0.5, y: 0.5 }}>
           <View //is where we can style the marker
             style={{ backgroundColor: "red", borderRadius: 50, padding: 5 }}>
-            <Text>You</Text>
+            <Image
+              style={styles.image}
+              source={{ uri: "https://picsum.photos/200/300" }}
+            />
           </View>
         </Marker>
-        {quests.map(quest => {
-          return <QuestMarker quest={quest}/>
+        {quests.map((quest) => {
+          return (
+            <QuestMarker
+              key={quest.id}
+              quest={quest}
+            />
+          );
         })}
       </MapView>
     </View>
@@ -115,7 +129,7 @@ const styles = StyleSheet.create({
   marker: {
     width: 200,
     height: 200,
-    alignItems:'center'
+    alignItems: "center",
   },
   button: {
     margin: 20,
@@ -127,6 +141,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   buttonText: {
-    color:'white'
-  }
+    color: "white",
+  },
+  image: {
+    height: 20,
+    width: 20,
+    borderRadius: 50,
+  },
 });

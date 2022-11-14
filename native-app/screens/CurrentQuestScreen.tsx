@@ -20,7 +20,7 @@ export default function CurrentQuestScreen() {
       <Text>{currentQuest.description}</Text>
       <View style={styles.container}>
         {currentQuest.questObjectives.map((objective:string) => {
-          return <Text>{objective}</Text>
+          return <Text key={objective}>{objective}</Text>
         })}
       </View>
       <View style={styles.buttonContainer}>
