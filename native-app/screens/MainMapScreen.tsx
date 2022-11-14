@@ -4,6 +4,7 @@ import MapView, { Callout, Marker } from "react-native-maps";
 import { StyleSheet, Text, View, Dimensions, Pressable } from "react-native";
 import * as Location from "expo-location"; //library used to get the location from the phone
 import { useNavigation } from "@react-navigation/native";
+import { QuestMarker } from "../components/QuestMarker";
 
 
 export default function TabTwoScreen() {
@@ -16,6 +17,30 @@ export default function TabTwoScreen() {
     latitudeDelta: 0.01,
     longitudeDelta: 0.01,
   });
+
+  const [quests, setQuests] = useState([
+    {cordinate:{
+      latitude: 53.7958,
+      longitude: -1.54535,
+    }, 
+    title: 'Slay a dragon',
+    category: 'adventure',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam aliquam libero quis ipsum fringilla pretium. Cras condimentum augue',
+    rewards: {xp: 100, coins: 10},
+    timeLimit: '1 hour',
+    questObjectives: ['go to location', 'slay dragon', 'find gold'] 
+  },
+  {cordinate:{
+    latitude: 53.7102,
+    longitude: -1.5012,
+  }, 
+  title: 'Defeat the wizard at checkers',
+  category: 'minigame',
+  description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam aliquam libero quis ipsum fringilla pretium. Cras condimentum augue',
+  rewards: {xp: 50, coins: 20},
+  timeLimit: '2 hour',
+  questObjectives: ['find wizard', 'play checkers', 'win at checkers'] 
+}])
 
   useEffect(() => {
     (async () => {
@@ -60,34 +85,9 @@ export default function TabTwoScreen() {
             <Text>You</Text>
           </View>
         </Marker>
-        <Marker //marker is the pin on the map
-          coordinate={{
-            latitude: 53.7958,
-            longitude: -1.54535,
-          }}
-          anchor={{ x: 0.5, y: 0.5 }}>
-          <View //is where we can style the marker
-            style={{ backgroundColor: "green", borderRadius: 50, padding: 5 }}>
-            <Text>Quest</Text>
-          </View>
-          <Callout>
-            <View style={styles.marker}>
-              <Text>Slay Dragon</Text>
-              <View style={styles.container}>
-                <Text> Adventure</Text>
-                <Text> Time Limit: 1hr</Text>
-              </View>
-              <View style={styles.container}>
-                <Text> 10 coins 100XP</Text>
-              </View>
-              <Pressable
-                style={styles.button}
-                onPress={() => navigation.navigate("AcceptQuest")}>
-                <Text style={styles.buttonText}>See Details</Text>
-              </Pressable>
-            </View>
-          </Callout>
-        </Marker>
+        {quests.map(quest => {
+          return <QuestMarker quest={quest}/>
+        })}
       </MapView>
     </View>
   );

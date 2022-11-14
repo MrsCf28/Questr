@@ -1,43 +1,42 @@
-import React from "react";
+import React, {useContext} from "react";
 import { Pressable, StyleSheet } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, usePreventRemoveContext } from "@react-navigation/native";
 import { Text, View } from "../components/Themed";
+import { CurrentQuest } from "../context/CurrentQuest";
 
-export default function AcceptQuestScreen() {
+export default function AcceptQuestScreen({route}) {
   const navigation = useNavigation();
+
+  const {setCurrentQuest}:object = useContext(CurrentQuest)
+
+  const quest = route.params
+
+  function acceptQuest() {
+    setCurrentQuest(quest)
+    navigation.navigate("CurrentQuest")
+  }
+
   return (
     <View style={styles.main}>
-      <Text style={styles.title}>Slay a dragon</Text>
+      <Text style={styles.title}>{quest.title}</Text>
       <View style={styles.container}>
-        <Text> Adventure</Text>
-        <Text> Time Limit: 1hr</Text>
+        <Text>{quest.category}</Text>
+        <Text>Time Limit: {quest.timeLimit}</Text>
       </View>
       <View style={styles.container}>
-        <Text> 10 coins 100XP</Text>
+        <Text>{quest.rewards.coins} coins {quest.rewards.xp}XP</Text>
       </View>
       <View style={styles.container}>
-        <Text>
-          {" "}
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-          aliquam libero quis ipsum fringilla pretium. Cras condimentum augue
-          sit amet lectus sodales efficitur. Sed in maximus eros. Nulla ac risus
-          nec ligula aliquam lobortis vel quis mauris. Morbi pretium fermentum
-          luctus. Mauris cursus nisi in dictum venenatis. Duis vitae odio
-          consequat ante laoreet eleifend. Aenean tempus enim quis turpis porta,
-          ut sodales nulla porta. Ut efficitur leo tortor, in facilisis urna
-          ultrices sit amet. Etiam vestibulum malesuada luctus. Vestibulum nec
-          molestie turpis. Proin ultrices ultricies mauris viverra tincidunt.
-          Phasellus ut ultricies lorem, vel finibus justo. Aenean lectus diam,
-          gravida id elementum ut, sodales eu metus.
-        </Text>
+        <Text>{quest.description}</Text>
         <View style={styles.container}>
-          <Text> - Go to location</Text>
-          <Text> - Take a photo of the dragon</Text>
+          {quest.questObjectives.map((objective:string) => {
+            return <Text>{objective}</Text>
+          })}
         </View>
       </View>
       <Pressable
         style={styles.button}
-        onPress={() => navigation.navigate("CurrentQuest")}>
+        onPress={acceptQuest}>
         <Text style={styles.buttonText}>Accept Quest</Text>
       </Pressable>
     </View>

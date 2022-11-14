@@ -19,6 +19,12 @@ export function TabHolder({setSelectedTab}:tabProp) {
             <Pressable style={styles.button} onPress={() => toggleTab('stats')}>
                 <Text style={styles.text}>Stats</Text>
             </Pressable> 
+            <Pressable style={styles.button} onPress={() => toggleTab('items')}>
+                <Text style={styles.text}>Items</Text>
+            </Pressable> 
+            <Pressable style={styles.button} onPress={() => toggleTab('avatar')}>
+                <Text style={styles.text}>Avatar</Text>
+            </Pressable> 
         </View>
     )
 }

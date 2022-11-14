@@ -1,21 +1,27 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Pressable, StyleSheet } from "react-native";
 import { Text, View } from "../components/Themed";
+import { CurrentQuest } from "../context/CurrentQuest";
 
 export default function CurrentQuestScreen() {
+
+  const {currentQuest} = useContext(CurrentQuest)
+
   return (
     <View style={styles.main}>
-      <Text style={styles.title}>Slay a dragon</Text>
+      <Text style={styles.title}>{currentQuest.title}</Text>
       <View style={styles.container}>
-        <Text> Adventure</Text>
-        <Text> Time Limit: 1hr</Text>
+        <Text>{currentQuest.category}</Text>
+        <Text>Time Limit: {currentQuest.timeLimit}</Text>
       </View>
       <View style={styles.container}>
-        <Text> 10 coins 100XP</Text>
+        <Text>{currentQuest.rewards.coins} coins {currentQuest.rewards.xp}XP</Text>
       </View>
+      <Text>{currentQuest.description}</Text>
       <View style={styles.container}>
-        <Text> - Go to location</Text>
-        <Text> - Take a photo of the dragon</Text>
+        {currentQuest.questObjectives.map((objective:string) => {
+          return <Text>{objective}</Text>
+        })}
       </View>
       <View style={styles.buttonContainer}>
         <Pressable style={styles.button}>
