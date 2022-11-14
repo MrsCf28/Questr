@@ -3,8 +3,11 @@ import { useState, useEffect } from "react";
 import MapView, { Callout, Marker } from "react-native-maps";
 import { StyleSheet, Text, View, Dimensions, Pressable } from "react-native";
 import * as Location from "expo-location"; //library used to get the location from the phone
+import { useNavigation } from "@react-navigation/native";
+
 
 export default function TabTwoScreen() {
+  const navigation = useNavigation()
   const [location, setLocation] = useState({});
   const [loading, setLoading] = useState(true);
   const [currentLocation, setCurrentLocation] = useState({
@@ -51,7 +54,7 @@ export default function TabTwoScreen() {
         showsMyLocationButton={true}>
         <Marker //marker is the pin on the map
           coordinate={currentLocation}
-          anchor={ {x: 0.5, y: 0.5} }>
+          anchor={{ x: 0.5, y: 0.5 }}>
           <View //is where we can style the marker
             style={{ backgroundColor: "red", borderRadius: 50, padding: 5 }}>
             <Text>You</Text>
@@ -62,16 +65,25 @@ export default function TabTwoScreen() {
             latitude: 53.7958,
             longitude: -1.54535,
           }}
-          anchor={ {x: 0.5, y: 0.5} }>
+          anchor={{ x: 0.5, y: 0.5 }}>
           <View //is where we can style the marker
             style={{ backgroundColor: "green", borderRadius: 50, padding: 5 }}>
             <Text>Quest</Text>
           </View>
           <Callout>
             <View style={styles.marker}>
-              <Text>Example Quest</Text>
-              <Pressable>
-                <Text>See Details</Text>
+              <Text>Slay Dragon</Text>
+              <View style={styles.container}>
+                <Text> Adventure</Text>
+                <Text> Time Limit: 1hr</Text>
+              </View>
+              <View style={styles.container}>
+                <Text> 10 coins 100XP</Text>
+              </View>
+              <Pressable
+                style={styles.button}
+                onPress={() => navigation.navigate("AcceptQuest")}>
+                <Text style={styles.buttonText}>See Details</Text>
               </Pressable>
             </View>
           </Callout>
@@ -101,8 +113,20 @@ const styles = StyleSheet.create({
     height: Dimensions.get("window").height,
   },
   marker: {
-    flex: 1,
     width: 200,
-    height: 200
+    height: 200,
+    alignItems:'center'
+  },
+  button: {
+    margin: 20,
+    width: "80%",
+    backgroundColor: "blue",
+    padding: 10,
+    borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  buttonText: {
+    color:'white'
   }
 });

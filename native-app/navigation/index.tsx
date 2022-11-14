@@ -16,7 +16,8 @@ import { ColorSchemeName, Pressable } from "react-native";
 
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
-import ModalScreen from "../screens/ModalScreen";
+import AcceptQuestScreen from "../screens/AcceptQuestScreen";
+import CurrentQuestScreen from "../screens/CurrentQuestScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import TabOneScreen from "../screens/ProfilePage";
 import TabTwoScreen from "../screens/MainMapScreen";
@@ -62,14 +63,14 @@ function RootNavigator() {
       />
       <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen
-          name="Modal"
-          component={ModalScreen}
+          name="CurrentQuest"
+          component={CurrentQuestScreen}
         />
       </Stack.Group>
       <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen
-          name="Quest"
-          component={ModalScreen}
+          name="AcceptQuest"
+          component={AcceptQuestScreen}
         />
       </Stack.Group>
     </Stack.Navigator>
@@ -105,7 +106,7 @@ function BottomTabNavigator() {
           ),
           headerRight: () => (
             <Pressable
-              onPress={() => navigation.navigate("Modal")}
+              onPress={() => navigation.navigate("CurrentQuest")}
               style={({ pressed }) => ({
                 opacity: pressed ? 0.5 : 1,
               })}>
