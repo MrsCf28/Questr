@@ -46,7 +46,7 @@ export function ItemsScreen({ selectedTab }: tabProp) {
       ]}>
       <ScrollView style={styles.scrollableArea}>
         {completedQuests.map((quest) => {
-          return <HistoryCard quest={quest} />;
+          return <HistoryCard key={quest.id} quest={quest} />;
         })}
       </ScrollView>
     </View>

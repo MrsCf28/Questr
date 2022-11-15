@@ -3,8 +3,6 @@ import { View, Pressable, StyleSheet, Text } from 'react-native';
 import MapView, { Callout, Marker } from "react-native-maps";
 import { useNavigation } from "@react-navigation/native";
 
-
-
 export function QuestMarker({quest}) {
 
     const navigation = useNavigation()
