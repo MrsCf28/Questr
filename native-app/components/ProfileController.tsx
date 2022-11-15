@@ -1,3 +1,4 @@
+import { Auth } from 'aws-amplify';
 import React from 'react'
 import {View, Pressable, StyleSheet, Text} from 'react-native'
 
@@ -6,7 +7,7 @@ export function ProfileController() {
 
     return (
         <View style={styles.container}>
-            <Pressable style={styles.button}>
+            <Pressable style={styles.button} onPress={() => Auth.signOut()}>
                 <Text style={styles.text}> Sign out</Text>
             </Pressable>
             <Pressable style={styles.button}>
