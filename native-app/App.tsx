@@ -7,7 +7,7 @@ import { withAuthenticator } from 'aws-amplify-react-native';
 import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation';
-import { CurrentQuest } from './context/CurrentQuest';
+import { CurrentUser } from './context/CurrentUser';
 import { listQuestApis } from './src/graphql/queries';
 
 import awsExports from './src/aws-exports';
@@ -18,9 +18,15 @@ function App() {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme(); 
 
-  const [currentQuest, setCurrentQuest] = useState(null)
+  const [currentUser, setCurrentUser] = useState({user:null, image:'https://picsum.photos/200/300', currentQuest: null})
   const [allQuests, setAllQuests] = useState([])
-  const [user, setUser] = useState({});
+
+
+  useEffect(() => {
+    setCurrentUser(currentUser => {
+      return {...currentUser, user: Auth.user.attributes.email}
+    })
+  }, [])
   // useEffect(() => {
   //   fetchAllQuests();
   // }, []);
@@ -42,10 +48,10 @@ function App() {
   } else {
     return (
       <SafeAreaProvider>
-        <CurrentQuest.Provider value={{currentQuest, setCurrentQuest}}>
+        <CurrentUser.Provider value={{currentUser, setCurrentUser}}>
           <Navigation colorScheme={colorScheme} />
           <StatusBar />
-        </CurrentQuest.Provider>
+        </CurrentUser.Provider>
       </SafeAreaProvider>
     );
   }

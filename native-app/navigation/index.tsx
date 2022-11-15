@@ -14,7 +14,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
 import { ColorSchemeName, Pressable } from "react-native";
 import { useContext } from 'react'
-import { CurrentQuest } from "../context/CurrentQuest";
+import { CurrentUser } from "../context/CurrentUser";
 
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
@@ -54,7 +54,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
 
-  const {currentQuest} = useContext(CurrentQuest)
+  const {currentUser} = useContext(CurrentUser)
 
   return (
     <Stack.Navigator>
@@ -71,7 +71,7 @@ function RootNavigator() {
       <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen
           name="CurrentQuest"
-          component={currentQuest ? CurrentQuestScreen : NoQuestScreen}
+          component={currentUser.currentQuest ? CurrentQuestScreen : NoQuestScreen}
         />
       </Stack.Group>
       <Stack.Group screenOptions={{ presentation: "modal" }}>

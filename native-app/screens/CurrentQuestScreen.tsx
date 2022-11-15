@@ -1,25 +1,25 @@
 import React, { useContext } from "react";
 import { Pressable, StyleSheet } from "react-native";
 import { Text, View } from "../components/Themed";
-import { CurrentQuest } from "../context/CurrentQuest";
+import { CurrentUser } from "../context/CurrentUser";
 
 export default function CurrentQuestScreen() {
 
-  const {currentQuest} = useContext(CurrentQuest)
+  const {currentUser} = useContext(CurrentUser)
 
   return (
     <View style={styles.main}>
-      <Text style={styles.title}>{currentQuest.title}</Text>
+      <Text style={styles.title}>{currentUser.currentQuest.title}</Text>
       <View style={styles.container}>
-        <Text>{currentQuest.category}</Text>
-        <Text>Time Limit: {currentQuest.timeLimit}</Text>
+        <Text>{currentUser.currentQuest.category}</Text>
+        <Text>Time Limit: {currentUser.currentQuest.timeLimit}</Text>
       </View>
       <View style={styles.container}>
-        <Text>{currentQuest.rewards.coins} coins {currentQuest.rewards.xp}XP</Text>
+        <Text>{currentUser.currentQuest.rewards.coins} coins {currentUser.currentQuest.rewards.xp}XP</Text>
       </View>
-      <Text>{currentQuest.description}</Text>
+      <Text>{currentUser.currentQuest.description}</Text>
       <View style={styles.container}>
-        {currentQuest.questObjectives.map((objective:string) => {
+        {currentUser.currentQuest.questObjectives.map((objective:string) => {
           return <Text key={objective}>{objective}</Text>
         })}
       </View>

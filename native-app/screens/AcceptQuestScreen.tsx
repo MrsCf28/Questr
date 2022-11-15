@@ -2,17 +2,17 @@ import React, {useContext} from "react";
 import { Pressable, StyleSheet } from "react-native";
 import { useNavigation, usePreventRemoveContext } from "@react-navigation/native";
 import { Text, View } from "../components/Themed";
-import { CurrentQuest } from "../context/CurrentQuest";
+import { CurrentUser } from "../context/CurrentUser";
 
 export default function AcceptQuestScreen({route}) {
   const navigation = useNavigation();
 
-  const {setCurrentQuest}:object = useContext(CurrentQuest)
+  const {currentUser, setCurrentUser}:object = useContext(CurrentUser)
 
   const quest = route.params
 
   function acceptQuest() {
-    setCurrentQuest(quest)
+    setCurrentUser({...currentUser, currentQuest: quest})
     navigation.navigate("CurrentQuest")
   }
 

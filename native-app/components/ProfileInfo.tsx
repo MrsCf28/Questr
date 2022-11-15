@@ -1,13 +1,21 @@
 import React from 'react'
+import { useContext } from 'react';
 import { View, Image, StyleSheet, Text } from 'react-native' 
-import {Auth } from "aws-amplify";
+import { CurrentUser } from '../context/CurrentUser';
+
 export function ProfileInfo() {
+
+    const {currentUser} = useContext(CurrentUser)
+
+    const {image} = currentUser
+
+    console.log(image)
 
     return (
         <View style={styles.container}>
-            <Image style={styles.image} source={{uri: 'https://picsum.photos/200/300'}}/> 
+            <Image style={styles.image} source={{uri:image}}/> 
             <View>
-                <Text>Name: {Auth.user.attributes.email}</Text>
+                <Text>Name: {currentUser.user}</Text>
                 <Text>Rank: BigDaddy</Text>
                 <Text>XP: 100</Text>
                 <Text>Coins: 10</Text>

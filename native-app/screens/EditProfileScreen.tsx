@@ -1,41 +1,45 @@
 import React, { useContext, useState } from "react";
-import { Pressable, StyleSheet, TextInput } from "react-native";
+import { Pressable, StyleSheet, TextInput, Image } from "react-native";
 import { Text, View } from "../components/Themed";
 import * as ImagePicker from "expo-image-picker";
+import { CurrentUser } from "../context/CurrentUser";
 
 export default function EditProfileScreen() {
   const [image, setImage] = useState(null);
+  const {currentUser, setCurrentUser} = useContext(CurrentUser)
+  // const [imageUri, setImageUri] = useState("notSet");
+  // const [image64, setImage64] = useState(null);
+
+  async function pickImage() {
+      const result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          allowsEditing: true,
+          aspect: [1,1],
+          quality: 1,
+          base64: true
+        });
+    
+        if (!result.canceled) {
+          setImage(result.assets[0].uri);
+        }
+  }
   
 
-  const pickImage = async () => {
-    // No permissions request is necessary for launching the image library
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-    
-    setImage(result);
-    if (!result.canceled) {
-      setImage(result.assets[0].uri);
-    }
-  };
-
   const submit = () => {
-    setUser({ ...user, image: image });
+    setCurrentUser({...currentUser, image:image});
   };
 
   return (
     <View style={styles.container}>
+      {image? <Image style={styles.image} source={{uri: image}}/> : <Image style={styles.image} source={{uri: 'https://picsum.photos/200/300'}}/>}
       <TextInput
         placeholder="Name"
         style={styles.input}
-        onChangeText={(text) => setUser({ ...user, name: text })}></TextInput>
+        ></TextInput>
       <TextInput
         placeholder="Region"
         style={styles.input}
-        onChangeText={(text) => setUser({ ...user, region: text })}></TextInput>
+        ></TextInput>
       <Pressable
         style={styles.button}
         onPress={() => pickImage()}>
@@ -78,4 +82,10 @@ const styles = StyleSheet.create({
   text: {
     color: "black",
   },
+  image: {
+    height: 150,
+    width: 150,
+    borderRadius: 100,
+    margin: 10,
+}
 });
