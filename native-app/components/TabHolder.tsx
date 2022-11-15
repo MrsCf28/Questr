@@ -43,17 +43,17 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "flex-start",
     justifyContent: "center",
+    marginBottom: 10,
   },
   button: {
-    backgroundColor: "#545453",
+    backgroundColor: "#014c54",
     padding: 10,
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    borderWidth: 3,
-    borderColor: '#2e2a27',
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
+    borderWidth: 5,
+    borderColor: '#7a7877',
+    borderRadius: 20,
     elevation: 2,
     zIndex: 2,
   },
@@ -61,8 +61,6 @@ const styles = StyleSheet.create({
     color: "white",
   },
   active: {
-    borderBottomWidth: 3,
-    borderBottomColor: '#8f8f8f',
-    backgroundColor: "#8f8f8f",
+    backgroundColor: "#02b9cc",
   }
 });
