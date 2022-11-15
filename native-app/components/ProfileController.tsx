@@ -1,24 +1,25 @@
-import React from "react";
-import { View, Pressable, StyleSheet, Text } from "react-native";
+
+import { Auth } from 'aws-amplify';
+import React from 'react'
+import {View, Pressable, StyleSheet, Text} from 'react-native'
 import {
   useNavigation,
-  usePreventRemoveContext,
 } from "@react-navigation/native";
 
+
 export function ProfileController() {
-  const navigation = useNavigation();
-  return (
-    <View style={styles.container}>
-      <Pressable style={styles.button}>
-        <Text style={styles.text}> Sign out</Text>
-      </Pressable>
-      <Pressable
-        style={styles.button}
-        onPress={() => navigation.navigate("EditProfile")}>
-        <Text style={styles.text}>Edit Profile</Text>
-      </Pressable>
-    </View>
-  );
+const navigation = useNavigation();
+    return (
+        <View style={styles.container}>
+            <Pressable style={styles.button} onPress={() => Auth.signOut()}>
+                <Text style={styles.text}> Sign out</Text>
+            </Pressable>
+            <Pressable style={styles.button}  onPress={() => navigation.navigate("EditProfile")}>
+                <Text style={styles.text}>Edit Profile</Text>
+            </Pressable>
+        </View>
+    )
+
 }
 
 const styles = StyleSheet.create({

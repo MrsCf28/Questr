@@ -36,6 +36,60 @@ export function HistoryScreen({ selectedTab }: tabProp) {
       timeLimit: "2 hour",
       questObjectives: ["find wizard", "play checkers", "win at checkers"],
     },
+    {
+      cordinate: {
+        latitude: 53.7102,
+        longitude: -1.5012,
+      },
+      id: 3,
+      title: "Defeat the wizard at checkers",
+      category: "minigame",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam aliquam libero quis ipsum fringilla pretium. Cras condimentum augue",
+      rewards: { xp: 50, coins: 20 },
+      timeLimit: "2 hour",
+      questObjectives: ["find wizard", "play checkers", "win at checkers"],
+    },
+    {
+      cordinate: {
+        latitude: 53.7102,
+        longitude: -1.5012,
+      },
+      id: 4,
+      title: "Defeat the wizard at checkers",
+      category: "minigame",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam aliquam libero quis ipsum fringilla pretium. Cras condimentum augue",
+      rewards: { xp: 50, coins: 20 },
+      timeLimit: "2 hour",
+      questObjectives: ["find wizard", "play checkers", "win at checkers"],
+    }, {
+      cordinate: {
+        latitude: 53.7102,
+        longitude: -1.5012,
+      },
+      id: 5,
+      title: "Defeat the wizard at checkers",
+      category: "minigame",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam aliquam libero quis ipsum fringilla pretium. Cras condimentum augue",
+      rewards: { xp: 50, coins: 20 },
+      timeLimit: "2 hour",
+      questObjectives: ["find wizard", "play checkers", "win at checkers"],
+    }, {
+      cordinate: {
+        latitude: 53.7102,
+        longitude: -1.5012,
+      },
+      id: 6,
+      title: "Defeat the wizard at checkers",
+      category: "minigame",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam aliquam libero quis ipsum fringilla pretium. Cras condimentum augue",
+      rewards: { xp: 50, coins: 20 },
+      timeLimit: "2 hour",
+      questObjectives: ["find wizard", "play checkers", "win at checkers"],
+    }
   ]);
 
   return (
