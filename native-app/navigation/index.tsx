@@ -23,6 +23,7 @@ import CurrentQuestScreen from "../screens/CurrentQuestScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import TabOneScreen from "../screens/ProfilePage";
 import TabTwoScreen from "../screens/MainMapScreen";
+import EditProfileScreen from "../screens/EditProfileScreen";
 import {
   RootStackParamList,
   RootTabParamList,
@@ -70,13 +71,19 @@ function RootNavigator() {
       <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen
           name="CurrentQuest"
-          component={currentQuest? CurrentQuestScreen : NoQuestScreen}
+          component={currentQuest ? CurrentQuestScreen : NoQuestScreen}
         />
       </Stack.Group>
       <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen
           name="AcceptQuest"
           component={AcceptQuestScreen}
+        />
+      </Stack.Group>
+      <Stack.Group screenOptions={{ presentation: "modal" }}>
+        <Stack.Screen
+          name="EditProfile"
+          component={EditProfileScreen}
         />
       </Stack.Group>
     </Stack.Navigator>

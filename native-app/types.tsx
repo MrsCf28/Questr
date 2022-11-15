@@ -17,7 +17,8 @@ export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
   CurrentQuest: undefined;
   NotFound: undefined;
-  AcceptQuest: undefined
+  AcceptQuest: undefined;
+  EditProfile: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<
