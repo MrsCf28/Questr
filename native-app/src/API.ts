@@ -3,30 +3,67 @@
 //  This file was automatically generated and should not be edited.
 
 export type CreateQuestApiInput = {
-  quest_id: string,
-  created_at: string,
-  description?: string | null,
-  latitude: number,
-  longtitude: number,
-  time_limit_hours?: number | null,
-  title?: string | null,
   id?: string | null,
+  category: string,
+  title: string,
+  description: string,
+  location?: LocationInput | null,
+  createdAt?: string | null,
+  updatedAt?: string | null,
+  rewards?: RewardsInput | null,
+  time_limit_hours: number,
+  restrictions?: RestrictionsInput | null,
+  reviews?: ReviewsInput | null,
+  objectives?: Array< ObjectivesInput | null > | null,
+};
+
+export type LocationInput = {
+  latitude: number,
+  longitude: number,
+  region: string,
+};
+
+export type RewardsInput = {
+  xp: number,
+  coins: number,
+  stamina: number,
+  wisdom: number,
+  dexterity: number,
+  perception: number,
+  exploration: number,
+  strength: number,
+};
+
+export type RestrictionsInput = {
+  min_age: number,
+  time_restriction: string,
+};
+
+export type ReviewsInput = {
+  current_rating: number,
+  times_abandoned: number,
+  times_completed: number,
+};
+
+export type ObjectivesInput = {
+  desc?: string | null,
+  endpoint?: string | null,
+  method?: string | null,
 };
 
 export type ModelQuestApiConditionInput = {
-  quest_id?: ModelIDInput | null,
-  created_at?: ModelStringInput | null,
-  description?: ModelStringInput | null,
-  latitude?: ModelFloatInput | null,
-  longtitude?: ModelFloatInput | null,
-  time_limit_hours?: ModelIntInput | null,
+  category?: ModelStringInput | null,
   title?: ModelStringInput | null,
+  description?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
+  time_limit_hours?: ModelIntInput | null,
   and?: Array< ModelQuestApiConditionInput | null > | null,
   or?: Array< ModelQuestApiConditionInput | null > | null,
   not?: ModelQuestApiConditionInput | null,
 };
 
-export type ModelIDInput = {
+export type ModelStringInput = {
   ne?: string | null,
   eq?: string | null,
   le?: string | null,
@@ -66,7 +103,106 @@ export type ModelSizeInput = {
   between?: Array< number | null > | null,
 };
 
-export type ModelStringInput = {
+export type ModelIntInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+};
+
+export type QuestApi = {
+  __typename: "QuestApi",
+  id: string,
+  category: string,
+  title: string,
+  description: string,
+  location?: Location | null,
+  createdAt: string,
+  updatedAt: string,
+  rewards?: Rewards | null,
+  time_limit_hours: number,
+  restrictions?: Restrictions | null,
+  reviews?: Reviews | null,
+  objectives?:  Array<Objectives | null > | null,
+};
+
+export type Location = {
+  __typename: "Location",
+  latitude: number,
+  longitude: number,
+  region: string,
+};
+
+export type Rewards = {
+  __typename: "Rewards",
+  xp: number,
+  coins: number,
+  stamina: number,
+  wisdom: number,
+  dexterity: number,
+  perception: number,
+  exploration: number,
+  strength: number,
+};
+
+export type Restrictions = {
+  __typename: "Restrictions",
+  min_age: number,
+  time_restriction: string,
+};
+
+export type Reviews = {
+  __typename: "Reviews",
+  current_rating: number,
+  times_abandoned: number,
+  times_completed: number,
+};
+
+export type Objectives = {
+  __typename: "Objectives",
+  desc?: string | null,
+  endpoint?: string | null,
+  method?: string | null,
+};
+
+export type UpdateQuestApiInput = {
+  id: string,
+  category?: string | null,
+  title?: string | null,
+  description?: string | null,
+  location?: LocationInput | null,
+  createdAt?: string | null,
+  updatedAt?: string | null,
+  rewards?: RewardsInput | null,
+  time_limit_hours?: number | null,
+  restrictions?: RestrictionsInput | null,
+  reviews?: ReviewsInput | null,
+  objectives?: Array< ObjectivesInput | null > | null,
+};
+
+export type DeleteQuestApiInput = {
+  id: string,
+};
+
+export type ModelQuestApiFilterInput = {
+  id?: ModelIDInput | null,
+  category?: ModelStringInput | null,
+  title?: ModelStringInput | null,
+  description?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
+  time_limit_hours?: ModelIntInput | null,
+  and?: Array< ModelQuestApiFilterInput | null > | null,
+  or?: Array< ModelQuestApiFilterInput | null > | null,
+  not?: ModelQuestApiFilterInput | null,
+};
+
+export type ModelIDInput = {
   ne?: string | null,
   eq?: string | null,
   le?: string | null,
@@ -82,72 +218,6 @@ export type ModelStringInput = {
   size?: ModelSizeInput | null,
 };
 
-export type ModelFloatInput = {
-  ne?: number | null,
-  eq?: number | null,
-  le?: number | null,
-  lt?: number | null,
-  ge?: number | null,
-  gt?: number | null,
-  between?: Array< number | null > | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-};
-
-export type ModelIntInput = {
-  ne?: number | null,
-  eq?: number | null,
-  le?: number | null,
-  lt?: number | null,
-  ge?: number | null,
-  gt?: number | null,
-  between?: Array< number | null > | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-};
-
-export type QuestApi = {
-  __typename: "QuestApi",
-  quest_id: string,
-  created_at: string,
-  description?: string | null,
-  latitude: number,
-  longtitude: number,
-  time_limit_hours?: number | null,
-  title?: string | null,
-  id: string,
-  createdAt: string,
-  updatedAt: string,
-};
-
-export type UpdateQuestApiInput = {
-  quest_id?: string | null,
-  created_at?: string | null,
-  description?: string | null,
-  latitude?: number | null,
-  longtitude?: number | null,
-  time_limit_hours?: number | null,
-  title?: string | null,
-  id: string,
-};
-
-export type DeleteQuestApiInput = {
-  id: string,
-};
-
-export type ModelQuestApiFilterInput = {
-  quest_id?: ModelIDInput | null,
-  created_at?: ModelStringInput | null,
-  description?: ModelStringInput | null,
-  latitude?: ModelFloatInput | null,
-  longtitude?: ModelFloatInput | null,
-  time_limit_hours?: ModelIntInput | null,
-  title?: ModelStringInput | null,
-  and?: Array< ModelQuestApiFilterInput | null > | null,
-  or?: Array< ModelQuestApiFilterInput | null > | null,
-  not?: ModelQuestApiFilterInput | null,
-};
-
 export type ModelQuestApiConnection = {
   __typename: "ModelQuestApiConnection",
   items:  Array<QuestApi | null >,
@@ -155,13 +225,13 @@ export type ModelQuestApiConnection = {
 };
 
 export type ModelSubscriptionQuestApiFilterInput = {
-  quest_id?: ModelSubscriptionIDInput | null,
-  created_at?: ModelSubscriptionStringInput | null,
-  description?: ModelSubscriptionStringInput | null,
-  latitude?: ModelSubscriptionFloatInput | null,
-  longtitude?: ModelSubscriptionFloatInput | null,
-  time_limit_hours?: ModelSubscriptionIntInput | null,
+  id?: ModelSubscriptionIDInput | null,
+  category?: ModelSubscriptionStringInput | null,
   title?: ModelSubscriptionStringInput | null,
+  description?: ModelSubscriptionStringInput | null,
+  createdAt?: ModelSubscriptionStringInput | null,
+  updatedAt?: ModelSubscriptionStringInput | null,
+  time_limit_hours?: ModelSubscriptionIntInput | null,
   and?: Array< ModelSubscriptionQuestApiFilterInput | null > | null,
   or?: Array< ModelSubscriptionQuestApiFilterInput | null > | null,
 };
@@ -196,18 +266,6 @@ export type ModelSubscriptionStringInput = {
   notIn?: Array< string | null > | null,
 };
 
-export type ModelSubscriptionFloatInput = {
-  ne?: number | null,
-  eq?: number | null,
-  le?: number | null,
-  lt?: number | null,
-  ge?: number | null,
-  gt?: number | null,
-  between?: Array< number | null > | null,
-  in?: Array< number | null > | null,
-  notIn?: Array< number | null > | null,
-};
-
 export type ModelSubscriptionIntInput = {
   ne?: number | null,
   eq?: number | null,
@@ -228,16 +286,47 @@ export type CreateQuestApiMutationVariables = {
 export type CreateQuestApiMutation = {
   createQuestApi?:  {
     __typename: "QuestApi",
-    quest_id: string,
-    created_at: string,
-    description?: string | null,
-    latitude: number,
-    longtitude: number,
-    time_limit_hours?: number | null,
-    title?: string | null,
     id: string,
+    category: string,
+    title: string,
+    description: string,
+    location?:  {
+      __typename: "Location",
+      latitude: number,
+      longitude: number,
+      region: string,
+    } | null,
     createdAt: string,
     updatedAt: string,
+    rewards?:  {
+      __typename: "Rewards",
+      xp: number,
+      coins: number,
+      stamina: number,
+      wisdom: number,
+      dexterity: number,
+      perception: number,
+      exploration: number,
+      strength: number,
+    } | null,
+    time_limit_hours: number,
+    restrictions?:  {
+      __typename: "Restrictions",
+      min_age: number,
+      time_restriction: string,
+    } | null,
+    reviews?:  {
+      __typename: "Reviews",
+      current_rating: number,
+      times_abandoned: number,
+      times_completed: number,
+    } | null,
+    objectives?:  Array< {
+      __typename: "Objectives",
+      desc?: string | null,
+      endpoint?: string | null,
+      method?: string | null,
+    } | null > | null,
   } | null,
 };
 
@@ -249,16 +338,47 @@ export type UpdateQuestApiMutationVariables = {
 export type UpdateQuestApiMutation = {
   updateQuestApi?:  {
     __typename: "QuestApi",
-    quest_id: string,
-    created_at: string,
-    description?: string | null,
-    latitude: number,
-    longtitude: number,
-    time_limit_hours?: number | null,
-    title?: string | null,
     id: string,
+    category: string,
+    title: string,
+    description: string,
+    location?:  {
+      __typename: "Location",
+      latitude: number,
+      longitude: number,
+      region: string,
+    } | null,
     createdAt: string,
     updatedAt: string,
+    rewards?:  {
+      __typename: "Rewards",
+      xp: number,
+      coins: number,
+      stamina: number,
+      wisdom: number,
+      dexterity: number,
+      perception: number,
+      exploration: number,
+      strength: number,
+    } | null,
+    time_limit_hours: number,
+    restrictions?:  {
+      __typename: "Restrictions",
+      min_age: number,
+      time_restriction: string,
+    } | null,
+    reviews?:  {
+      __typename: "Reviews",
+      current_rating: number,
+      times_abandoned: number,
+      times_completed: number,
+    } | null,
+    objectives?:  Array< {
+      __typename: "Objectives",
+      desc?: string | null,
+      endpoint?: string | null,
+      method?: string | null,
+    } | null > | null,
   } | null,
 };
 
@@ -270,16 +390,47 @@ export type DeleteQuestApiMutationVariables = {
 export type DeleteQuestApiMutation = {
   deleteQuestApi?:  {
     __typename: "QuestApi",
-    quest_id: string,
-    created_at: string,
-    description?: string | null,
-    latitude: number,
-    longtitude: number,
-    time_limit_hours?: number | null,
-    title?: string | null,
     id: string,
+    category: string,
+    title: string,
+    description: string,
+    location?:  {
+      __typename: "Location",
+      latitude: number,
+      longitude: number,
+      region: string,
+    } | null,
     createdAt: string,
     updatedAt: string,
+    rewards?:  {
+      __typename: "Rewards",
+      xp: number,
+      coins: number,
+      stamina: number,
+      wisdom: number,
+      dexterity: number,
+      perception: number,
+      exploration: number,
+      strength: number,
+    } | null,
+    time_limit_hours: number,
+    restrictions?:  {
+      __typename: "Restrictions",
+      min_age: number,
+      time_restriction: string,
+    } | null,
+    reviews?:  {
+      __typename: "Reviews",
+      current_rating: number,
+      times_abandoned: number,
+      times_completed: number,
+    } | null,
+    objectives?:  Array< {
+      __typename: "Objectives",
+      desc?: string | null,
+      endpoint?: string | null,
+      method?: string | null,
+    } | null > | null,
   } | null,
 };
 
@@ -290,16 +441,47 @@ export type GetQuestApiQueryVariables = {
 export type GetQuestApiQuery = {
   getQuestApi?:  {
     __typename: "QuestApi",
-    quest_id: string,
-    created_at: string,
-    description?: string | null,
-    latitude: number,
-    longtitude: number,
-    time_limit_hours?: number | null,
-    title?: string | null,
     id: string,
+    category: string,
+    title: string,
+    description: string,
+    location?:  {
+      __typename: "Location",
+      latitude: number,
+      longitude: number,
+      region: string,
+    } | null,
     createdAt: string,
     updatedAt: string,
+    rewards?:  {
+      __typename: "Rewards",
+      xp: number,
+      coins: number,
+      stamina: number,
+      wisdom: number,
+      dexterity: number,
+      perception: number,
+      exploration: number,
+      strength: number,
+    } | null,
+    time_limit_hours: number,
+    restrictions?:  {
+      __typename: "Restrictions",
+      min_age: number,
+      time_restriction: string,
+    } | null,
+    reviews?:  {
+      __typename: "Reviews",
+      current_rating: number,
+      times_abandoned: number,
+      times_completed: number,
+    } | null,
+    objectives?:  Array< {
+      __typename: "Objectives",
+      desc?: string | null,
+      endpoint?: string | null,
+      method?: string | null,
+    } | null > | null,
   } | null,
 };
 
@@ -314,16 +496,47 @@ export type ListQuestApisQuery = {
     __typename: "ModelQuestApiConnection",
     items:  Array< {
       __typename: "QuestApi",
-      quest_id: string,
-      created_at: string,
-      description?: string | null,
-      latitude: number,
-      longtitude: number,
-      time_limit_hours?: number | null,
-      title?: string | null,
       id: string,
+      category: string,
+      title: string,
+      description: string,
+      location?:  {
+        __typename: "Location",
+        latitude: number,
+        longitude: number,
+        region: string,
+      } | null,
       createdAt: string,
       updatedAt: string,
+      rewards?:  {
+        __typename: "Rewards",
+        xp: number,
+        coins: number,
+        stamina: number,
+        wisdom: number,
+        dexterity: number,
+        perception: number,
+        exploration: number,
+        strength: number,
+      } | null,
+      time_limit_hours: number,
+      restrictions?:  {
+        __typename: "Restrictions",
+        min_age: number,
+        time_restriction: string,
+      } | null,
+      reviews?:  {
+        __typename: "Reviews",
+        current_rating: number,
+        times_abandoned: number,
+        times_completed: number,
+      } | null,
+      objectives?:  Array< {
+        __typename: "Objectives",
+        desc?: string | null,
+        endpoint?: string | null,
+        method?: string | null,
+      } | null > | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -336,16 +549,47 @@ export type OnCreateQuestApiSubscriptionVariables = {
 export type OnCreateQuestApiSubscription = {
   onCreateQuestApi?:  {
     __typename: "QuestApi",
-    quest_id: string,
-    created_at: string,
-    description?: string | null,
-    latitude: number,
-    longtitude: number,
-    time_limit_hours?: number | null,
-    title?: string | null,
     id: string,
+    category: string,
+    title: string,
+    description: string,
+    location?:  {
+      __typename: "Location",
+      latitude: number,
+      longitude: number,
+      region: string,
+    } | null,
     createdAt: string,
     updatedAt: string,
+    rewards?:  {
+      __typename: "Rewards",
+      xp: number,
+      coins: number,
+      stamina: number,
+      wisdom: number,
+      dexterity: number,
+      perception: number,
+      exploration: number,
+      strength: number,
+    } | null,
+    time_limit_hours: number,
+    restrictions?:  {
+      __typename: "Restrictions",
+      min_age: number,
+      time_restriction: string,
+    } | null,
+    reviews?:  {
+      __typename: "Reviews",
+      current_rating: number,
+      times_abandoned: number,
+      times_completed: number,
+    } | null,
+    objectives?:  Array< {
+      __typename: "Objectives",
+      desc?: string | null,
+      endpoint?: string | null,
+      method?: string | null,
+    } | null > | null,
   } | null,
 };
 
@@ -356,16 +600,47 @@ export type OnUpdateQuestApiSubscriptionVariables = {
 export type OnUpdateQuestApiSubscription = {
   onUpdateQuestApi?:  {
     __typename: "QuestApi",
-    quest_id: string,
-    created_at: string,
-    description?: string | null,
-    latitude: number,
-    longtitude: number,
-    time_limit_hours?: number | null,
-    title?: string | null,
     id: string,
+    category: string,
+    title: string,
+    description: string,
+    location?:  {
+      __typename: "Location",
+      latitude: number,
+      longitude: number,
+      region: string,
+    } | null,
     createdAt: string,
     updatedAt: string,
+    rewards?:  {
+      __typename: "Rewards",
+      xp: number,
+      coins: number,
+      stamina: number,
+      wisdom: number,
+      dexterity: number,
+      perception: number,
+      exploration: number,
+      strength: number,
+    } | null,
+    time_limit_hours: number,
+    restrictions?:  {
+      __typename: "Restrictions",
+      min_age: number,
+      time_restriction: string,
+    } | null,
+    reviews?:  {
+      __typename: "Reviews",
+      current_rating: number,
+      times_abandoned: number,
+      times_completed: number,
+    } | null,
+    objectives?:  Array< {
+      __typename: "Objectives",
+      desc?: string | null,
+      endpoint?: string | null,
+      method?: string | null,
+    } | null > | null,
   } | null,
 };
 
@@ -376,15 +651,46 @@ export type OnDeleteQuestApiSubscriptionVariables = {
 export type OnDeleteQuestApiSubscription = {
   onDeleteQuestApi?:  {
     __typename: "QuestApi",
-    quest_id: string,
-    created_at: string,
-    description?: string | null,
-    latitude: number,
-    longtitude: number,
-    time_limit_hours?: number | null,
-    title?: string | null,
     id: string,
+    category: string,
+    title: string,
+    description: string,
+    location?:  {
+      __typename: "Location",
+      latitude: number,
+      longitude: number,
+      region: string,
+    } | null,
     createdAt: string,
     updatedAt: string,
+    rewards?:  {
+      __typename: "Rewards",
+      xp: number,
+      coins: number,
+      stamina: number,
+      wisdom: number,
+      dexterity: number,
+      perception: number,
+      exploration: number,
+      strength: number,
+    } | null,
+    time_limit_hours: number,
+    restrictions?:  {
+      __typename: "Restrictions",
+      min_age: number,
+      time_restriction: string,
+    } | null,
+    reviews?:  {
+      __typename: "Reviews",
+      current_rating: number,
+      times_abandoned: number,
+      times_completed: number,
+    } | null,
+    objectives?:  Array< {
+      __typename: "Objectives",
+      desc?: string | null,
+      endpoint?: string | null,
+      method?: string | null,
+    } | null > | null,
   } | null,
 };

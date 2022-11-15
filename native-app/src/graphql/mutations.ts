@@ -8,16 +8,42 @@ export const createQuestApi = /* GraphQL */ `
     $condition: ModelQuestApiConditionInput
   ) {
     createQuestApi(input: $input, condition: $condition) {
-      quest_id
-      created_at
-      description
-      latitude
-      longtitude
-      time_limit_hours
-      title
       id
+      category
+      title
+      description
+      location {
+        latitude
+        longitude
+        region
+      }
       createdAt
       updatedAt
+      rewards {
+        xp
+        coins
+        stamina
+        wisdom
+        dexterity
+        perception
+        exploration
+        strength
+      }
+      time_limit_hours
+      restrictions {
+        min_age
+        time_restriction
+      }
+      reviews {
+        current_rating
+        times_abandoned
+        times_completed
+      }
+      objectives {
+        desc
+        endpoint
+        method
+      }
     }
   }
 `;
@@ -27,16 +53,42 @@ export const updateQuestApi = /* GraphQL */ `
     $condition: ModelQuestApiConditionInput
   ) {
     updateQuestApi(input: $input, condition: $condition) {
-      quest_id
-      created_at
-      description
-      latitude
-      longtitude
-      time_limit_hours
-      title
       id
+      category
+      title
+      description
+      location {
+        latitude
+        longitude
+        region
+      }
       createdAt
       updatedAt
+      rewards {
+        xp
+        coins
+        stamina
+        wisdom
+        dexterity
+        perception
+        exploration
+        strength
+      }
+      time_limit_hours
+      restrictions {
+        min_age
+        time_restriction
+      }
+      reviews {
+        current_rating
+        times_abandoned
+        times_completed
+      }
+      objectives {
+        desc
+        endpoint
+        method
+      }
     }
   }
 `;
@@ -46,16 +98,42 @@ export const deleteQuestApi = /* GraphQL */ `
     $condition: ModelQuestApiConditionInput
   ) {
     deleteQuestApi(input: $input, condition: $condition) {
-      quest_id
-      created_at
-      description
-      latitude
-      longtitude
-      time_limit_hours
-      title
       id
+      category
+      title
+      description
+      location {
+        latitude
+        longitude
+        region
+      }
       createdAt
       updatedAt
+      rewards {
+        xp
+        coins
+        stamina
+        wisdom
+        dexterity
+        perception
+        exploration
+        strength
+      }
+      time_limit_hours
+      restrictions {
+        min_age
+        time_restriction
+      }
+      reviews {
+        current_rating
+        times_abandoned
+        times_completed
+      }
+      objectives {
+        desc
+        endpoint
+        method
+      }
     }
   }
 `;
