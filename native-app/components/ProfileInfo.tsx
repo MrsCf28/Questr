@@ -1,13 +1,13 @@
 import React from 'react'
 import { View, Image, StyleSheet, Text } from 'react-native' 
-
+import {Auth } from "aws-amplify";
 export function ProfileInfo() {
 
     return (
         <View style={styles.container}>
             <Image style={styles.image} source={{uri: 'https://picsum.photos/200/300'}}/> 
             <View>
-                <Text>Name: Placeholder</Text>
+                <Text>Name: {Auth.user.attributes.email}</Text>
                 <Text>Rank: BigDaddy</Text>
                 <Text>XP: 100</Text>
                 <Text>Coins: 10</Text>
@@ -15,7 +15,6 @@ export function ProfileInfo() {
         </View>
     )
 }
-
 const styles = StyleSheet.create({
     container: {
       flex: 2,

@@ -5,7 +5,7 @@ import * as ImagePicker from "expo-image-picker";
 
 export default function EditProfileScreen() {
   const [image, setImage] = useState(null);
-  const [user, setUser] = useState({});
+  
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library

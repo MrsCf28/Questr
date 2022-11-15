@@ -20,7 +20,7 @@ function App() {
 
   const [currentQuest, setCurrentQuest] = useState(null)
   const [allQuests, setAllQuests] = useState([])
-  
+  const [user, setUser] = useState({});
   // useEffect(() => {
   //   fetchAllQuests();
   // }, []);
