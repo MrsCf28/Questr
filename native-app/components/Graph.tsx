@@ -50,7 +50,7 @@ export function Graph() {
               strokeWidth: 4,
             },
           }}
-          data={[1, 0.4, 0.1, 0.8, 0.3, 0.1]}
+          data={[1, 0.6, 0.5, 0.9, 0.7, 0.3]}
         />
       </VictoryChart>
     </View>
