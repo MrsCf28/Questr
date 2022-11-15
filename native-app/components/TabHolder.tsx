@@ -6,6 +6,7 @@ interface tabProp {
 }
 
 export function TabHolder({ setSelectedTab }: tabProp) {
+
   function toggleTab(input: string) {
     setSelectedTab(input);
   }
@@ -51,6 +52,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderWidth: 2,
+    zIndex: 10,
+    elevation: 10,
   },
   text: {
     color: "white",

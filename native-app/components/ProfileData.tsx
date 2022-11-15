@@ -4,9 +4,14 @@ import { StatsScreen } from "./StatsScreen";
 import { HistoryScreen } from "./HistoryScreen";
 import { TabHolder } from "./TabHolder";
 import { ItemsScreen } from "./ItemsScreen";
+import { useEffect } from "react";
 
 export function ProfileData() {
   const [selectedTab, setSelectedTab] = useState<string>("stats");
+
+  useEffect(() => {
+    
+  }, [selectedTab])
 
   return (
     <View style={styles.container}>

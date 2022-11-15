@@ -46,6 +46,48 @@ export default function TabTwoScreen() {
       timeLimit: "2 hour",
       questObjectives: ["find wizard", "play checkers", "win at checkers"],
     },
+    {
+      cordinate: {
+        latitude: 53.5102,
+        longitude: -1.5012,
+      },
+      id: 3,
+      title: "Find the Goblin",
+      category: "hunt",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam aliquam libero quis ipsum fringilla pretium. Cras condimentum augue",
+      rewards: { xp: 50, coins: 20 },
+      timeLimit: "2 hour",
+      questObjectives: ["find wizard", "play checkers", "win at checkers"],
+    },
+    {
+      cordinate: {
+        latitude: 53.7102,
+        longitude: -1.4012,
+      },
+      id: 4,
+      title: "Drink all the Mead",
+      category: "minigame",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam aliquam libero quis ipsum fringilla pretium. Cras condimentum augue",
+      rewards: { xp: 50, coins: 20 },
+      timeLimit: "2 hour",
+      questObjectives: ["find wizard", "play checkers", "win at checkers"],
+    },
+    {
+      cordinate: {
+        latitude: 53.796,
+        longitude: -1.5454,
+      },
+      id: 5,
+      title: "Save the Damsel",
+      category: "adventure",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam aliquam libero quis ipsum fringilla pretium. Cras condimentum augue",
+      rewards: { xp: 100, coins: 10 },
+      timeLimit: "1 hour",
+      questObjectives: ["go to location", "slay dragon", "find gold"],
+    },
   ]);
 
   useEffect(() => {
@@ -85,9 +127,10 @@ export default function TabTwoScreen() {
         showsMyLocationButton={true}>
         <Marker //marker is the pin on the map
           coordinate={currentLocation}
-          anchor={{ x: 0.5, y: 0.5 }}>
+          anchor={{ x: 0.5, y: 0.5 }}
+          style={styles.marker}>
           <View //is where we can style the marker
-            style={{ backgroundColor: "red", borderRadius: 50, padding: 5 }}>
+            style={{ backgroundColor: "red", borderRadius: 50, padding: 2 }}>
             <Image
               style={styles.image}
               source={{ uri: "https://picsum.photos/200/300" }}
@@ -127,9 +170,11 @@ const styles = StyleSheet.create({
     height: Dimensions.get("window").height,
   },
   marker: {
-    width: 200,
-    height: 200,
-    alignItems: "center",
+    width: 50,
+    height: 50,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   button: {
     margin: 20,
@@ -144,8 +189,8 @@ const styles = StyleSheet.create({
     color: "white",
   },
   image: {
-    height: 20,
-    width: 20,
+    height: 30,
+    width: 30,
     borderRadius: 50,
   },
 });

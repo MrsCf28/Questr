@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Pressable, StyleSheet, Text } from 'react-native';
+import { View, Pressable, StyleSheet, Text, Image } from 'react-native';
 import MapView, { Callout, Marker } from "react-native-maps";
 import { useNavigation } from "@react-navigation/native";
 
@@ -11,11 +11,12 @@ export function QuestMarker({quest}) {
         <Marker //marker is the pin on the map
           coordinate={quest.cordinate}
         anchor={{ x: 0.5, y: 0.5 }}
-      style={{backgroundColor: 'blue'}}>
+      style={{flex:1, justifyContent:'center', alignItems: 'center', height: 30, width: 28}}>
         <View>
-          <Text style={{color:'white'}}>{quest.title}</Text>
+        <Image source={require('../assets/images/marker.png')} style={{width:26, height:30 }} />
           </View>
-          <Callout onPress={() => navigation.navigate("AcceptQuest", quest)}>
+          <Callout style={styles.callout}
+          onPress={() => navigation.navigate("AcceptQuest", quest)}>
             <View style={styles.marker}>
               <Text>{quest.title}</Text>
               <View style={styles.container}>
@@ -27,6 +28,7 @@ export function QuestMarker({quest}) {
               </View>
               <Pressable
                 style={styles.button}
+                onPress={() => navigation.navigate("AcceptQuest", quest)}
                 >
                 <Text style={styles.buttonText}>See Details</Text>
               </Pressable>
@@ -64,8 +66,16 @@ const styles = StyleSheet.create({
       borderRadius: 20,
       justifyContent: "center",
       alignItems: "center",
+      zIndex: 3,
+      elevation: 3
     },
     buttonText: {
       color:'white'
+    },
+    callout: {
+      flex: 1,
+      elevation: 1,
+      justifyContent: 'center',
+      alignItems: 'center'
     }
   });
