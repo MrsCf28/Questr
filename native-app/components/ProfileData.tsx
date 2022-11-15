@@ -28,7 +28,7 @@ export function ProfileData() {
 const styles = StyleSheet.create({
   container: {
     flex: 6,
-    alignItems: "flex-start",
+    alignItems: "center",
     justifyContent: "flex-start",
     width: "100%",
   },
