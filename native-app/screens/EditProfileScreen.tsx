@@ -1,13 +1,11 @@
 import React, { useContext, useState } from "react";
 import { Pressable, StyleSheet, TextInput } from "react-native";
 import { Text, View } from "../components/Themed";
-import { CurrentQuest } from "../context/CurrentQuest";
 import * as ImagePicker from "expo-image-picker";
 
 export default function EditProfileScreen() {
   const [image, setImage] = useState(null);
-  const [user, setUser] = useState(null);
-  
+  const [user, setUser] = useState({});
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -17,25 +15,27 @@ export default function EditProfileScreen() {
       aspect: [4, 3],
       quality: 1,
     });
-    console.log(result);
+    
+    setImage(result);
     if (!result.canceled) {
       setImage(result.assets[0].uri);
     }
   };
-  const onChange = () => {};
+
   const submit = () => {
-    return;
+    setUser({ ...user, image: image });
   };
 
   return (
     <View style={styles.container}>
       <TextInput
         placeholder="Name"
-        style={styles.input}></TextInput>
+        style={styles.input}
+        onChangeText={(text) => setUser({ ...user, name: text })}></TextInput>
       <TextInput
         placeholder="Region"
         style={styles.input}
-      onChangeText={(text) => console.log(text)}></TextInput>
+        onChangeText={(text) => setUser({ ...user, region: text })}></TextInput>
       <Pressable
         style={styles.button}
         onPress={() => pickImage()}>
@@ -43,7 +43,7 @@ export default function EditProfileScreen() {
       </Pressable>
       <Pressable
         style={styles.button}
-        onPress={() => submit()}>
+        onPress={submit}>
         <Text style={styles.text}>Submit</Text>
       </Pressable>
     </View>

@@ -1,3 +1,7 @@
 import React from "react";
 
-export const CurrentQuest = React.createContext();
+export const CurrentUser = React.createContext({
+  name: "",
+  region: "",
+  image: "",
+});
