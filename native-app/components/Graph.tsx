@@ -45,8 +45,8 @@ export function Graph() {
           interpolation="linear"
           style={{
             data: {
-              fill: "white",
-              stroke: "green",
+              fill: "''",
+              stroke: "#291403",
               strokeWidth: 4,
             },
           }}
@@ -62,5 +62,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: 'rgba(128,193,255,0.0)',
   },
 });

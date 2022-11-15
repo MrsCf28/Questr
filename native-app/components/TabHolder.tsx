@@ -3,9 +3,10 @@ import { View, Pressable, StyleSheet, Text } from "react-native";
 
 interface tabProp {
   setSelectedTab: Function;
+  selectedTab: string;
 }
 
-export function TabHolder({ setSelectedTab }: tabProp) {
+export function TabHolder({ selectedTab,setSelectedTab }: tabProp) {
 
   function toggleTab(input: string) {
     setSelectedTab(input);
@@ -14,22 +15,22 @@ export function TabHolder({ setSelectedTab }: tabProp) {
   return (
     <View style={styles.container}>
       <Pressable
-        style={styles.button}
+        style={[styles.button, selectedTab === 'history'? styles.active : null]}
         onPress={() => toggleTab("history")}>
         <Text style={styles.text}>History</Text>
       </Pressable>
       <Pressable
-        style={styles.button}
+        style={[styles.button, selectedTab === 'stats' ? styles.active : null]}
         onPress={() => toggleTab("stats")}>
         <Text style={styles.text}>Stats</Text>
       </Pressable>
       <Pressable
-        style={styles.button}
+        style={[styles.button, selectedTab === 'items' ? styles.active : null]}
         onPress={() => toggleTab("items")}>
         <Text style={styles.text}>Items</Text>
       </Pressable>
       <Pressable
-        style={styles.button}
+        style={[styles.button, selectedTab === 'avatar' ? styles.active : null]}
         onPress={() => toggleTab("avatar")}>
         <Text style={styles.text}>Avatar</Text>
       </Pressable>
@@ -39,23 +40,29 @@ export function TabHolder({ setSelectedTab }: tabProp) {
 
 const styles = StyleSheet.create({
   container: {
-    
     flexDirection: "row",
     alignItems: "flex-start",
     justifyContent: "center",
   },
   button: {
-    backgroundColor: "green",
+    backgroundColor: "#545453",
     padding: 10,
-    color: "white",
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    borderWidth: 2,
-    zIndex: 10,
-    elevation: 10,
+    borderWidth: 3,
+    borderColor: '#2e2a27',
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    elevation: 2,
+    zIndex: 2,
   },
   text: {
     color: "white",
   },
+  active: {
+    borderBottomWidth: 3,
+    borderBottomColor: '#8f8f8f',
+    backgroundColor: "#8f8f8f",
+  }
 });

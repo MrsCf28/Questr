@@ -131,7 +131,8 @@ function BottomTabNavigator() {
               />
             </Pressable>
           ),
-        })}
+        })
+        }
       />
       <BottomTab.Screen
         name="TabTwo"

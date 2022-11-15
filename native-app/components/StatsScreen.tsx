@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Image, StyleSheet, Text } from "react-native";
+import { View, ImageBackground, StyleSheet, Text } from "react-native";
 import { Graph } from "./Graph";
 interface tabProp {
   selectedTab: string;
@@ -12,7 +12,9 @@ export function StatsScreen({ selectedTab }: tabProp) {
         styles.container,
         selectedTab === "stats" ? null : styles.hidden,
       ]}>
-      <Graph />
+      <ImageBackground source={require('../assets/images/scroll.png')} resizeMode="contain" style={styles.image}>
+        <Graph />
+      </ImageBackground>
     </View>
   );
 }
@@ -23,12 +25,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: '#8f8f8f',
+    borderWidth: 3,
+    borderColor: '#2e2a27',
+    borderTopWidth: 0,
   },
   image: {
-    height: 150,
-    width: 150,
-    borderRadius: 100,
-    margin: 10,
+    height: '100%',
+    width: '100%',
   },
   hidden: {
     display: "none",

@@ -1,10 +1,11 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import MapView, { Callout, Marker } from "react-native-maps";
 import { StyleSheet, Text, View, Dimensions, Pressable, Image } from "react-native";
 import * as Location from "expo-location"; //library used to get the location from the phone
 import { useNavigation } from "@react-navigation/native";
 import { QuestMarker } from "../components/QuestMarker";
+import { CurrentUser } from "../context/CurrentUser";
 
 export default function TabTwoScreen() {
   const navigation = useNavigation();
@@ -16,6 +17,10 @@ export default function TabTwoScreen() {
     latitudeDelta: 0.01,
     longitudeDelta: 0.01,
   });
+
+  const {currentUser} = useContext(CurrentUser)
+
+  const {image} = currentUser
 
   const [quests, setQuests] = useState([
     {
@@ -133,7 +138,7 @@ export default function TabTwoScreen() {
             style={{ backgroundColor: "red", borderRadius: 50, padding: 2 }}>
             <Image
               style={styles.image}
-              source={{ uri: "https://picsum.photos/200/300" }}
+              source={{uri:image}}
             />
           </View>
         </Marker>

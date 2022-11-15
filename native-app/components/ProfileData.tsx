@@ -5,6 +5,7 @@ import { HistoryScreen } from "./HistoryScreen";
 import { TabHolder } from "./TabHolder";
 import { ItemsScreen } from "./ItemsScreen";
 import { useEffect } from "react";
+import { AvatarScreen } from "../screens/AvatarScreen";
 
 export function ProfileData() {
   const [selectedTab, setSelectedTab] = useState<string>("stats");
@@ -15,10 +16,11 @@ export function ProfileData() {
 
   return (
     <View style={styles.container}>
-      <TabHolder setSelectedTab={setSelectedTab} />
+      <TabHolder selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
       <StatsScreen selectedTab={selectedTab} />
       <HistoryScreen selectedTab={selectedTab} />
       <ItemsScreen selectedTab={selectedTab} />
+      <AvatarScreen selectedTab={selectedTab}/>
     </View>
   );
 }

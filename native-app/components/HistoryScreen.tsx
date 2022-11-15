@@ -111,6 +111,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 7,
     width: "100%",
+    backgroundColor: '#8f8f8f',
+    paddingBottom: 10,
+    borderWidth: 3,
+    borderColor: '#2e2a27',
+    borderTopWidth: 0,
   },
   hidden: {
     display: "none",

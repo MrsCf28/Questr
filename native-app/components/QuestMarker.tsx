@@ -17,6 +17,7 @@ export function QuestMarker({quest}) {
           </View>
           <Callout style={styles.callout}
           onPress={() => navigation.navigate("AcceptQuest", quest)}>
+            
             <View style={styles.marker}>
               <Text>{quest.title}</Text>
               <View style={styles.container}>
