@@ -146,7 +146,7 @@ export const createUserApi = /* GraphQL */ `
       id
       display_name
       image
-      Age
+      age
       quest_history {
         quest_id
         completed_status
@@ -179,7 +179,7 @@ export const updateUserApi = /* GraphQL */ `
       id
       display_name
       image
-      Age
+      age
       quest_history {
         quest_id
         completed_status
@@ -212,7 +212,7 @@ export const deleteUserApi = /* GraphQL */ `
       id
       display_name
       image
-      Age
+      age
       quest_history {
         quest_id
         completed_status
