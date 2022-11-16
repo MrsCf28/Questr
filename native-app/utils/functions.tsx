@@ -9,3 +9,43 @@ export const locationChecker = (questLocation, myLocation, accuracy) => {
         return 'false'
     }
 }
+
+export function formatUserStats({
+	dexterity,
+	exploration,
+	perception,
+	stamina,
+	strength,
+	wisdom,
+}: {
+	stamina: number;
+	wisdom: number;
+	dexterity: number;
+	perception: number;
+	exploration: number;
+	strength: number;
+}) {
+
+	const maxStatOnRadarChart = (Math.max.apply(
+		Math,
+		Object.values({
+			dexterity,
+			exploration,
+			perception,
+			stamina,
+			strength,
+			wisdom,
+		})
+	))*0.9;
+
+	const formattedStats: number[] = [
+		dexterity/maxStatOnRadarChart,
+		exploration/maxStatOnRadarChart,
+		perception/maxStatOnRadarChart,
+		stamina/maxStatOnRadarChart,
+		strength/maxStatOnRadarChart,
+		wisdom/maxStatOnRadarChart,
+	];
+
+	return formattedStats;
+}
