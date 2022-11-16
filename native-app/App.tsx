@@ -8,76 +8,60 @@ import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
 
-
 import { CurrentUser } from "./context/CurrentUser";
 import { getQuestApi, listQuestApis } from "./src/graphql/queries";
 
 import awsExports from "./src/aws-exports";
-import { fetchAllQuests, fetchQuestById } from './utils/questApi';
-import { fetchUser } from './utils/userApi';
+import { fetchAllQuests, fetchQuestById } from "./utils/questApi";
+import { fetchUser } from "./utils/userApi";
 
 Amplify.configure({
-  ...awsExports,
-  Analytics: {
-    disabled: true,
-  },
+	...awsExports,
+	Analytics: {
+		disabled: true,
+	},
 });
 
 function App() {
-    const isLoadingComplete = useCachedResources();
-    const colorScheme = useColorScheme();
+	const isLoadingComplete = useCachedResources();
+	const colorScheme = useColorScheme();
 
-    const [currentUser, setCurrentUser] = useState({
-        user: null,
-        image: "https://picsum.photos/200/300",
-        currentQuest: null,
-    });
-    const [allQuests, setAllQuests] = useState([]);
-    const [id, setId] = useState("1");
+	const [currentUser, setCurrentUser] = useState({
+		user: null,
+		image: "https://picsum.photos/200/300",
+		currentQuest: null,
+	});
+	const [allQuests, setAllQuests] = useState([]);
+	const [id, setId] = useState("1");
 
-    useEffect(() => {
-        //fetchAllQuests();
-        setCurrentUser((currentUser) => {
-            return {
-                ...currentUser,
-                user: Auth.user.attributes.email,
-            };
-        });
+	const [userId, setUserId] = useState("4");
 
-        const [allQuests, setAllQuests] = useState([]);
-        const [id, setId] = useState('3');
-        const [userId, setUserId] = useState('4')
+	useEffect(() => {
+		fetchAllQuests().then((questList) => {
+			setAllQuests(questList);
+		});
+		setCurrentUser((currentUser) => {
+			return {
+				...currentUser,
+				user: Auth.user.attributes.email,
+			};
+		});
+		fetchQuestById(id);
+		fetchUser(userId);
+	}, []);
 
-        useEffect(() => {
-            fetchAllQuests().then(questList => {
-                setAllQuests(questList);
-            });
-            setCurrentUser(currentUser => {
-                return {
-                    ...currentUser,
-                    user: Auth.user.attributes.email,
-                };
-            });
-            fetchQuestById(id);
-            fetchUser(userId);
-        }, []);
-
-        if (!isLoadingComplete) {
-            return null;
-        } else {
-            return (
-                <SafeAreaProvider>
-                    <CurrentUser.Provider
-                        value={{ currentUser, setCurrentUser }}
-                    >
-                        <Navigation colorScheme={colorScheme} />
-                        <StatusBar />
-                    </CurrentUser.Provider>
-                </SafeAreaProvider>
-            );
-        }
-
-    })
+	if (!isLoadingComplete) {
+		return null;
+	} else {
+		return (
+			<SafeAreaProvider>
+				<CurrentUser.Provider value={{ currentUser, setCurrentUser }}>
+					<Navigation colorScheme={colorScheme} />
+					<StatusBar />
+				</CurrentUser.Provider>
+			</SafeAreaProvider>
+		);
+	}
 }
 
 export default withAuthenticator(App);
