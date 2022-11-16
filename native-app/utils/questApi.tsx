@@ -8,7 +8,7 @@ export async function fetchAllQuests() {
             graphqlOperation(listQuestApis)
         );
         const questList = questData.data.listQuestApis.items;
-        console.log(questList);
+        // console.log(questList);
     } catch (err) {
         console.log('ERROR fetching questLists: ', err);
     }
