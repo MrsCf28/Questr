@@ -1,5 +1,5 @@
 import { API, graphqlOperation } from 'aws-amplify';
-import { getQuestApi, listQuestApis } from '../src/graphql/queries';
+import { getQuestApi, listQuestApis, listUserApis } from '../src/graphql/queries';
 
 
 export async function fetchAllQuests() {

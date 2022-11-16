@@ -4,7 +4,8 @@ import { Text, View } from "../components/Themed";
 import * as ImagePicker from "expo-image-picker";
 import { CurrentUser } from "../context/CurrentUser";
 
-export default function EditProfileScreen() {
+export default function EditProfileScreen(props) {
+  const { signedUp, setSignedUp } = props
   const [image, setImage] = useState(null);
   const {currentUser, setCurrentUser} = useContext(CurrentUser)
   // const [imageUri, setImageUri] = useState("notSet");
@@ -34,6 +35,10 @@ export default function EditProfileScreen() {
       {image? <Image style={styles.image} source={{uri: image}}/> : <Image style={styles.image} source={{uri: 'https://picsum.photos/200/300'}}/>}
       <TextInput
         placeholder="Name"
+        style={styles.input}
+        ></TextInput>
+      <TextInput
+        placeholder="Age"
         style={styles.input}
         ></TextInput>
       <TextInput

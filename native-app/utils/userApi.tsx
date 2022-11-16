@@ -2,16 +2,12 @@ import { API, graphqlOperation } from "aws-amplify";
 import { createUserApi } from "../src/graphql/mutations";
 import { getQuestApi, getUserApi, listQuestApis } from "../src/graphql/queries";
 
-export async function fetchUser(id: string) {
-	try {
-		const userData = await API.graphql(
-			graphqlOperation(getUserApi, { id: id })
-		);
-		const userList = userData.data.getUserApi;
-		// console.log(userList, 'user')
-	} catch (err) {
-		console.log("ERROR fetching userLists: ", err);
-	}
+export function fetchUserById(id: string) {
+	return API.graphql(
+		graphqlOperation(getUserApi, { id: id })
+	).then(userData => {
+		return userData.data.getUserApi;
+	});
 }
 
 export async function addUser(newUser:object) {
@@ -23,4 +19,17 @@ export async function addUser(newUser:object) {
 	} catch (err) {
 		console.log("ERROR creating new user: ", err);
 	}
+}
+
+export async function fetchUserIdsPlay() {
+    try {
+        const usersData = await API.graphql(
+            graphqlOperation(listUserApis)
+        );
+        const usersList = usersData.data.listUserApis.items;
+        const userIds = usersList.map((user) => user.id);
+        console.log(userIds, "<< userIds")
+    } catch (err) {
+        console.log('ERROR fetching UserIds: ', err);
+    }
 }
