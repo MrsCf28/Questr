@@ -3,6 +3,7 @@
 input AMPLIFY {
     globalAuthRule: AuthRule = { allow: public }
 } # FOR TESTING ONLY!
+
 schema {
     query: QuestApi
 }
@@ -20,6 +21,24 @@ type QuestApi @model {
     restrictions: Restrictions
     reviews: Reviews
     objectives: [Objectives]
+}
+
+type UserApi @model {
+    id: ID!
+    display_name: String
+    image: String
+    Age: Int!
+    quest_history: [QuestHistory]
+    stats: Rewards
+    preferred_region: [String]
+}
+
+type QuestHistory {
+    quest_id: String!
+    completed_status: String!    
+    start_time: String!
+    end_time: String
+    completion_image: String
 }
 
 type Rewards {

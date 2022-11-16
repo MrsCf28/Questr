@@ -93,3 +93,70 @@ export const listQuestApis = /* GraphQL */ `
     }
   }
 `;
+export const getUserApi = /* GraphQL */ `
+  query GetUserApi($id: ID!) {
+    getUserApi(id: $id) {
+      id
+      display_name
+      image
+      Age
+      quest_history {
+        quest_id
+        completed_status
+        start_time
+        end_time
+        completion_image
+      }
+      stats {
+        xp
+        coins
+        stamina
+        wisdom
+        dexterity
+        perception
+        exploration
+        strength
+      }
+      preferred_region
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listUserApis = /* GraphQL */ `
+  query ListUserApis(
+    $filter: ModelUserApiFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listUserApis(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        display_name
+        image
+        Age
+        quest_history {
+          quest_id
+          completed_status
+          start_time
+          end_time
+          completion_image
+        }
+        stats {
+          xp
+          coins
+          stamina
+          wisdom
+          dexterity
+          perception
+          exploration
+          strength
+        }
+        preferred_region
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;

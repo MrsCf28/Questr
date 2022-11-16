@@ -9,9 +9,9 @@ import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation';
 
 import { CurrentUser } from './context/CurrentUser';
-import { getQuestApi, listQuestApis } from './src/graphql/queries';
 
 import awsExports from './src/aws-exports';
+import { fetchAllQuests, fetchQuestById } from './utils/questApi';
 Amplify.configure({
     ...awsExports,
     Analytics: {
@@ -29,10 +29,12 @@ function App() {
         currentQuest: null,
     });
     const [allQuests, setAllQuests] = useState([]);
-    const [id, setId] = useState('1');
+    const [id, setId] = useState('3');
 
     useEffect(() => {
-        //fetchAllQuests();
+        fetchAllQuests().then(questList => {
+            setAllQuests(questList);
+        });
         setCurrentUser(currentUser => {
             return {
                 ...currentUser,
@@ -41,29 +43,6 @@ function App() {
         });
         fetchQuestById(id);
     }, []);
-
-    async function fetchAllQuests() {
-        try {
-            const questData = await API.graphql(
-                graphqlOperation(listQuestApis)
-            );
-            const questList = questData.data.listQuestApis.items;
-            setAllQuests(questList);
-        } catch (err) {
-            console.log('ERROR fetching questLists: ', err);
-        }
-    }
-
-    async function fetchQuestById(id: string) {
-        try {
-            const trialQuest = await API.graphql(
-                graphqlOperation(getQuestApi, { id: id })
-            );
-            console.log(trialQuest.data.getQuestApi);
-        } catch (err) {
-            console.log('ERROR fetching questById: ', err);
-        }
-    }
 
     if (!isLoadingComplete) {
         return null;
