@@ -1,11 +1,13 @@
+import { useNavigation } from "@react-navigation/native";
 import React, { useContext } from "react";
 import { Pressable, StyleSheet } from "react-native";
 import { Text, View } from "../components/Themed";
 import { CurrentUser } from "../context/CurrentUser";
 
 export default function CurrentQuestScreen() {
+  const navigation = useNavigation();
 
-  const {currentUser} = useContext(CurrentUser)
+  const { currentUser } = useContext(CurrentUser);
 
   return (
     <View style={styles.main}>
@@ -15,16 +17,24 @@ export default function CurrentQuestScreen() {
         <Text>Time Limit: {currentUser.currentQuest.timeLimit}</Text>
       </View>
       <View style={styles.container}>
-        <Text>{currentUser.currentQuest.rewards.coins} coins {currentUser.currentQuest.rewards.xp}XP</Text>
+        <Text>
+          {currentUser.currentQuest.rewards.coins} coins{" "}
+          {currentUser.currentQuest.rewards.xp}XP
+        </Text>
       </View>
       <Text>{currentUser.currentQuest.description}</Text>
       <View style={styles.container}>
-        {currentUser.currentQuest.questObjectives.map((objective:string) => {
-          return <Text key={objective}>{objective}</Text>
+        {currentUser.currentQuest.questObjectives.map((objective: string) => {
+          return <Text key={objective}>{objective}</Text>;
         })}
       </View>
       <View style={styles.buttonContainer}>
-        <Pressable style={styles.button}>
+        <Pressable
+          style={styles.button}
+          onPress={() => {
+            navigation.navigate("CameraPage");
+          }}
+        >
           <Text>Submit Quest Update</Text>
         </Pressable>
         <Pressable style={[styles.button, styles.sos]}>
