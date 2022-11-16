@@ -9,7 +9,7 @@ export function ProfileInfo() {
 
     const {image} = currentUser
 
-    console.log(image)
+    // console.log(image)
 
     return (
         <View style={styles.container}>

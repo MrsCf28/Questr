@@ -22,7 +22,7 @@ export default function AcceptQuestScreen({route}) {
       <Text style={styles.title}>{quest.title}</Text>
       <View style={styles.container}>
         <Text>{quest.category}</Text>
-        <Text>Time Limit: {quest.timeLimit}</Text>
+        <Text>Time Limit: {quest.time_limit_hours} hr</Text>
       </View>
       <View style={styles.container}>
         <Text>{quest.rewards.coins} coins {quest.rewards.xp}XP</Text>
@@ -30,8 +30,8 @@ export default function AcceptQuestScreen({route}) {
       <View style={styles.container}>
         <Text>{quest.description}</Text>
         <View style={styles.container}>
-          {quest.questObjectives.map((objective:string) => {
-            return <Text key={objective}>{objective}</Text>
+          {quest.objectives.map((objective) => {
+            return <Text key={objective.desc}>{objective.desc}</Text>
           })}
         </View>
       </View>
