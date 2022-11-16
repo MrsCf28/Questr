@@ -45,7 +45,7 @@ export function Graph() {
           interpolation="linear"
           style={{
             data: {
-              fill: "''",
+              fill: "none",
               stroke: "#291403",
               strokeWidth: 4,
             },
