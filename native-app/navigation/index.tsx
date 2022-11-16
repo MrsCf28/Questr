@@ -13,7 +13,7 @@ import {
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
 import { ColorSchemeName, Pressable } from "react-native";
-import { useContext } from 'react'
+import { useContext } from "react";
 import { CurrentUser } from "../context/CurrentUser";
 
 import Colors from "../constants/Colors";
@@ -31,6 +31,7 @@ import {
 } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
 import NoQuestScreen from "../screens/NoQuestScreen";
+import CameraPage from "../components/CameraPage";
 
 export default function Navigation({
   colorScheme,
@@ -40,7 +41,8 @@ export default function Navigation({
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
-      theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+      theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+    >
       <RootNavigator />
     </NavigationContainer>
   );
@@ -53,8 +55,7 @@ export default function Navigation({
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
-
-  const {currentUser} = useContext(CurrentUser)
+  const { currentUser } = useContext(CurrentUser);
 
   return (
     <Stack.Navigator>
@@ -71,20 +72,19 @@ function RootNavigator() {
       <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen
           name="CurrentQuest"
-          component={currentUser.currentQuest ? CurrentQuestScreen : NoQuestScreen}
+          component={
+            currentUser.currentQuest ? CurrentQuestScreen : NoQuestScreen
+          }
         />
       </Stack.Group>
       <Stack.Group screenOptions={{ presentation: "modal" }}>
-        <Stack.Screen
-          name="AcceptQuest"
-          component={AcceptQuestScreen}
-        />
+        <Stack.Screen name="CameraPage" component={CameraPage} />
       </Stack.Group>
       <Stack.Group screenOptions={{ presentation: "modal" }}>
-        <Stack.Screen
-          name="EditProfile"
-          component={EditProfileScreen}
-        />
+        <Stack.Screen name="AcceptQuest" component={AcceptQuestScreen} />
+      </Stack.Group>
+      <Stack.Group screenOptions={{ presentation: "modal" }}>
+        <Stack.Screen name="EditProfile" component={EditProfileScreen} />
       </Stack.Group>
     </Stack.Navigator>
   );
@@ -96,7 +96,6 @@ function RootNavigator() {
  */
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
-
 function BottomTabNavigator() {
   const colorScheme = useColorScheme();
 
@@ -105,24 +104,21 @@ function BottomTabNavigator() {
       initialRouteName="TabOne"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
-      }}>
+      }}
+    >
       <BottomTab.Screen
         name="TabOne"
         component={TabOneScreen}
         options={({ navigation }: RootTabScreenProps<"TabOne">) => ({
           title: "Profile",
-          tabBarIcon: ({ color }) => (
-            <TabBarIcon
-              name="code"
-              color={color}
-            />
-          ),
+          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
           headerRight: () => (
             <Pressable
               onPress={() => navigation.navigate("CurrentQuest")}
               style={({ pressed }) => ({
                 opacity: pressed ? 0.5 : 1,
-              })}>
+              })}
+            >
               <FontAwesome
                 name="info-circle"
                 size={25}
@@ -131,20 +127,14 @@ function BottomTabNavigator() {
               />
             </Pressable>
           ),
-        })
-        }
+        })}
       />
       <BottomTab.Screen
         name="TabTwo"
         component={TabTwoScreen}
         options={{
           title: "Map",
-          tabBarIcon: ({ color }) => (
-            <TabBarIcon
-              name="code"
-              color={color}
-            />
-          ),
+          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
         }}
       />
     </BottomTab.Navigator>
@@ -158,11 +148,5 @@ function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>["name"];
   color: string;
 }) {
-  return (
-    <FontAwesome
-      size={30}
-      style={{ marginBottom: -3 }}
-      {...props}
-    />
-  );
+  return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
 }
