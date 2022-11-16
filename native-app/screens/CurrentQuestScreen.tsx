@@ -92,35 +92,37 @@ export default function CurrentQuestScreen() {
   return (
     <View style={styles.main}>
       <ImageBackground source={require('../assets/images/stones.jpg')} style={styles.container} resizeMode="cover">
-        <ImageBackground source={require('../assets/images/bigScroll.png')} resizeMode="cover" style={styles.holder}>
-          <Text style={styles.title}>{currentUser.currentQuest.title}</Text>
-          <View style={styles.container}>
-            <Text>{currentUser.currentQuest.category}</Text>
-            <Text>Time Limit: {currentUser.currentQuest.time_limit_hours} hrs</Text>
-          </View>
-          <View style={styles.container}>
-            <Text>
-              {currentUser.currentQuest.rewards.coins} coins{" "}
-              {currentUser.currentQuest.rewards.xp}XP
-            </Text>
-          </View>
-          <View style={styles.container}>
-            <Text>{currentUser.currentQuest.description}</Text>
-          </View>
-          <View style={styles.container}>
-            {currentUser.currentQuest.objectives.map((objective) => {
-              return <Text key={objective.desc}>{objective.desc}</Text>;
-            })}
-          </View>
-          <View style={styles.buttonContainer}>
-            {arrived==='false'? <Text style={styles.redText}>I don't think we are there yet, move around and check again</Text> : <Text style={styles.blueText}>Adventurer press the button when you have arrived</Text>}
-            <Pressable onPress={updateLocation} style={[styles.button, styles.sos, ]}>
-              <Text style={styles.buttonText}>Check Location</Text>
-            </Pressable>
-            <Pressable style={[styles.button, styles.cancel]} onPress={cancelQuest}>
-              <Text style={styles.buttonText}>Cancel Quest</Text>
-            </Pressable>
-          </View>
+        <ImageBackground source={require('../assets/images/bigScroll.png')} resizeMode="cover" style={styles.scroll}>
+          <View style={styles.holder}>
+            <Text style={styles.title}>{currentUser.currentQuest.title}</Text>
+            <View style={styles.container}>
+              <Text>{currentUser.currentQuest.category}</Text>
+              <Text>Time Limit: {currentUser.currentQuest.time_limit_hours} hrs</Text>
+            </View>
+            <View style={styles.container}>
+              <Text>
+                {currentUser.currentQuest.rewards.coins} coins{" "}
+                {currentUser.currentQuest.rewards.xp}XP
+              </Text>
+            </View>
+            <View style={styles.container}>
+              <Text>{currentUser.currentQuest.description}</Text>
+            </View>
+            <View style={styles.container}>
+              {currentUser.currentQuest.objectives.map((objective) => {
+                return <Text key={objective.desc}>{objective.desc}</Text>;
+              })}
+            </View>
+            <View style={styles.buttonContainer}>
+              {arrived==='false'? <Text style={styles.redText}>I don't think we are there yet, move around and check again</Text> : <Text style={styles.blueText}>Adventurer press the button when you have arrived</Text>}
+              <Pressable onPress={updateLocation} style={[styles.button, styles.sos, ]}>
+                <Text style={styles.buttonText}>Check Location</Text>
+              </Pressable>
+              <Pressable style={[styles.button, styles.cancel]} onPress={cancelQuest}>
+                <Text style={styles.buttonText}>Cancel Quest</Text>
+              </Pressable>
+            </View>
+          </View> 
         </ImageBackground>
       </ImageBackground>
     </View>
@@ -141,12 +143,20 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  scroll: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%'
+  },
   holder: {
     flex: 1,
     paddingHorizontal: 40,
     paddingVertical: 120,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    width: '100%',
+    backgroundColor: 'none'
   },
   title: {
     fontSize: 20,
