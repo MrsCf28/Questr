@@ -13,7 +13,7 @@ import { getQuestApi, listQuestApis } from "./src/graphql/queries";
 
 import awsExports from "./src/aws-exports";
 import { fetchAllQuests, fetchQuestById } from "./utils/questApi";
-import { fetchUser } from "./utils/userApi";
+import { addUser, fetchUser } from "./utils/userApi";
 
 Amplify.configure({
 	...awsExports,
@@ -35,6 +35,7 @@ function App() {
 	const [id, setId] = useState("1");
 
 	const [userId, setUserId] = useState("4");
+	const [newUser, setNewUser] = useState({ id: "24", age: 22 });
 
 	useEffect(() => {
 		fetchAllQuests().then((questList) => {
@@ -48,6 +49,7 @@ function App() {
 		});
 		fetchQuestById(id);
 		fetchUser(userId);
+		addUser(newUser);
 	}, []);
 
 	if (!isLoadingComplete) {
