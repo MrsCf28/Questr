@@ -3,7 +3,7 @@ import { StatusBar } from "expo-status-bar";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Amplify, API, graphqlOperation, Auth } from "aws-amplify";
 import { withAuthenticator } from "aws-amplify-react-native";
-
+import { ImageBackground, StyleSheet } from 'react-native'
 import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
@@ -58,8 +58,8 @@ function App() {
 		return (
 			<SafeAreaProvider>
 				<CurrentUser.Provider value={{ currentUser, setCurrentUser }}>
-					<Navigation colorScheme={colorScheme} />
-					<StatusBar />
+						<Navigation colorScheme={colorScheme} />
+						<StatusBar />
 				</CurrentUser.Provider>
 			</SafeAreaProvider>
 		);

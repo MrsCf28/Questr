@@ -14,11 +14,13 @@ export function ProfileInfo() {
     return (
         <View style={styles.container}>
             <Image style={styles.image} source={{uri:image}}/> 
-            <View>
+            <View style={styles.holder}>
                 <Text style={styles.title}>{currentUser.user}</Text>
                 <Text style={styles.text}>Rank: BigDaddy</Text>
-                <Text style={styles.text}>XP: 100</Text>
-                <Text style={styles.text}>Coins: 10</Text>
+                <View style={styles.flexRow}>
+                  <Text style={styles.text}>XP: 100      </Text>
+                  <Text style={styles.text}>Coins: 10</Text>
+                </View>
             </View>
         </View>
     )
@@ -26,17 +28,27 @@ export function ProfileInfo() {
 const styles = StyleSheet.create({
     container: {
       flex: 2,
-      flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'center',
       paddingTop: 20,
     },
+    holder: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: 10,
+      paddingHorizontal: 50,
+      borderWidth: 3,
+      borderColor: '#d4d4d4',
+      backgroundColor: '#292936',
+      borderRadius: 20,
+    },
     title: {
       fontWeight: 'bold',
-      color: '#291403'
+      color: '#d4d4d4'
     },
     text : {
-      color: '#291403'
+      color: '#d4d4d4'
     },
     separator: {
       marginVertical: 30,
@@ -49,7 +61,12 @@ const styles = StyleSheet.create({
         borderRadius: 100,
         margin: 10,
         borderWidth: 5,
-        borderColor: '#291403',
+        borderColor: '#d4d4d4',
+    },
+    flexRow: {
+      flexDirection: 'row',
+      justifyContent: 'space-evenly',
+      flex: 1
     }
   });
   

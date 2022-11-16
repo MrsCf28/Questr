@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useContext, useEffect, useState } from "react";
-import { Pressable, StyleSheet } from "react-native";
+import { Pressable, StyleSheet, ImageBackground } from "react-native";
 import { Text, View } from "../components/Themed";
 import { CurrentUser } from "../context/CurrentUser";
 import * as Location from "expo-location";
@@ -91,50 +91,62 @@ export default function CurrentQuestScreen() {
   )
   return (
     <View style={styles.main}>
-      <Text style={styles.title}>{currentUser.currentQuest.title}</Text>
-      <View style={styles.container}>
-        <Text>{currentUser.currentQuest.category}</Text>
-        <Text>Time Limit: {currentUser.currentQuest.time_limit_hours} hrs</Text>
-      </View>
-      <View style={styles.container}>
-        <Text>
-          {currentUser.currentQuest.rewards.coins} coins{" "}
-          {currentUser.currentQuest.rewards.xp}XP
-        </Text>
-      </View>
-      <View style={styles.container}>
-        <Text>{currentUser.currentQuest.description}</Text>
-      </View>
-      <View style={styles.container}>
-        {currentUser.currentQuest.objectives.map((objective) => {
-          return <Text key={objective.desc}>{objective.desc}</Text>;
-        })}
-      </View>
-      <View style={styles.buttonContainer}>
-        {arrived==='false'? <Text style={styles.redText}>I don't think we are there yet, move around and check again</Text> : <Text style={styles.blueText}>Adventurer press the button when you have arrived</Text>}
-        <Pressable onPress={updateLocation} style={[styles.button, styles.sos, ]}>
-          <Text style={styles.buttonText}>Check Location</Text>
-        </Pressable>
-        <Pressable style={[styles.button, styles.cancel]} onPress={cancelQuest}>
-          <Text style={styles.buttonText}>Cancel Quest</Text>
-        </Pressable>
-      </View>
+      <ImageBackground source={require('../assets/images/stones.jpg')} style={styles.container} resizeMode="cover">
+        <ImageBackground source={require('../assets/images/bigScroll.png')} resizeMode="cover" style={styles.holder}>
+          <Text style={styles.title}>{currentUser.currentQuest.title}</Text>
+          <View style={styles.container}>
+            <Text>{currentUser.currentQuest.category}</Text>
+            <Text>Time Limit: {currentUser.currentQuest.time_limit_hours} hrs</Text>
+          </View>
+          <View style={styles.container}>
+            <Text>
+              {currentUser.currentQuest.rewards.coins} coins{" "}
+              {currentUser.currentQuest.rewards.xp}XP
+            </Text>
+          </View>
+          <View style={styles.container}>
+            <Text>{currentUser.currentQuest.description}</Text>
+          </View>
+          <View style={styles.container}>
+            {currentUser.currentQuest.objectives.map((objective) => {
+              return <Text key={objective.desc}>{objective.desc}</Text>;
+            })}
+          </View>
+          <View style={styles.buttonContainer}>
+            {arrived==='false'? <Text style={styles.redText}>I don't think we are there yet, move around and check again</Text> : <Text style={styles.blueText}>Adventurer press the button when you have arrived</Text>}
+            <Pressable onPress={updateLocation} style={[styles.button, styles.sos, ]}>
+              <Text style={styles.buttonText}>Check Location</Text>
+            </Pressable>
+            <Pressable style={[styles.button, styles.cancel]} onPress={cancelQuest}>
+              <Text style={styles.buttonText}>Cancel Quest</Text>
+            </Pressable>
+          </View>
+        </ImageBackground>
+      </ImageBackground>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
-    alignItems: "flex-start",
-    justifyContent: "flex-start",
+    flex: 1,
+    alignItems: 'center',
     width: "100%",
+    justifyContent: 'center',
+    backgroundColor: 'none'
   },
   main: {
     flex: 1,
-    padding: 10,
+    width: "100%",
     alignItems: "center",
-    justifyContent: "flex-start",
+    justifyContent: "center",
+  },
+  holder: {
+    flex: 1,
+    paddingHorizontal: 40,
+    paddingVertical: 120,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   title: {
     fontSize: 20,
@@ -143,6 +155,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     alignItems: "center",
     width: "100%",
+    backgroundColor: 'none'
   },
   button: {
     margin: 20,
@@ -167,6 +180,6 @@ const styles = StyleSheet.create({
     color: 'red'
   },
   blueText: {
-    color: 'blue'
+    color: 'blue',
   }
 });

@@ -20,7 +20,7 @@ export function Graph() {
         polar
         theme={VictoryTheme.material}
         domain={{ y: [0, 1] }}
-        padding={60}>
+        padding={80}>
         <VictoryPolarAxis
           dependentAxis
           style={{
