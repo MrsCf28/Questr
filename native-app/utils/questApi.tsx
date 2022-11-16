@@ -8,6 +8,7 @@ export async function fetchAllQuests() {
             graphqlOperation(listQuestApis)
         );
         const questList = questData.data.listQuestApis.items;
+        console.log(questList);
     } catch (err) {
         console.log('ERROR fetching questLists: ', err);
     }
@@ -18,8 +19,8 @@ export async function fetchQuestById(id: string) {
         const trialQuest = await API.graphql(
             graphqlOperation(getQuestApi, { id: id })
         );
-        console.log(trialQuest.data.getQuestApi);
-        console.log(trialQuest.data.getQuestApi.objectives[0].endpoint);
+        // console.log(trialQuest.data.getQuestApi);
+        // console.log(trialQuest.data.getQuestApi.objectives[0].endpoint);
     } catch (err) {
         console.log('ERROR fetching questById: ', err);
     }

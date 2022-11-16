@@ -12,6 +12,7 @@ import { CurrentUser } from './context/CurrentUser';
 
 import awsExports from './src/aws-exports';
 import { fetchAllQuests, fetchQuestById } from './utils/questApi';
+import { fetchUser } from './utils/userApi';
 Amplify.configure({
     ...awsExports,
     Analytics: {
@@ -30,6 +31,7 @@ function App() {
     });
     const [allQuests, setAllQuests] = useState([]);
     const [id, setId] = useState('3');
+    const [userId, setUserId] = useState('4')
 
     useEffect(() => {
         fetchAllQuests().then(questList => {
@@ -42,6 +44,7 @@ function App() {
             };
         });
         fetchQuestById(id);
+        fetchUser(userId);
     }, []);
 
     if (!isLoadingComplete) {
