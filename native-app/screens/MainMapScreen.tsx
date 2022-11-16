@@ -1,14 +1,14 @@
 import React from "react";
 import { useState, useEffect, useContext } from "react";
-import MapView, { Callout, Marker } from "react-native-maps";
+import MapView, { Marker } from "react-native-maps";
 import { StyleSheet, Text, View, Dimensions, Pressable, Image } from "react-native";
 import * as Location from "expo-location"; //library used to get the location from the phone
-import { useNavigation } from "@react-navigation/native";
 import { QuestMarker } from "../components/QuestMarker";
 import { CurrentUser } from "../context/CurrentUser";
+import CurrentQuestMap from "../components/CurrentQuestMap";
+import AllQuestMap from "../components/AllQuestsMap";
 
 export default function TabTwoScreen() {
-  const navigation = useNavigation();
   const [location, setLocation] = useState({});
   const [loading, setLoading] = useState(true);
   const [currentLocation, setCurrentLocation] = useState({
@@ -20,7 +20,7 @@ export default function TabTwoScreen() {
 
   const {currentUser} = useContext(CurrentUser)
 
-  const {image} = currentUser
+  const {image, currentQuest} = currentUser
 
   const [quests, setQuests] = useState([
     {
@@ -124,35 +124,12 @@ export default function TabTwoScreen() {
     );
   }
 
-  return (
-    <View style={styles.container}>
-      <MapView //mapview loads the base map
-        style={styles.map}
-        initialRegion={currentLocation}
-        showsMyLocationButton={true}>
-        <Marker //marker is the pin on the map
-          coordinate={currentLocation}
-          anchor={{ x: 0.5, y: 0.5 }}
-          style={styles.marker}>
-          <View //is where we can style the marker
-            style={{ backgroundColor: "red", borderRadius: 50, padding: 2 }}>
-            <Image
-              style={styles.image}
-              source={{uri:image}}
-            />
-          </View>
-        </Marker>
-        {quests.map((quest) => {
-          return (
-            <QuestMarker
-              key={quest.id}
-              quest={quest}
-            />
-          );
-        })}
-      </MapView>
-    </View>
-  );
+  if(currentQuest === null) {
+    return <AllQuestMap currentLocation ={currentLocation} image={image} quests={quests}/>
+  } else if (currentQuest !== null) {
+    return <CurrentQuestMap currentLocation ={currentLocation} image={image} currentQuest={currentQuest}/>
+  }
+  else return <Text>Something Went Wrong</Text>
 }
 
 const styles = StyleSheet.create({
