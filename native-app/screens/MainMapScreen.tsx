@@ -22,78 +22,78 @@ export default function TabTwoScreen() {
 
   const {image, currentQuest} = currentUser
 
-  const [quests, setQuests] = useState([
-    {
-      cordinate: {
-        latitude: 53.7958,
-        longitude: -1.54535,
-      },
-      id: 1,
-      title: "Slay a dragon",
-      category: "adventure",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam aliquam libero quis ipsum fringilla pretium. Cras condimentum augue",
-      rewards: { xp: 100, coins: 10 },
-      timeLimit: "1 hour",
-      questObjectives: ["go to location", "slay dragon", "find gold"],
-    },
-    {
-      cordinate: {
-        latitude: 53.7102,
-        longitude: -1.5012,
-      },
-      id: 2,
-      title: "Defeat the wizard at checkers",
-      category: "minigame",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam aliquam libero quis ipsum fringilla pretium. Cras condimentum augue",
-      rewards: { xp: 50, coins: 20 },
-      timeLimit: "2 hour",
-      questObjectives: ["find wizard", "play checkers", "win at checkers"],
-    },
-    {
-      cordinate: {
-        latitude: 53.5102,
-        longitude: -1.5012,
-      },
-      id: 3,
-      title: "Find the Goblin",
-      category: "hunt",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam aliquam libero quis ipsum fringilla pretium. Cras condimentum augue",
-      rewards: { xp: 50, coins: 20 },
-      timeLimit: "2 hour",
-      questObjectives: ["find wizard", "play checkers", "win at checkers"],
-    },
-    {
-      cordinate: {
-        latitude: 53.7102,
-        longitude: -1.4012,
-      },
-      id: 4,
-      title: "Drink all the Mead",
-      category: "minigame",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam aliquam libero quis ipsum fringilla pretium. Cras condimentum augue",
-      rewards: { xp: 50, coins: 20 },
-      timeLimit: "2 hour",
-      questObjectives: ["find wizard", "play checkers", "win at checkers"],
-    },
-    {
-      cordinate: {
-        latitude: 53.796,
-        longitude: -1.5454,
-      },
-      id: 5,
-      title: "Save the Damsel",
-      category: "adventure",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam aliquam libero quis ipsum fringilla pretium. Cras condimentum augue",
-      rewards: { xp: 100, coins: 10 },
-      timeLimit: "1 hour",
-      questObjectives: ["go to location", "slay dragon", "find gold"],
-    },
-  ]);
+  // const [quests, setQuests] = useState([
+  //   {
+  //     cordinate: {
+  //       latitude: 53.7958,
+  //       longitude: -1.54535,
+  //     },
+  //     id: 1,
+  //     title: "Slay a dragon",
+  //     category: "adventure",
+  //     description:
+  //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam aliquam libero quis ipsum fringilla pretium. Cras condimentum augue",
+  //     rewards: { xp: 100, coins: 10 },
+  //     timeLimit: "1 hour",
+  //     questObjectives: ["go to location", "slay dragon", "find gold"],
+  //   },
+  //   {
+  //     cordinate: {
+  //       latitude: 53.7102,
+  //       longitude: -1.5012,
+  //     },
+  //     id: 2,
+  //     title: "Defeat the wizard at checkers",
+  //     category: "minigame",
+  //     description:
+  //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam aliquam libero quis ipsum fringilla pretium. Cras condimentum augue",
+  //     rewards: { xp: 50, coins: 20 },
+  //     timeLimit: "2 hour",
+  //     questObjectives: ["find wizard", "play checkers", "win at checkers"],
+  //   },
+  //   {
+  //     cordinate: {
+  //       latitude: 53.5102,
+  //       longitude: -1.5012,
+  //     },
+  //     id: 3,
+  //     title: "Find the Goblin",
+  //     category: "hunt",
+  //     description:
+  //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam aliquam libero quis ipsum fringilla pretium. Cras condimentum augue",
+  //     rewards: { xp: 50, coins: 20 },
+  //     timeLimit: "2 hour",
+  //     questObjectives: ["find wizard", "play checkers", "win at checkers"],
+  //   },
+  //   {
+  //     cordinate: {
+  //       latitude: 53.7102,
+  //       longitude: -1.4012,
+  //     },
+  //     id: 4,
+  //     title: "Drink all the Mead",
+  //     category: "minigame",
+  //     description:
+  //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam aliquam libero quis ipsum fringilla pretium. Cras condimentum augue",
+  //     rewards: { xp: 50, coins: 20 },
+  //     timeLimit: "2 hour",
+  //     questObjectives: ["find wizard", "play checkers", "win at checkers"],
+  //   },
+  //   {
+  //     cordinate: {
+  //       latitude: 53.796,
+  //       longitude: -1.5454,
+  //     },
+  //     id: 5,
+  //     title: "Save the Damsel",
+  //     category: "adventure",
+  //     description:
+  //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam aliquam libero quis ipsum fringilla pretium. Cras condimentum augue",
+  //     rewards: { xp: 100, coins: 10 },
+  //     timeLimit: "1 hour",
+  //     questObjectives: ["go to location", "slay dragon", "find gold"],
+  //   },
+  // ]);
 
   useEffect(() => {
     (async () => {
@@ -125,7 +125,7 @@ export default function TabTwoScreen() {
   }
 
   if(currentQuest === null) {
-    return <AllQuestMap currentLocation ={currentLocation} image={image} quests={quests}/>
+    return <AllQuestMap currentLocation ={currentLocation} image={image}/>
   } else if (currentQuest !== null) {
     return <CurrentQuestMap currentLocation ={currentLocation} image={image} currentQuest={currentQuest}/>
   }

@@ -1,15 +1,21 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { View, Pressable, StyleSheet, Text, Image } from 'react-native';
 import MapView, { Callout, Marker } from "react-native-maps";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
 export function QuestMarker({quest}) {
 
     const navigation = useNavigation()
 
+    const {latitude, longitude} = quest.location
+
+    useEffect(() => {
+      console.log(quest)
+    }, [])
+
     return (
         <Marker //marker is the pin on the map
-          coordinate={quest.cordinate}
+          coordinate={{latitude, longitude}}
         anchor={{ x: 0.5, y: 0.5 }}
       style={{flex:1, justifyContent:'center', alignItems: 'center', height: 30, width: 28}}>
         <View>
@@ -22,7 +28,7 @@ export function QuestMarker({quest}) {
               <Text>{quest.title}</Text>
               <View style={styles.container}>
                 <Text>{quest.category}</Text>
-                <Text> Time Limit: {quest.timeLimit}</Text>
+                <Text> Time Limit: {quest.time_limit_hours} hrs</Text>
               </View>
               <View style={styles.container}>
                 <Text> {quest.rewards.coins} coins {quest.rewards.xp} XP</Text>

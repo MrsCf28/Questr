@@ -9,6 +9,7 @@ export async function fetchAllQuests() {
         );
         const questList = questData.data.listQuestApis.items;
         // console.log(questList);
+        return questList
     } catch (err) {
         console.log('ERROR fetching questLists: ', err);
     }

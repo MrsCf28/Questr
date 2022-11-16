@@ -7,9 +7,11 @@ export function CurrentQuestMarker({quest}) {
 
     const navigation = useNavigation()
 
+    const {latitude, longitude} = quest.location
+
     return (
         <Marker //marker is the pin on the map
-          coordinate={quest.cordinate}
+          coordinate={{latitude, longitude}}
         anchor={{ x: 0.5, y: 0.5 }}
       style={{flex:1, justifyContent:'center', alignItems: 'center', height: 30, width: 28}}>
         <View>

@@ -5,6 +5,9 @@ import { StyleSheet, Text, View, Dimensions, Pressable, Image } from "react-nati
 import { CurrentQuestMarker } from "./CurrentQuestMarker";
 
 export default function CurrentQuestMap ({currentLocation, currentQuest, image}) {
+
+    const {latitude, longitude} = currentQuest.location
+
     return (
         <View style={styles.container}>
         <MapView
@@ -27,7 +30,7 @@ export default function CurrentQuestMap ({currentLocation, currentQuest, image})
                 quest={currentQuest}
               />
                     <Polyline
-          coordinates={[currentLocation, currentQuest.cordinate]}
+          coordinates={[currentLocation, {latitude, longitude}]}
           strokeColor={"#000"}
           strokeWidth={3}
           lineDashPattern={[1]}

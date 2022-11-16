@@ -1,14 +1,23 @@
-import React from "react";
+import React, { useEffect, useState} from "react";
 import MapView, { Callout, Marker, Polyline } from "react-native-maps";
 import { StyleSheet, Text, View, Dimensions, Pressable, Image } from "react-native";
-
+import { fetchAllQuests } from "../utils/questApi";
 import { QuestMarker } from "./QuestMarker";
 
-export default function AllQuestMap ({currentLocation, quests, image}) {
+export default function AllQuestMap ({currentLocation, image}) {
 
+  const [allQuests, setAllQuests] = useState([]);
+  const [isLoading, setIsLoading] = useState(true)
   
+  useEffect(() => {
+    setIsLoading(true)
+    fetchAllQuests().then((questList) => {
+			setAllQuests(questList);
+      setIsLoading(false)
+		});
+  }, [])
 
-
+  if(isLoading) return <Text>Loading</Text>
   return (
     <View style={styles.container}>
       <MapView //mapview loads the base map
@@ -27,7 +36,8 @@ export default function AllQuestMap ({currentLocation, quests, image}) {
             />
           </View>
         </Marker>
-           {quests.map((quest) => {
+           {allQuests.map((quest) => {
+
           return (
             <QuestMarker
               key={quest.id}
