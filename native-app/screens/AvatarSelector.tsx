@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import { View, StyleSheet, Text, ImageBackground, Image, Pressable } from "react-native";
-import { ChangeAvatar } from "../components/ChangeAvatar";
-import { ProfileController } from "../components/ProfileController";
+import { useNavigation } from "@react-navigation/native";
+
 interface tabProp {
   selectedTab: string;
 }
@@ -10,7 +10,7 @@ const Knight = require('../assets/images/knight.png')
 const DeathKnight = require('../assets/images/deathknight.png')
 
 export function AvatarSelector({route}) {
-
+    const navigation = useNavigation();
     const setMyAvatar = route.params
 
     const [avatarArray, setAvatarArray] = useState([Knight, DeathKnight])
@@ -26,6 +26,7 @@ export function AvatarSelector({route}) {
 
     function select() {
         setMyAvatar(avatarArray[currentAvatar])
+        navigation.goBack()
     }
 
   return (

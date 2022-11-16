@@ -3,10 +3,16 @@ import { Pressable, StyleSheet, TextInput, Image } from "react-native";
 import { Text, View } from "../components/Themed";
 import * as ImagePicker from "expo-image-picker";
 import { CurrentUser } from "../context/CurrentUser";
+import { useNavigation } from "@react-navigation/native";
 
 export default function EditProfileScreen() {
-  const [image, setImage] = useState(null);
+  
   const {currentUser, setCurrentUser} = useContext(CurrentUser)
+  const {image} = currentUser
+  const [newImage, setNewImage] = useState(image);
+  const navigation = useNavigation();
+
+  console.log(image)
 
   async function pickImage() {
       const result = await ImagePicker.launchImageLibraryAsync({
@@ -18,17 +24,18 @@ export default function EditProfileScreen() {
         });
     
         if (!result.canceled) {
-          setImage(result.assets[0].uri);
+          setNewImage(result.assets[0].uri);
         }
   }
   
   const submit = () => {
-    setCurrentUser({...currentUser, image:image});
+    setCurrentUser({...currentUser, image:newImage});
+    navigation.goBack()
   };
 
   return (
     <View style={styles.container}>
-      {image? <Image style={styles.image} source={{uri: image}}/> : <Image style={styles.image} source={{uri: 'https://picsum.photos/200/300'}}/>}
+      <Image style={styles.image} source={{uri: newImage}}/>
       <TextInput
         placeholder="Name"
         style={styles.input}

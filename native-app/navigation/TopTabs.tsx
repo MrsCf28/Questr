@@ -18,7 +18,8 @@ export function TopTabs() {
 
     return (
     <SafeAreaView style={{flex:1, backgroundColor: 'white'}}>
-      <TopTab.Navigator>
+      <TopTab.Navigator
+      initialRouteName="Home">
         <TopTab.Screen name="Home" component={TabOneScreen} />
         <TopTab.Screen name="History" component={HistoryScreen} />
         <TopTab.Screen name="CurrentQuest" component={currentUser.currentQuest ? CurrentQuestScreen : NoQuestScreen} />
