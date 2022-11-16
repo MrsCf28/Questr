@@ -7,7 +7,11 @@ import { CurrentUser } from "../context/CurrentUser";
 export default function CurrentQuestScreen() {
   const navigation = useNavigation();
 
-  const { currentUser } = useContext(CurrentUser);
+  const { currentUser, setCurrentUser } = useContext(CurrentUser);
+
+  const cancelQuest = () => {
+    setCurrentUser({ ...currentUser, currentQuest: null });
+  };
 
   return (
     <View style={styles.main}>
@@ -40,7 +44,7 @@ export default function CurrentQuestScreen() {
         <Pressable style={[styles.button, styles.sos]}>
           <Text>SOS</Text>
         </Pressable>
-        <Pressable style={[styles.button, styles.cancel]}>
+        <Pressable style={[styles.button, styles.cancel]} onPress={cancelQuest}>
           <Text>Cancel Quest</Text>
         </Pressable>
       </View>
