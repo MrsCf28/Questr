@@ -32,6 +32,7 @@ import {
 import LinkingConfiguration from "./LinkingConfiguration";
 import NoQuestScreen from "../screens/NoQuestScreen";
 import CameraPage from "../components/CameraPage";
+import { TopTabs } from "./TopTabs";
 
 export default function Navigation({
   colorScheme,
@@ -77,7 +78,9 @@ function RootNavigator() {
           }
         />
       </Stack.Group>
-      <Stack.Group screenOptions={{ presentation: "modal" }}>
+      <Stack.Group screenOptions={{ 
+        presentation: "modal",
+        headerShown: false }}>
         <Stack.Screen name="CameraPage" component={CameraPage} />
       </Stack.Group>
       <Stack.Group screenOptions={{ presentation: "modal" }}>
@@ -104,11 +107,12 @@ function BottomTabNavigator() {
       initialRouteName="TabOne"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
+        headerShown: false
       }}
     >
       <BottomTab.Screen
         name="TabOne"
-        component={TabOneScreen}
+        component={TopTabs}
         options={({ navigation }: RootTabScreenProps<"TabOne">) => ({
           title: "Profile",
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,

@@ -7,7 +7,7 @@ import { CurrentUser } from "../context/CurrentUser";
 export default function AcceptQuestScreen({route}) {
   const navigation = useNavigation();
 
-  const {currentUser, setCurrentUser}:object = useContext(CurrentUser)
+  const {currentUser, setCurrentUser} = useContext(CurrentUser)
 
   const quest = route.params
 

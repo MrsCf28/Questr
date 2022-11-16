@@ -13,6 +13,7 @@ export default function CurrentQuestScreen() {
     setCurrentUser({ ...currentUser, currentQuest: null });
   };
 
+
   return (
     <View style={styles.main}>
       <Text style={styles.title}>{currentUser.currentQuest.title}</Text>
