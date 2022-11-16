@@ -18,7 +18,7 @@ export default function CurrentQuestScreen() {
       <Text style={styles.title}>{currentUser.currentQuest.title}</Text>
       <View style={styles.container}>
         <Text>{currentUser.currentQuest.category}</Text>
-        <Text>Time Limit: {currentUser.currentQuest.timeLimit}</Text>
+        <Text>Time Limit: {currentUser.currentQuest.time_limit_hours} hrs</Text>
       </View>
       <View style={styles.container}>
         <Text>
@@ -28,8 +28,8 @@ export default function CurrentQuestScreen() {
       </View>
       <Text>{currentUser.currentQuest.description}</Text>
       <View style={styles.container}>
-        {currentUser.currentQuest.questObjectives.map((objective: string) => {
-          return <Text key={objective}>{objective}</Text>;
+        {currentUser.currentQuest.objectives.map((objective) => {
+          return <Text key={objective.desc}>{objective.desc}</Text>;
         })}
       </View>
       <View style={styles.buttonContainer}>
