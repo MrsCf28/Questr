@@ -9,10 +9,6 @@ export function QuestMarker({quest}) {
 
     const {latitude, longitude} = quest.location
 
-    useEffect(() => {
-      console.log(quest)
-    }, [])
-
     return (
         <Marker //marker is the pin on the map
           coordinate={{latitude, longitude}}
