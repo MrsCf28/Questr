@@ -3,12 +3,15 @@ import { StyleSheet, Text, View, Button, TextInput } from "react-native";
 import { Camera, CameraType } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
 import CameraButton from "./CameraButton";
+import postClarifai from "../clarifaiAPI/callAPI";
+import * as FileSystem from "expo-file-system";
 
 export default function CameraPage() {
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState({});
   const [type, setType] = useState(Camera.Constants.Type.back);
   const [flash, setFlash] = useState(Camera.Constants.FlashMode.off);
+  const [predict, setPredict] = useState({});
   const cameraRef = useRef(null);
 
   useEffect(() => {
@@ -20,14 +23,16 @@ export default function CameraPage() {
   }, []);
 
   const takePicture = async () => {
-    console.log(CameraType);
     if (cameraRef) {
       try {
         const data = await cameraRef.current.takePictureAsync();
-        console.log(data);
-        setImage(data.uri);
+        const base64Img = await FileSystem.readAsStringAsync(data.uri, {
+          encoding: "base64",
+        });
+        await postClarifai(base64Img, predict, setPredict);
+        console.log(predict, "--- in the component");
       } catch (err) {
-        console.log(err);
+        console.log("takePicture", err);
       }
     }
   };
