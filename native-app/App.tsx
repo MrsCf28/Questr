@@ -31,16 +31,12 @@ function App() {
 		image: "https://picsum.photos/200/300",
 		currentQuest: null,
 	});
-	// const [allQuests, setAllQuests] = useState([]);
 	const [id, setId] = useState("1");
 
 	const [userId, setUserId] = useState("4");
 	const [newUser, setNewUser] = useState({ id: "24", age: 22 });
 
 	useEffect(() => {
-		// fetchAllQuests().then((questList) => {
-		// 	setAllQuests(questList);
-		// });
 		setCurrentUser((currentUser) => {
 			return {
 				...currentUser,
