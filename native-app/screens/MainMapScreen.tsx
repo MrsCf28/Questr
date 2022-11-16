@@ -34,8 +34,8 @@ export default function TabTwoScreen() {
         setCurrentLocation({
           latitude: location.coords.latitude,
           longitude: location.coords.longitude,
-          latitudeDelta: 0.01,
-          longitudeDelta: 0.01,
+          latitudeDelta: 0.05,
+          longitudeDelta: 0.05,
         });
       }
 
@@ -64,42 +64,5 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
-  },
-  map: {
-    width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height,
-  },
-  marker: {
-    width: 50,
-    height: 50,
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  button: {
-    margin: 20,
-    width: "80%",
-    backgroundColor: "blue",
-    padding: 10,
-    borderRadius: 20,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  buttonText: {
-    color: "white",
-  },
-  image: {
-    height: 30,
-    width: 30,
-    borderRadius: 50,
   },
 });

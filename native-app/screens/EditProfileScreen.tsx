@@ -7,8 +7,6 @@ import { CurrentUser } from "../context/CurrentUser";
 export default function EditProfileScreen() {
   const [image, setImage] = useState(null);
   const {currentUser, setCurrentUser} = useContext(CurrentUser)
-  // const [imageUri, setImageUri] = useState("notSet");
-  // const [image64, setImage64] = useState(null);
 
   async function pickImage() {
       const result = await ImagePicker.launchImageLibraryAsync({
@@ -24,7 +22,6 @@ export default function EditProfileScreen() {
         }
   }
   
-
   const submit = () => {
     setCurrentUser({...currentUser, image:image});
   };

@@ -13,7 +13,7 @@ export default function AcceptQuestScreen({route}) {
 
   function acceptQuest() {
     setCurrentUser({...currentUser, currentQuest: quest})
-    navigation.navigate('TabOne', {screen:'CurrentQuest'})
+    navigation.navigate('TabTwo')
   }
 
   return (
@@ -90,12 +90,14 @@ export default function AcceptQuestScreen({route}) {
     button: {
       margin: 20,
       width: "80%",
-      backgroundColor: "green",
+      borderColor: '#7a7877',
+      backgroundColor: '#014c54',
       padding: 10,
       color: "white",
       borderRadius: 20,
       justifyContent: "center",
       alignItems: "center",
+      borderWidth: 3
     },
     buttonText: {
       color: "white",

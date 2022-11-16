@@ -23,6 +23,7 @@ export default function CurrentQuestScreen() {
 
   const cancelQuest = () => {
     setCurrentUser({ ...currentUser, currentQuest: null });
+    navigation.navigate('TabTwo')
   };
 
   useEffect(() => {
@@ -170,18 +171,17 @@ const styles = StyleSheet.create({
   button: {
     margin: 20,
     width: "80%",
-    backgroundColor: "green",
+    borderColor: '#7a7877',
+    backgroundColor: '#014c54',
+    borderWidth: 3,
     padding: 10,
     color: "white",
     borderRadius: 20,
     justifyContent: "center",
     alignItems: "center",
   },
-  sos: {
-    backgroundColor: "green",
-  },
   cancel: {
-    backgroundColor: "blue",
+    backgroundColor: "#4a040c",
   },
   buttonText: {
     color: "white",

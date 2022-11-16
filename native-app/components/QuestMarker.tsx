@@ -13,11 +13,12 @@ export function QuestMarker({quest}) {
         <Marker //marker is the pin on the map
           coordinate={{latitude, longitude}}
         anchor={{ x: 0.5, y: 0.5 }}
-      style={{flex:1, justifyContent:'center', alignItems: 'center', height: 30, width: 28}}>
+      style={{flex:1, justifyContent:'center', alignItems: 'center', height: 30, width: 28}}
+      onPress={() => navigation.navigate("AcceptQuest", quest)}>
         <View>
         <Image source={require('../assets/images/marker.png')} style={{width:26, height:30 }} />
           </View>
-          <Callout style={styles.callout}
+          {/* <Callout style={styles.callout}
           onPress={() => navigation.navigate("AcceptQuest", quest)}>
             
             <View style={styles.marker}>
@@ -36,7 +37,7 @@ export function QuestMarker({quest}) {
                 <Text style={styles.buttonText}>See Details</Text>
               </Pressable>
             </View>
-          </Callout>
+          </Callout> */}
         </Marker>
     )
 }

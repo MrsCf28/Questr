@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { Amplify, API, graphqlOperation, Auth } from "aws-amplify";
+import { Amplify, Auth } from "aws-amplify";
 import { withAuthenticator } from "aws-amplify-react-native";
-import { ImageBackground, StyleSheet } from 'react-native'
 import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
 
 import { CurrentUser } from "./context/CurrentUser";
-import { getQuestApi, listQuestApis } from "./src/graphql/queries";
 
 import awsExports from "./src/aws-exports";
-import { fetchAllQuests, fetchQuestById } from "./utils/questApi";
+import { fetchQuestById } from "./utils/questApi";
 import { addUser, fetchUser } from "./utils/userApi";
 
 Amplify.configure({
