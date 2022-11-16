@@ -20,20 +20,26 @@ Amplify.configure({
 });
 
 function App() {
+    const isLoadingComplete = useCachedResources();
+    const colorScheme = useColorScheme();
 
-  const isLoadingComplete = useCachedResources();
-  const colorScheme = useColorScheme(); 
-
-    const [currentUser, setCurrentUser] = useState({user:null, image:'https://picsum.photos/200/300', currentQuest: null})
+    const [currentUser, setCurrentUser] = useState({
+        user: null,
+        image: 'https://picsum.photos/200/300',
+        currentQuest: null,
+    });
     const [allQuests, setAllQuests] = useState([]);
-
+    const [id, setId] = useState('1');
 
     useEffect(() => {
         //fetchAllQuests();
         setCurrentUser(currentUser => {
-          return {...currentUser, user: Auth.user.attributes.email}
-        })
-        fetchQuestById();
+            return {
+                ...currentUser,
+                user: Auth.user.attributes.email,
+            };
+        });
+        fetchQuestById(id);
     }, []);
 
     async function fetchAllQuests() {
@@ -48,15 +54,15 @@ function App() {
         }
     }
 
-    async function fetchQuestById() {
-      try {
-        const trialQuest = await API.graphql(
-          graphqlOperation(getQuestApi, {id:"3"})
-        );
-        console.log(trialQuest.data.getQuestApi)
-      } catch (err) {
-        console.log('ERROR fetching questById: ', err);
-    }
+    async function fetchQuestById(id: string) {
+        try {
+            const trialQuest = await API.graphql(
+                graphqlOperation(getQuestApi, { id: id })
+            );
+            console.log(trialQuest.data.getQuestApi);
+        } catch (err) {
+            console.log('ERROR fetching questById: ', err);
+        }
     }
 
     if (!isLoadingComplete) {

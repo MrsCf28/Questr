@@ -52,6 +52,6 @@ type Location {
 
 type Objectives {
     desc: String
-    endpoint: String
+    endpoint: [String]
     method: String
 }
