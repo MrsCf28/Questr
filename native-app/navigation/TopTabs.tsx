@@ -6,6 +6,7 @@ import TabOneScreen from '../screens/ProfilePage';
 import CurrentQuestScreen from '../screens/CurrentQuestScreen';
 import NoQuestScreen from '../screens/NoQuestScreen';
 import { CurrentUser } from '../context/CurrentUser';
+import { HistoryScreen } from '../components/HistoryScreen';
 
 const TopTab = createMaterialTopTabNavigator();
 
@@ -19,7 +20,7 @@ export function TopTabs() {
     <SafeAreaView style={{flex:1, backgroundColor: 'white'}}>
       <TopTab.Navigator>
         <TopTab.Screen name="Home" component={TabOneScreen} />
-        <TopTab.Screen name="History" component={TabOneScreen} />
+        <TopTab.Screen name="History" component={HistoryScreen} />
         <TopTab.Screen name="CurrentQuest" component={currentUser.currentQuest ? CurrentQuestScreen : NoQuestScreen} />
       </TopTab.Navigator>
       <StatusBar />

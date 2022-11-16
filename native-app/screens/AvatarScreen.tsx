@@ -9,7 +9,6 @@ export function AvatarScreen({ selectedTab }: tabProp) {
     <View
       style={[
         styles.container,
-        selectedTab === "avatar" ? null : styles.hidden,
       ]}>
         <ImageBackground style={styles.image} source={require('../assets/images/knight.png')}>
           <View>

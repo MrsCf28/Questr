@@ -13,7 +13,8 @@ export default function AcceptQuestScreen({route}) {
 
   function acceptQuest() {
     setCurrentUser({...currentUser, currentQuest: quest})
-    navigation.navigate("CurrentQuest")
+    // navigation.navigate("CurrentQuest")
+    navigation.navigate('TabOne', {screen:'CurrentQuest'})
   }
 
   return (

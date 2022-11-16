@@ -70,14 +70,6 @@ function RootNavigator() {
         component={NotFoundScreen}
         options={{ title: "Oops!" }}
       />
-      <Stack.Group screenOptions={{ presentation: "modal" }}>
-        <Stack.Screen
-          name="CurrentQuest"
-          component={
-            currentUser.currentQuest ? CurrentQuestScreen : NoQuestScreen
-          }
-        />
-      </Stack.Group>
       <Stack.Group screenOptions={{ 
         presentation: "modal",
         headerShown: false }}>

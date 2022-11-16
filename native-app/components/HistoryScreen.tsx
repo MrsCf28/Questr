@@ -96,7 +96,6 @@ export function HistoryScreen({ selectedTab }: tabProp) {
     <View
       style={[
         styles.container,
-        selectedTab === "history" ? null : styles.hidden,
       ]}>
       <ScrollView style={styles.scrollableArea}>
         {completedQuests.map((quest) => {
