@@ -34,7 +34,7 @@ function App() {
     const [id, setId] = useState(Auth.user.attributes.sub);
     const [userId, setUserId] = useState('4');
     const [newUser, setNewUser] = useState({ id: '24', age: 22 });
-    const [signedUp, setSignedUp] = useState(false);
+    const [signedUp, setSignedUp] = useState(true);
 
 
     useEffect(() => {
@@ -60,11 +60,7 @@ function App() {
                   <SignedUp.Provider
                   value={{ signedUp, setSignedUp }}
                   >
-                    {signedUp ? (
-                        <Navigation colorScheme={colorScheme} />
-                    ) : (
-                        <EditProfileScreen />
-                    )}
+                        <Navigation signedUp={signedUp} colorScheme={colorScheme} />
                     <StatusBar />
                     </SignedUp.Provider>
                 </CurrentUser.Provider>
