@@ -36,7 +36,7 @@ function App() {
     const [id, setId] = useState(Auth.user.attributes.sub);
     const [userId, setUserId] = useState('4');
     const [newUser, setNewUser] = useState({ id: '24', age: 22 });
-    const [signedUp, setSignedUp] = useState(true);
+    const [signedUp, setSignedUp] = useState(false);
 
     useEffect(() => {
         fetchUserById(id).then(user => {

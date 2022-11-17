@@ -12,6 +12,7 @@ import { Float } from "react-native/Libraries/Types/CodegenTypes";
 type Quest = {
   latitude: Float,
   longitude: Float,
+  region: String
 }
 
 export default function TabTwoScreen() {
@@ -26,7 +27,7 @@ export default function TabTwoScreen() {
 
   const {currentUser} = useContext(CurrentUser)
 
-  const currentQuest: Quest = { latitude: 53.80129139918636, longitude: -1.548085642328802 }
+  const currentQuest: Quest = { latitude: 53.80129139918636, longitude: -1.548085642328802, region: "Leeds" }
   const image = currentUser.image
 
   useEffect(() => {

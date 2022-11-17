@@ -17,6 +17,9 @@ type User = {
     age: number;
     preferred_region: Array<string>;
     image: string;
+    current_quest_id: string;
+    quest_history: Array<object>;
+    avatar_uri: string;
 };
 
 export default function EditProfileScreen() {
@@ -31,7 +34,6 @@ export default function EditProfileScreen() {
 
     useEffect(() => {
         displayImage = <Image style={styles.image} source={{ uri: currentUser.image }} />
-        handleSubmit();
     }, [imagePicked])
 
     async function pickImage() {
@@ -60,11 +62,17 @@ export default function EditProfileScreen() {
                 age: currentUser.age,
                 preferred_region: currentUser.preferred_region,
                 image: currentUser.image,
+                current_quest_id: currentUser.current_quest_id,
+                quest_history: currentUser.quest_id,
+                avatar_uri: currentUser.avatar_uri,
             };
             patchUser(updatedUser).catch((err: any) => {
                 console.log('error in patch user', err);
             });
         } else {
+            currentUser.avatar_uri = "../assets/images/knight.png"
+            currentUser.current_quest_id = "0";
+            currentUser.quest_history = [];
             addUser(currentUser);
             setSignedUp(true);
         }
