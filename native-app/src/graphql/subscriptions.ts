@@ -128,3 +128,99 @@ export const onDeleteQuestApi = /* GraphQL */ `
     }
   }
 `;
+export const onCreateUserApi = /* GraphQL */ `
+  subscription OnCreateUserApi($filter: ModelSubscriptionUserApiFilterInput) {
+    onCreateUserApi(filter: $filter) {
+      id
+      display_name
+      image
+      age
+      current_quest_id
+      avatar_uri
+      quest_history {
+        quest_id
+        completed_status
+        start_time
+        end_time
+        completion_image
+      }
+      stats {
+        xp
+        coins
+        stamina
+        wisdom
+        dexterity
+        perception
+        exploration
+        strength
+      }
+      preferred_region
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateUserApi = /* GraphQL */ `
+  subscription OnUpdateUserApi($filter: ModelSubscriptionUserApiFilterInput) {
+    onUpdateUserApi(filter: $filter) {
+      id
+      display_name
+      image
+      age
+      current_quest_id
+      avatar_uri
+      quest_history {
+        quest_id
+        completed_status
+        start_time
+        end_time
+        completion_image
+      }
+      stats {
+        xp
+        coins
+        stamina
+        wisdom
+        dexterity
+        perception
+        exploration
+        strength
+      }
+      preferred_region
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteUserApi = /* GraphQL */ `
+  subscription OnDeleteUserApi($filter: ModelSubscriptionUserApiFilterInput) {
+    onDeleteUserApi(filter: $filter) {
+      id
+      display_name
+      image
+      age
+      current_quest_id
+      avatar_uri
+      quest_history {
+        quest_id
+        completed_status
+        start_time
+        end_time
+        completion_image
+      }
+      stats {
+        xp
+        coins
+        stamina
+        wisdom
+        dexterity
+        perception
+        exploration
+        strength
+      }
+      preferred_region
+      createdAt
+      updatedAt
+    }
+  }
+`;

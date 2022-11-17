@@ -1,57 +1,81 @@
 # This "input" configures a global authorization rule to enable public access to
 # all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
 input AMPLIFY {
-    globalAuthRule: AuthRule = { allow: public }
+	globalAuthRule: AuthRule = { allow: public }
 } # FOR TESTING ONLY!
 schema {
-    query: QuestApi
+	query: Query
+}
+type Query {
+	questApi: QuestApi
+	userApi: UserApi
 }
 
 type QuestApi @model {
-    id: ID!
-    category: String!
-    title: String!
-    description: String!
-    location: Location
-    createdAt: String!
-    updatedAt: String!
-    rewards: Rewards
-    time_limit_hours: Int!
-    restrictions: Restrictions
-    reviews: Reviews
-    objectives: [Objectives]
+	id: ID!
+	category: String!
+	title: String!
+	description: String!
+	location: Location
+	createdAt: String!
+	updatedAt: String!
+	rewards: Rewards
+	time_limit_hours: Int!
+	restrictions: Restrictions
+	reviews: Reviews
+	objectives: [Objectives]
+}
+
+type UserApi @model {
+	id: ID!
+	display_name: String
+	image: String
+	age: Int!
+	current_quest_id: String!
+	avatar_uri: String
+	quest_history: [QuestHistory]
+	stats: Rewards
+	preferred_region: [String]
+}
+
+type QuestHistory {
+	quest_id: String!
+	completed_status: String!
+	start_time: String!
+	end_time: String
+	completion_image: String
 }
 
 type Rewards {
-    xp: Int!
-    coins: Int!
-    stamina: Int!
-    wisdom: Int!
-    dexterity: Int!
-    perception: Int!
-    exploration: Int!
-    strength: Int!
+	xp: Int!
+	coins: Int!
+	stamina: Int!
+	wisdom: Int!
+	dexterity: Int!
+	perception: Int!
+	exploration: Int!
+	strength: Int!
 }
 
 type Restrictions {
-    min_age: Int!
-    time_restriction: String!
+	min_age: Int!
+	time_restriction: String!
 }
 
 type Reviews {
-    current_rating: Int!
-    times_abandoned: Int!
-    times_completed: Int!
+	current_rating: Int!
+	times_abandoned: Int!
+	times_completed: Int!
 }
 
 type Location {
-    latitude: Float!
-    longitude: Float!
-    region: String!
+	latitude: Float!
+	longitude: Float!
+	region: String!
 }
 
 type Objectives {
-    desc: String
-    endpoint: [String]
-    method: String
+	desc: String
+	endpoint: [String]
+	method: String
 }

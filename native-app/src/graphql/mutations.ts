@@ -137,3 +137,108 @@ export const deleteQuestApi = /* GraphQL */ `
     }
   }
 `;
+export const createUserApi = /* GraphQL */ `
+  mutation CreateUserApi(
+    $input: CreateUserApiInput!
+    $condition: ModelUserApiConditionInput
+  ) {
+    createUserApi(input: $input, condition: $condition) {
+      id
+      display_name
+      image
+      age
+      current_quest_id
+      avatar_uri
+      quest_history {
+        quest_id
+        completed_status
+        start_time
+        end_time
+        completion_image
+      }
+      stats {
+        xp
+        coins
+        stamina
+        wisdom
+        dexterity
+        perception
+        exploration
+        strength
+      }
+      preferred_region
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateUserApi = /* GraphQL */ `
+  mutation UpdateUserApi(
+    $input: UpdateUserApiInput!
+    $condition: ModelUserApiConditionInput
+  ) {
+    updateUserApi(input: $input, condition: $condition) {
+      id
+      display_name
+      image
+      age
+      current_quest_id
+      avatar_uri
+      quest_history {
+        quest_id
+        completed_status
+        start_time
+        end_time
+        completion_image
+      }
+      stats {
+        xp
+        coins
+        stamina
+        wisdom
+        dexterity
+        perception
+        exploration
+        strength
+      }
+      preferred_region
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteUserApi = /* GraphQL */ `
+  mutation DeleteUserApi(
+    $input: DeleteUserApiInput!
+    $condition: ModelUserApiConditionInput
+  ) {
+    deleteUserApi(input: $input, condition: $condition) {
+      id
+      display_name
+      image
+      age
+      current_quest_id
+      avatar_uri
+      quest_history {
+        quest_id
+        completed_status
+        start_time
+        end_time
+        completion_image
+      }
+      stats {
+        xp
+        coins
+        stamina
+        wisdom
+        dexterity
+        perception
+        exploration
+        strength
+      }
+      preferred_region
+      createdAt
+      updatedAt
+    }
+  }
+`;

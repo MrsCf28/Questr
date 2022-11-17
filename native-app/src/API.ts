@@ -47,7 +47,7 @@ export type ReviewsInput = {
 
 export type ObjectivesInput = {
   desc?: string | null,
-  endpoint?: string | null,
+  endpoint?: Array< string | null > | null,
   method?: string | null,
 };
 
@@ -166,7 +166,7 @@ export type Reviews = {
 export type Objectives = {
   __typename: "Objectives",
   desc?: string | null,
-  endpoint?: string | null,
+  endpoint?: Array< string | null > | null,
   method?: string | null,
 };
 
@@ -186,6 +186,78 @@ export type UpdateQuestApiInput = {
 };
 
 export type DeleteQuestApiInput = {
+  id: string,
+};
+
+export type CreateUserApiInput = {
+  id?: string | null,
+  display_name?: string | null,
+  image?: string | null,
+  age: number,
+  current_quest_id: string,
+  avatar_uri?: string | null,
+  quest_history?: Array< QuestHistoryInput | null > | null,
+  stats?: RewardsInput | null,
+  preferred_region?: Array< string | null > | null,
+};
+
+export type QuestHistoryInput = {
+  quest_id: string,
+  completed_status: string,
+  start_time: string,
+  end_time?: string | null,
+  completion_image?: string | null,
+};
+
+export type ModelUserApiConditionInput = {
+  display_name?: ModelStringInput | null,
+  image?: ModelStringInput | null,
+  age?: ModelIntInput | null,
+  current_quest_id?: ModelStringInput | null,
+  avatar_uri?: ModelStringInput | null,
+  preferred_region?: ModelStringInput | null,
+  and?: Array< ModelUserApiConditionInput | null > | null,
+  or?: Array< ModelUserApiConditionInput | null > | null,
+  not?: ModelUserApiConditionInput | null,
+};
+
+export type UserApi = {
+  __typename: "UserApi",
+  id: string,
+  display_name?: string | null,
+  image?: string | null,
+  age: number,
+  current_quest_id: string,
+  avatar_uri?: string | null,
+  quest_history?:  Array<QuestHistory | null > | null,
+  stats?: Rewards | null,
+  preferred_region?: Array< string | null > | null,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type QuestHistory = {
+  __typename: "QuestHistory",
+  quest_id: string,
+  completed_status: string,
+  start_time: string,
+  end_time?: string | null,
+  completion_image?: string | null,
+};
+
+export type UpdateUserApiInput = {
+  id: string,
+  display_name?: string | null,
+  image?: string | null,
+  age?: number | null,
+  current_quest_id?: string | null,
+  avatar_uri?: string | null,
+  quest_history?: Array< QuestHistoryInput | null > | null,
+  stats?: RewardsInput | null,
+  preferred_region?: Array< string | null > | null,
+};
+
+export type DeleteUserApiInput = {
   id: string,
 };
 
@@ -221,6 +293,25 @@ export type ModelIDInput = {
 export type ModelQuestApiConnection = {
   __typename: "ModelQuestApiConnection",
   items:  Array<QuestApi | null >,
+  nextToken?: string | null,
+};
+
+export type ModelUserApiFilterInput = {
+  id?: ModelIDInput | null,
+  display_name?: ModelStringInput | null,
+  image?: ModelStringInput | null,
+  age?: ModelIntInput | null,
+  current_quest_id?: ModelStringInput | null,
+  avatar_uri?: ModelStringInput | null,
+  preferred_region?: ModelStringInput | null,
+  and?: Array< ModelUserApiFilterInput | null > | null,
+  or?: Array< ModelUserApiFilterInput | null > | null,
+  not?: ModelUserApiFilterInput | null,
+};
+
+export type ModelUserApiConnection = {
+  __typename: "ModelUserApiConnection",
+  items:  Array<UserApi | null >,
   nextToken?: string | null,
 };
 
@@ -278,6 +369,18 @@ export type ModelSubscriptionIntInput = {
   notIn?: Array< number | null > | null,
 };
 
+export type ModelSubscriptionUserApiFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  display_name?: ModelSubscriptionStringInput | null,
+  image?: ModelSubscriptionStringInput | null,
+  age?: ModelSubscriptionIntInput | null,
+  current_quest_id?: ModelSubscriptionStringInput | null,
+  avatar_uri?: ModelSubscriptionStringInput | null,
+  preferred_region?: ModelSubscriptionStringInput | null,
+  and?: Array< ModelSubscriptionUserApiFilterInput | null > | null,
+  or?: Array< ModelSubscriptionUserApiFilterInput | null > | null,
+};
+
 export type CreateQuestApiMutationVariables = {
   input: CreateQuestApiInput,
   condition?: ModelQuestApiConditionInput | null,
@@ -324,7 +427,7 @@ export type CreateQuestApiMutation = {
     objectives?:  Array< {
       __typename: "Objectives",
       desc?: string | null,
-      endpoint?: string | null,
+      endpoint?: Array< string | null > | null,
       method?: string | null,
     } | null > | null,
   } | null,
@@ -376,7 +479,7 @@ export type UpdateQuestApiMutation = {
     objectives?:  Array< {
       __typename: "Objectives",
       desc?: string | null,
-      endpoint?: string | null,
+      endpoint?: Array< string | null > | null,
       method?: string | null,
     } | null > | null,
   } | null,
@@ -428,9 +531,207 @@ export type DeleteQuestApiMutation = {
     objectives?:  Array< {
       __typename: "Objectives",
       desc?: string | null,
-      endpoint?: string | null,
+      endpoint?: Array< string | null > | null,
       method?: string | null,
     } | null > | null,
+  } | null,
+};
+
+export type CreateUserApiMutationVariables = {
+  input: CreateUserApiInput,
+  condition?: ModelUserApiConditionInput | null,
+};
+
+export type CreateUserApiMutation = {
+  createUserApi?:  {
+    __typename: "UserApi",
+    id: string,
+    display_name?: string | null,
+    image?: string | null,
+    age: number,
+    current_quest_id: string,
+    avatar_uri?: string | null,
+    quest_history?:  Array< {
+      __typename: "QuestHistory",
+      quest_id: string,
+      completed_status: string,
+      start_time: string,
+      end_time?: string | null,
+      completion_image?: string | null,
+    } | null > | null,
+    stats?:  {
+      __typename: "Rewards",
+      xp: number,
+      coins: number,
+      stamina: number,
+      wisdom: number,
+      dexterity: number,
+      perception: number,
+      exploration: number,
+      strength: number,
+    } | null,
+    preferred_region?: Array< string | null > | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateUserApiMutationVariables = {
+  input: UpdateUserApiInput,
+  condition?: ModelUserApiConditionInput | null,
+};
+
+export type UpdateUserApiMutation = {
+  updateUserApi?:  {
+    __typename: "UserApi",
+    id: string,
+    display_name?: string | null,
+    image?: string | null,
+    age: number,
+    current_quest_id: string,
+    avatar_uri?: string | null,
+    quest_history?:  Array< {
+      __typename: "QuestHistory",
+      quest_id: string,
+      completed_status: string,
+      start_time: string,
+      end_time?: string | null,
+      completion_image?: string | null,
+    } | null > | null,
+    stats?:  {
+      __typename: "Rewards",
+      xp: number,
+      coins: number,
+      stamina: number,
+      wisdom: number,
+      dexterity: number,
+      perception: number,
+      exploration: number,
+      strength: number,
+    } | null,
+    preferred_region?: Array< string | null > | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteUserApiMutationVariables = {
+  input: DeleteUserApiInput,
+  condition?: ModelUserApiConditionInput | null,
+};
+
+export type DeleteUserApiMutation = {
+  deleteUserApi?:  {
+    __typename: "UserApi",
+    id: string,
+    display_name?: string | null,
+    image?: string | null,
+    age: number,
+    current_quest_id: string,
+    avatar_uri?: string | null,
+    quest_history?:  Array< {
+      __typename: "QuestHistory",
+      quest_id: string,
+      completed_status: string,
+      start_time: string,
+      end_time?: string | null,
+      completion_image?: string | null,
+    } | null > | null,
+    stats?:  {
+      __typename: "Rewards",
+      xp: number,
+      coins: number,
+      stamina: number,
+      wisdom: number,
+      dexterity: number,
+      perception: number,
+      exploration: number,
+      strength: number,
+    } | null,
+    preferred_region?: Array< string | null > | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type QuestApiQuery = {
+  questApi?:  {
+    __typename: "QuestApi",
+    id: string,
+    category: string,
+    title: string,
+    description: string,
+    location?:  {
+      __typename: "Location",
+      latitude: number,
+      longitude: number,
+      region: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    rewards?:  {
+      __typename: "Rewards",
+      xp: number,
+      coins: number,
+      stamina: number,
+      wisdom: number,
+      dexterity: number,
+      perception: number,
+      exploration: number,
+      strength: number,
+    } | null,
+    time_limit_hours: number,
+    restrictions?:  {
+      __typename: "Restrictions",
+      min_age: number,
+      time_restriction: string,
+    } | null,
+    reviews?:  {
+      __typename: "Reviews",
+      current_rating: number,
+      times_abandoned: number,
+      times_completed: number,
+    } | null,
+    objectives?:  Array< {
+      __typename: "Objectives",
+      desc?: string | null,
+      endpoint?: Array< string | null > | null,
+      method?: string | null,
+    } | null > | null,
+  } | null,
+};
+
+export type UserApiQuery = {
+  userApi?:  {
+    __typename: "UserApi",
+    id: string,
+    display_name?: string | null,
+    image?: string | null,
+    age: number,
+    current_quest_id: string,
+    avatar_uri?: string | null,
+    quest_history?:  Array< {
+      __typename: "QuestHistory",
+      quest_id: string,
+      completed_status: string,
+      start_time: string,
+      end_time?: string | null,
+      completion_image?: string | null,
+    } | null > | null,
+    stats?:  {
+      __typename: "Rewards",
+      xp: number,
+      coins: number,
+      stamina: number,
+      wisdom: number,
+      dexterity: number,
+      perception: number,
+      exploration: number,
+      strength: number,
+    } | null,
+    preferred_region?: Array< string | null > | null,
+    createdAt: string,
+    updatedAt: string,
   } | null,
 };
 
@@ -479,7 +780,7 @@ export type GetQuestApiQuery = {
     objectives?:  Array< {
       __typename: "Objectives",
       desc?: string | null,
-      endpoint?: string | null,
+      endpoint?: Array< string | null > | null,
       method?: string | null,
     } | null > | null,
   } | null,
@@ -534,9 +835,91 @@ export type ListQuestApisQuery = {
       objectives?:  Array< {
         __typename: "Objectives",
         desc?: string | null,
-        endpoint?: string | null,
+        endpoint?: Array< string | null > | null,
         method?: string | null,
       } | null > | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetUserApiQueryVariables = {
+  id: string,
+};
+
+export type GetUserApiQuery = {
+  getUserApi?:  {
+    __typename: "UserApi",
+    id: string,
+    display_name?: string | null,
+    image?: string | null,
+    age: number,
+    current_quest_id: string,
+    avatar_uri?: string | null,
+    quest_history?:  Array< {
+      __typename: "QuestHistory",
+      quest_id: string,
+      completed_status: string,
+      start_time: string,
+      end_time?: string | null,
+      completion_image?: string | null,
+    } | null > | null,
+    stats?:  {
+      __typename: "Rewards",
+      xp: number,
+      coins: number,
+      stamina: number,
+      wisdom: number,
+      dexterity: number,
+      perception: number,
+      exploration: number,
+      strength: number,
+    } | null,
+    preferred_region?: Array< string | null > | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListUserApisQueryVariables = {
+  filter?: ModelUserApiFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListUserApisQuery = {
+  listUserApis?:  {
+    __typename: "ModelUserApiConnection",
+    items:  Array< {
+      __typename: "UserApi",
+      id: string,
+      display_name?: string | null,
+      image?: string | null,
+      age: number,
+      current_quest_id: string,
+      avatar_uri?: string | null,
+      quest_history?:  Array< {
+        __typename: "QuestHistory",
+        quest_id: string,
+        completed_status: string,
+        start_time: string,
+        end_time?: string | null,
+        completion_image?: string | null,
+      } | null > | null,
+      stats?:  {
+        __typename: "Rewards",
+        xp: number,
+        coins: number,
+        stamina: number,
+        wisdom: number,
+        dexterity: number,
+        perception: number,
+        exploration: number,
+        strength: number,
+      } | null,
+      preferred_region?: Array< string | null > | null,
+      createdAt: string,
+      updatedAt: string,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -587,7 +970,7 @@ export type OnCreateQuestApiSubscription = {
     objectives?:  Array< {
       __typename: "Objectives",
       desc?: string | null,
-      endpoint?: string | null,
+      endpoint?: Array< string | null > | null,
       method?: string | null,
     } | null > | null,
   } | null,
@@ -638,7 +1021,7 @@ export type OnUpdateQuestApiSubscription = {
     objectives?:  Array< {
       __typename: "Objectives",
       desc?: string | null,
-      endpoint?: string | null,
+      endpoint?: Array< string | null > | null,
       method?: string | null,
     } | null > | null,
   } | null,
@@ -689,8 +1072,122 @@ export type OnDeleteQuestApiSubscription = {
     objectives?:  Array< {
       __typename: "Objectives",
       desc?: string | null,
-      endpoint?: string | null,
+      endpoint?: Array< string | null > | null,
       method?: string | null,
     } | null > | null,
+  } | null,
+};
+
+export type OnCreateUserApiSubscriptionVariables = {
+  filter?: ModelSubscriptionUserApiFilterInput | null,
+};
+
+export type OnCreateUserApiSubscription = {
+  onCreateUserApi?:  {
+    __typename: "UserApi",
+    id: string,
+    display_name?: string | null,
+    image?: string | null,
+    age: number,
+    current_quest_id: string,
+    avatar_uri?: string | null,
+    quest_history?:  Array< {
+      __typename: "QuestHistory",
+      quest_id: string,
+      completed_status: string,
+      start_time: string,
+      end_time?: string | null,
+      completion_image?: string | null,
+    } | null > | null,
+    stats?:  {
+      __typename: "Rewards",
+      xp: number,
+      coins: number,
+      stamina: number,
+      wisdom: number,
+      dexterity: number,
+      perception: number,
+      exploration: number,
+      strength: number,
+    } | null,
+    preferred_region?: Array< string | null > | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateUserApiSubscriptionVariables = {
+  filter?: ModelSubscriptionUserApiFilterInput | null,
+};
+
+export type OnUpdateUserApiSubscription = {
+  onUpdateUserApi?:  {
+    __typename: "UserApi",
+    id: string,
+    display_name?: string | null,
+    image?: string | null,
+    age: number,
+    current_quest_id: string,
+    avatar_uri?: string | null,
+    quest_history?:  Array< {
+      __typename: "QuestHistory",
+      quest_id: string,
+      completed_status: string,
+      start_time: string,
+      end_time?: string | null,
+      completion_image?: string | null,
+    } | null > | null,
+    stats?:  {
+      __typename: "Rewards",
+      xp: number,
+      coins: number,
+      stamina: number,
+      wisdom: number,
+      dexterity: number,
+      perception: number,
+      exploration: number,
+      strength: number,
+    } | null,
+    preferred_region?: Array< string | null > | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteUserApiSubscriptionVariables = {
+  filter?: ModelSubscriptionUserApiFilterInput | null,
+};
+
+export type OnDeleteUserApiSubscription = {
+  onDeleteUserApi?:  {
+    __typename: "UserApi",
+    id: string,
+    display_name?: string | null,
+    image?: string | null,
+    age: number,
+    current_quest_id: string,
+    avatar_uri?: string | null,
+    quest_history?:  Array< {
+      __typename: "QuestHistory",
+      quest_id: string,
+      completed_status: string,
+      start_time: string,
+      end_time?: string | null,
+      completion_image?: string | null,
+    } | null > | null,
+    stats?:  {
+      __typename: "Rewards",
+      xp: number,
+      coins: number,
+      stamina: number,
+      wisdom: number,
+      dexterity: number,
+      perception: number,
+      exploration: number,
+      strength: number,
+    } | null,
+    preferred_region?: Array< string | null > | null,
+    createdAt: string,
+    updatedAt: string,
   } | null,
 };
