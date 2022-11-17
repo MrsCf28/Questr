@@ -73,7 +73,7 @@ function RootNavigator() {
         <Stack.Screen
           name="CurrentQuest"
           component={
-            currentUser.currentQuest ? CurrentQuestScreen : NoQuestScreen
+          NoQuestScreen
           }
         />
       </Stack.Group>
@@ -98,6 +98,9 @@ const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
   const colorScheme = useColorScheme();
+  const { currentUser } = useContext(CurrentUser);
+
+
 
   return (
     <BottomTab.Navigator
