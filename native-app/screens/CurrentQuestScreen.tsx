@@ -6,12 +6,11 @@ import { CurrentUser } from "../context/CurrentUser";
 import * as Location from "expo-location";
 import { locationChecker } from "../utils/functions";
 
-
 export default function CurrentQuestScreen() {
   const navigation = useNavigation();
 
   const { currentUser, setCurrentUser } = useContext(CurrentUser);
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true);
   const [location, setLocation] = useState({});
   const [currentLocation, setCurrentLocation] = useState({
     latitude: 0,
@@ -19,7 +18,8 @@ export default function CurrentQuestScreen() {
     latitudeDelta: 0.01,
     longitudeDelta: 0.01,
   });
-  const [arrived, setArrived] = useState('null')
+  const [arrived, setArrived] = useState("null");
+  const [questStatus, setQuestStatus] = useState(false);
 
   const cancelQuest = () => {
     setCurrentUser({ ...currentUser, currentQuest: null });
@@ -27,7 +27,7 @@ export default function CurrentQuestScreen() {
 
   useEffect(() => {
     (async () => {
-      setIsLoading(true)
+      setIsLoading(true);
       let { status } = await Location.requestForegroundPermissionsAsync(); //asks the phone for permission to use location
       if (status !== "granted") {
         return;
@@ -44,51 +44,60 @@ export default function CurrentQuestScreen() {
       }
       setIsLoading(false);
     })();
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    if (questStatus) {
+      //Congrats you've completed the quest
+      setQuestStatus(null);
+    }
+  }, [questStatus]);
 
   const updateLocation = () => {
-      (async () => {
-        setIsLoading(true);
-        let { status } = await Location.requestForegroundPermissionsAsync(); //asks the phone for permission to use location
-        if (status !== "granted") {
-          return;
-        }
-        let location = await Location.getCurrentPositionAsync({}); //gets the last known location this is quicker than  requesting the current location the alternative is to use Location.getCurrentPositionAsync(options)
-        if (location !== null) {
-          setLocation(location);
-          setCurrentLocation({
-            latitude: location.coords.latitude,
-            longitude: location.coords.longitude,
-            latitudeDelta: 0.01,
-            longitudeDelta: 0.01,
-          });
-        }
-        setArrived(locationChecker(currentUser.currentQuest.location, currentLocation, 3))
-        setIsLoading(false);
-      })();
-    };
+    (async () => {
+      setIsLoading(true);
+      let { status } = await Location.requestForegroundPermissionsAsync(); //asks the phone for permission to use location
+      if (status !== "granted") {
+        return;
+      }
+      let location = await Location.getCurrentPositionAsync({}); //gets the last known location this is quicker than  requesting the current location the alternative is to use Location.getCurrentPositionAsync(options)
+      if (location !== null) {
+        setLocation(location);
+        setCurrentLocation({
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+          latitudeDelta: 0.01,
+          longitudeDelta: 0.01,
+        });
+      }
+      setArrived(
+        locationChecker(currentUser.currentQuest.location, currentLocation, 3)
+      );
+      setIsLoading(false);
+    })();
+  };
 
-  
-  if(isLoading) return <Text>Loading</Text>
-  if(arrived==='true') return (
-  <View style={styles.main}>
-    <Text>You Have arrived</Text>
-    <Text>Now complete the tasks at hand</Text>
-    <View style={styles.container}>
-        {currentUser.currentQuest.objectives.map((objective) => {
-          return <Text key={objective.desc}>{objective.desc}</Text>;
-        })}
-      </View>
-    <Pressable
+  if (isLoading) return <Text>Loading</Text>;
+  if (arrived === "true")
+    return (
+      <View style={styles.main}>
+        <Text>You Have arrived</Text>
+        <Text>Now complete the tasks at hand</Text>
+        <View style={styles.container}>
+          {currentUser.currentQuest.objectives.map((objective) => {
+            return <Text key={objective.desc}>{objective.desc}</Text>;
+          })}
+        </View>
+        <Pressable
           style={styles.button}
           onPress={() => {
-            navigation.navigate("CameraPage");
+            navigation.navigate("CameraPage", { questStatus, setQuestStatus });
           }}
         >
           <Text>Submit Quest Update</Text>
-    </Pressable>
-  </View>
-  )
+        </Pressable>
+      </View>
+    );
   return (
     <View style={styles.main}>
       <Text style={styles.title}>{currentUser.currentQuest.title}</Text>
@@ -111,8 +120,16 @@ export default function CurrentQuestScreen() {
         })}
       </View>
       <View style={styles.buttonContainer}>
-        {arrived==='false'? <Text style={styles.redText}>I don't think we are there yet, move around and check again</Text> : <Text style={styles.blueText}>Adventurer press the button when you have arrived</Text>}
-        <Pressable onPress={updateLocation} style={[styles.button, styles.sos, ]}>
+        {arrived === "false" ? (
+          <Text style={styles.redText}>
+            I don't think we are there yet, move around and check again
+          </Text>
+        ) : (
+          <Text style={styles.blueText}>
+            Adventurer press the button when you have arrived
+          </Text>
+        )}
+        <Pressable onPress={updateLocation} style={[styles.button, styles.sos]}>
           <Text style={styles.buttonText}>Check Location</Text>
         </Pressable>
         <Pressable style={[styles.button, styles.cancel]} onPress={cancelQuest}>
@@ -164,9 +181,9 @@ const styles = StyleSheet.create({
     color: "white",
   },
   redText: {
-    color: 'red'
+    color: "red",
   },
   blueText: {
-    color: 'blue'
-  }
+    color: "blue",
+  },
 });

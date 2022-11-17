@@ -31,7 +31,7 @@ import {
 } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
 import NoQuestScreen from "../screens/NoQuestScreen";
-import CameraPage from "../components/CameraPage";
+import CameraScreen from "../screens/CameraScreen";
 
 export default function Navigation({
   colorScheme,
@@ -70,15 +70,10 @@ function RootNavigator() {
         options={{ title: "Oops!" }}
       />
       <Stack.Group screenOptions={{ presentation: "modal" }}>
-        <Stack.Screen
-          name="CurrentQuest"
-          component={
-          NoQuestScreen
-          }
-        />
+        <Stack.Screen name="CurrentQuest" component={NoQuestScreen} />
       </Stack.Group>
       <Stack.Group screenOptions={{ presentation: "modal" }}>
-        <Stack.Screen name="CameraPage" component={CameraPage} />
+        <Stack.Screen name="CameraScreen" component={CameraScreen} />
       </Stack.Group>
       <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen name="AcceptQuest" component={AcceptQuestScreen} />
@@ -99,8 +94,6 @@ const BottomTab = createBottomTabNavigator<RootTabParamList>();
 function BottomTabNavigator() {
   const colorScheme = useColorScheme();
   const { currentUser } = useContext(CurrentUser);
-
-
 
   return (
     <BottomTab.Navigator

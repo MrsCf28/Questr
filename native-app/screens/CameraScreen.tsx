@@ -2,17 +2,19 @@ import React, { useState, useEffect, useRef } from "react";
 import { StyleSheet, Text, View, Button, TextInput } from "react-native";
 import { Camera, CameraType } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
-import CameraButton from "./CameraButton";
+import CameraButton from "../components/CameraButton";
 import postClarifai from "../clarifaiAPI/callAPI";
 import * as FileSystem from "expo-file-system";
 
-export default function CameraPage() {
+export default function CameraScreen({ route }) {
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
   const [flash, setFlash] = useState(Camera.Constants.FlashMode.off);
   const [predict, setPredict] = useState({});
   const [imageErr, setImageErr] = useState(false);
   const cameraRef = useRef(null);
+
+  const { questStatus, setQuestStatus } = route.params;
 
   useEffect(() => {
     (async () => {
@@ -32,6 +34,15 @@ export default function CameraPage() {
         .then((res) => {
           //setPredict(() => setPredict(res));
           console.log("CameraPage", res, predict);
+        })
+        .then(() => {
+          let correctTerms = [];
+          predict.forEach((concept) => {
+            if (correctTerms.includes(concept.name)) {
+              setQuestStatus(true);
+              console.log("Correct term detected.");
+            }
+          });
         })
         .catch((err) => {
           console.log(err);
