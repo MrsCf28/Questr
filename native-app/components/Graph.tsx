@@ -1,67 +1,81 @@
-import React from "react";
+import React, { useContext } from "react";
 import { StyleSheet } from "react-native";
 
 import { Text, View } from "../components/Themed";
 import { RootTabScreenProps } from "../types";
 
 import {
-  VictoryArea,
-  VictoryBar,
-  VictoryChart,
-  VictoryLabel,
-  VictoryPolarAxis,
-  VictoryTheme,
+	VictoryArea,
+	VictoryChart,
+	VictoryPolarAxis,
+	VictoryTheme,
 } from "victory-native";
+import { CurrentUser } from "../context/CurrentUser";
+import { formatUserStats } from "../utils/functions";
 
 export function Graph() {
-  return (
-    <View style={styles.container}>
-      <VictoryChart
-        polar
-        theme={VictoryTheme.material}
-        domain={{ y: [0, 1] }}
-        padding={80}>
-        <VictoryPolarAxis
-          dependentAxis
-          style={{
-            axis: { stroke: "none" },
-            tickLabels: { fill: "none" },
-            grid: { stroke: "grey", strokeDasharray: "10,10  " },
-          }}
-        />
-        <VictoryPolarAxis
-          tickValues={[
-            "stamina",
-            "exploration",
-            "perception ",
-            "dexterity",
-            "wisdom",
-            'strength'
-          ]}
-          labelPlacement="vertical"
-          tickCount={6}
-        />
-        <VictoryArea
-          interpolation="linear"
-          style={{
-            data: {
-              fill: "none",
-              stroke: "#291403",
-              strokeWidth: 4,
-            },
-          }}
-          data={[1, 0.6, 0.5, 0.9, 0.7, 0.3]}
-        />
-      </VictoryChart>
-    </View>
-  );
+	const { currentUser } = useContext(CurrentUser);
+
+	return (
+		<View style={styles.container}>
+			<VictoryChart
+				polar
+				theme={VictoryTheme.material}
+				domain={{ y: [0, 1] }}
+				padding={80}
+			>
+				<VictoryPolarAxis
+					dependentAxis
+					style={{
+						axis: { stroke: "none" },
+						tickLabels: { fill: "none" },
+						grid: {
+							stroke: "black",
+							strokeDasharray: "10,10",
+							opacity: 0.1,
+						},
+					}}
+				/>
+				<VictoryPolarAxis
+					tickValues={[
+						"dexterity",
+						"exploration",
+						"perception",
+						"stamina",
+						"strength",
+						"wisdom",
+					]}
+					labelPlacement="vertical"
+					tickCount={6}
+					style={{
+						axis: { stroke: "none" },
+						grid: { stroke: "black", opacity: 0.7 },
+						tickLabels: { fill: "brown" },
+					}}
+				/>
+				<VictoryArea
+					interpolation="linear"
+					style={{
+						data: {
+							fill: "brown",
+							fillOpacity: 0.3,
+							stroke: "brown",
+							strokeWidth: 4,
+							strokeOpacity: 1,
+						},
+					}}
+					data={formatUserStats(currentUser.stats)}
+				/>
+			</VictoryChart>
+		</View>
+	);
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: 'rgba(128,193,255,0.0)',
-  },
+	container: {
+		flex: 1,
+		alignItems: "center",
+		justifyContent: "center",
+		backgroundColor: "rgba(128,193,255,0.0)",
+	},
 });
