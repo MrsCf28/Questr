@@ -7,12 +7,12 @@ import { RootTabScreenProps } from '../types';
 import { StatsScreen } from '../components/StatsScreen';
 import { AvatarScreen } from './AvatarScreen';
 
-const Knight = require('../assets/images/knight.png')
+const Bard = require('../assets/images/Bard.png')
 
 export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
 
   const [selectedTab, setSelectedTab] = useState<string>("stats");
-  const [myAvatar, setMyAvatar] = useState(Knight)
+  const [myAvatar, setMyAvatar] = useState(Bard)
 
   return (
     <View style={styles.container}>
