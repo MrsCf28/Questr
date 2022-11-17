@@ -102,6 +102,9 @@ export default function CurrentQuestScreen() {
         >
           <Text>Submit Quest Update</Text>
     </Pressable>
+    <Pressable style={[styles.button, styles.cancel]} onPress={cancelQuest}>
+                <Text style={styles.buttonText}>Cancel Quest</Text>
+    </Pressable>
   </View>
   )
   } else {

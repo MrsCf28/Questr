@@ -36,16 +36,16 @@ import { TopTabs } from "./TopTabs";
 import { AvatarSelector } from "../screens/AvatarSelector";
 
 export default function Navigation({
-  colorScheme,
+  colorScheme, signedUp
 }: {
-  colorScheme: ColorSchemeName;
+  colorScheme: ColorSchemeName, signedUp
 }) {
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
       theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
     >
-      <RootNavigator />
+      {signedUp? <RootNavigator /> : <EditProfileScreen />}
     </NavigationContainer>
   );
 }
