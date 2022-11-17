@@ -22,7 +22,7 @@ export type RootStackParamList = {
   NotFound: undefined;
   AcceptQuest: undefined;
   EditProfile: undefined;
-  CameraPage: undefined;
+  CameraScreen: undefined;
   AvatarSelector: undefined;
 };
 

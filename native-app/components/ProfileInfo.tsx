@@ -14,6 +14,7 @@ export function ProfileInfo() {
 		"WiseWolfred",
 		"BigDaddy",
 	];
+	console.log(currentUser)
 
 	return (
 		<View style={styles.container}>

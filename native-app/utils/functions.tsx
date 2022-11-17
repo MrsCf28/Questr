@@ -10,7 +10,6 @@ export const locationChecker = (
 	myLocation: location,
 	accuracy: number
 ) => {
-	console.log(myLocation, questLocation);
 	const me = {
 		lat: myLocation.latitude.toFixed(accuracy),
 		long: myLocation.longitude.toFixed(accuracy),

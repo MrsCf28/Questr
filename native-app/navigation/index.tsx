@@ -31,7 +31,7 @@ import {
 } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
 import NoQuestScreen from "../screens/NoQuestScreen";
-import CameraPage from "../components/CameraPage";
+import CameraScreen from "../screens/CameraScreen";
 import { TopTabs } from "./TopTabs";
 import { AvatarSelector } from "../screens/AvatarSelector";
 
@@ -58,6 +58,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
   const { currentUser } = useContext(CurrentUser);
+  console.log(currentUser, 'nav page')
 
   return (
     <Stack.Navigator>
@@ -86,7 +87,7 @@ function RootNavigator() {
       <Stack.Group screenOptions={{ 
         presentation: "modal",
         headerShown: false }}>
-        <Stack.Screen name="CameraPage" component={CameraPage} />
+        <Stack.Screen name="CameraScreen" component={CameraScreen} />
       </Stack.Group>
       <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen name="AcceptQuest" component={AcceptQuestScreen} />
