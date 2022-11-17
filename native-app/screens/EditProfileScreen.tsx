@@ -25,7 +25,7 @@ export default function EditProfileScreen() {
   const {currentUser, setCurrentUser} = useContext(CurrentUser)
   const {image} = currentUser
   const [newImage, setNewImage] = useState(image);
-  const navigation = useNavigation();
+//   const navigation = useNavigation();
 
     // const [image, setImage] = useState(
     //     'https://picsum.photos/200/300'
@@ -71,7 +71,7 @@ export default function EditProfileScreen() {
             patchUser(updatedUser).catch((err: any) => {
                 console.log('error in patch user', err);
             });
-            navigation.goBack()
+            // navigation.goBack()
         } else {
             currentUser.avatar_uri = "../assets/images/knight.png"
             currentUser.current_quest_id = "0";

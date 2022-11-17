@@ -12,6 +12,7 @@ import { SignedUp } from './context/SignedUp';
 
 import awsExports from "./src/aws-exports";
 import { fetchQuestById } from "./utils/questApi";
+import { fetchUserById } from "./utils/userApi";
 import { addUser, fetchUser } from "./utils/userApi";
 import EditProfileScreen from './screens/EditProfileScreen';
 
