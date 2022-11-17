@@ -21,7 +21,6 @@ const postClarifai = async (IMAGE_BYTES_STRING, predict, setPredict) => {
       },
     ],
   });
-
   const requestOptions = {
     method: "POST",
     headers: {
@@ -30,11 +29,6 @@ const postClarifai = async (IMAGE_BYTES_STRING, predict, setPredict) => {
     },
     body: raw,
   };
-
-  // NOTE: MODEL_VERSION_ID is optional, you can also call prediction with the MODEL_ID only
-  // https://api.clarifai.com/v2/models/{YOUR_MODEL_ID}/outputs
-  // this will default to the latest version_id
-
   const fetchPredictions = fetch(
     "https://api.clarifai.com/v2/models/" +
       MODEL_ID +
@@ -47,9 +41,10 @@ const postClarifai = async (IMAGE_BYTES_STRING, predict, setPredict) => {
     .then((result) => {
       result = JSON.parse(result);
       let predictions = result.outputs[0].data.concepts;
-      predictions.forEach((i) => {
+      //console.log(predictions);
+      /*       predictions.forEach((i) => {
         console.log(i.name, i.value);
-      });
+      }); */
       setPredict(() => setPredict(predictions));
       return predictions;
     })

@@ -12,7 +12,12 @@ import {
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
-import { ColorSchemeName, Pressable, ImageBackground, StyleSheet } from "react-native";
+import {
+  ColorSchemeName,
+  Pressable,
+  ImageBackground,
+  StyleSheet,
+} from "react-native";
 import { useContext } from "react";
 import { CurrentUser } from "../context/CurrentUser";
 
@@ -34,18 +39,21 @@ import NoQuestScreen from "../screens/NoQuestScreen";
 import CameraScreen from "../screens/CameraScreen";
 import { TopTabs } from "./TopTabs";
 import { AvatarSelector } from "../screens/AvatarSelector";
+import CompletedQuestScreen from "../screens/CompletedQuest";
 
 export default function Navigation({
-  colorScheme, signedUp
+  colorScheme,
+  signedUp,
 }: {
-  colorScheme: ColorSchemeName, signedUp
+  colorScheme: ColorSchemeName;
+  signedUp;
 }) {
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
       theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
     >
-      {signedUp? <RootNavigator /> : <EditProfileScreen />}
+      {signedUp ? <RootNavigator /> : <EditProfileScreen />}
     </NavigationContainer>
   );
 }
@@ -58,7 +66,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
   const { currentUser } = useContext(CurrentUser);
-  console.log(currentUser, 'nav page')
+  console.log(currentUser, "nav page");
 
   return (
     <Stack.Navigator>
@@ -72,23 +80,45 @@ function RootNavigator() {
         component={NotFoundScreen}
         options={{ title: "Oops!" }}
       />
-      <Stack.Group screenOptions={{ 
-        presentation: "modal" }}>
+      <Stack.Group
+        screenOptions={{
+          presentation: "modal",
+        }}
+      >
         <Stack.Screen name="AvatarSelector" component={AvatarSelector} />
-       </Stack.Group>
+      </Stack.Group>
 
       <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen
           name="CurrentQuest"
-          component={currentUser.current_quest_id !== '0'? CurrentQuestScreen : NoQuestScreen}
+          component={
+            currentUser.current_quest_id !== "0"
+              ? CurrentQuestScreen
+              : NoQuestScreen
+          }
         />
-
       </Stack.Group>
-      <Stack.Group screenOptions={{ 
-        presentation: "modal",
-        headerShown: false }}>
+      <Stack.Group
+        screenOptions={{
+          presentation: "modal",
+          headerShown: false,
+        }}
+      >
         <Stack.Screen name="CameraScreen" component={CameraScreen} />
       </Stack.Group>
+
+      <Stack.Group
+        screenOptions={{
+          presentation: "modal",
+          headerShown: false,
+        }}
+      >
+        <Stack.Screen
+          name="CompletedQuestScreen"
+          component={CompletedQuestScreen}
+        />
+      </Stack.Group>
+
       <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen name="AcceptQuest" component={AcceptQuestScreen} />
       </Stack.Group>
@@ -109,14 +139,12 @@ function BottomTabNavigator() {
   const colorScheme = useColorScheme();
   const { currentUser } = useContext(CurrentUser);
 
-
-
   return (
     <BottomTab.Navigator
       initialRouteName="TabOne"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
-        headerShown: false
+        headerShown: false,
       }}
     >
       <BottomTab.Screen
@@ -169,5 +197,5 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-}
+  },
 });

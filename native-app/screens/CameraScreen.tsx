@@ -1,10 +1,17 @@
-import React, { useState, useEffect, useRef } from "react";
+
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { StyleSheet, Text, View, Button, TextInput, useWindowDimensions, } from "react-native";
+
 import { Camera, CameraType } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
 import CameraButton from "../components/CameraButton";
 import postClarifai from "../clarifaiAPI/callAPI";
 import * as FileSystem from "expo-file-system";
+import { fetchQuestById } from "../utils/questApi";
+import { CurrentUser } from "../context/CurrentUser";
+
+import { useNavigation } from "@react-navigation/native";
+
 
 
 export default function CameraScreen({ route }) {
@@ -13,12 +20,32 @@ export default function CameraScreen({ route }) {
   const [flash, setFlash] = useState(Camera.Constants.FlashMode.off);
   const [predict, setPredict] = useState({});
   const [imageErr, setImageErr] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const cameraRef = useRef(null);
+
+  const { currentUser, setCurrentUser } = useContext(CurrentUser);
+  const [currentQuest, setCurrentQuest] = useState(null);
+  const [questStatus, setQuestStatus] = useState(false);
+
+  const navigation = useNavigation();
 
   const { width } = useWindowDimensions();
 	const height = Math.round((width * 16) / 9);
 
+
   // const { questStatus, setQuestStatus } = route.params;
+
+  useEffect(() => {
+    setIsLoading(true);
+    fetchQuestById(currentUser.current_quest_id)
+      .then((quest) => {
+        setCurrentQuest(quest);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err, "error");
+      });
+  }, []);
 
   useEffect(() => {
     (async () => {
@@ -28,6 +55,15 @@ export default function CameraScreen({ route }) {
     })();
   }, []);
 
+  useEffect(() => {
+    if (questStatus) {
+      navigation.navigate("CompletedQuestScreen", {
+        currentQuest,
+        currentUser,
+      });
+    }
+  }, [questStatus]);
+
   const takePicture = async () => {
     if (cameraRef) {
       const data = await cameraRef.current.takePictureAsync();
@@ -36,17 +72,19 @@ export default function CameraScreen({ route }) {
       });
       postClarifai(base64Img, predict, setPredict)
         .then((res) => {
+          let endpoints = currentQuest.objectives[0].endpoint;
+          console.log("here", currentQuest.objectives[0].endpoint);
+          //console.log(predict, "predict in camerascreen");
           //setPredict(() => setPredict(res));
-          console.log("CameraPage", res, predict);
-        })
-        .then(() => {
-          /*    let correctTerms = [];
-          predict.forEach((concept) => {
-            if (correctTerms.includes(concept.name)) {
+          //console.log("CameraPage", res, predict);
+
+          Object.values(predict).forEach((concept) => {
+            if (endpoints.includes(concept.name)) {
+              //setQuestStatus(true);
+              console.log("Correct term detected.", concept.name);
               setQuestStatus(true);
-              console.log("Correct term detected.");
             }
-          }); */
+          });
         })
         .catch((err) => {
           console.log(err);
