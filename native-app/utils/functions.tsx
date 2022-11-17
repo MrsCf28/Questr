@@ -1,11 +1,15 @@
 type location = {
-	longitude: number,
-	latitude: number,
-	latitudeDelta: number,
-    longitudeDelta: number,
-}
+	longitude: number;
+	latitude: number;
+	latitudeDelta: number;
+	longitudeDelta: number;
+};
 
-export const locationChecker = (questLocation: location, myLocation: location, accuracy: number) => {
+export const locationChecker = (
+	questLocation: location,
+	myLocation: location,
+	accuracy: number
+) => {
 	console.log(myLocation, questLocation);
 	const me = {
 		lat: myLocation.latitude.toFixed(accuracy),
@@ -30,12 +34,12 @@ export function formatUserStats({
 	strength,
 	wisdom,
 }: {
-	stamina: number;
-	wisdom: number;
 	dexterity: number;
-	perception: number;
 	exploration: number;
+	perception: number;
+	stamina: number;
 	strength: number;
+	wisdom: number;
 }) {
 	const maxStatOnRadarChart =
 		Math.max.apply(
@@ -48,20 +52,19 @@ export function formatUserStats({
 				strength,
 				wisdom,
 			})
-		) * 0.9;
+		) / 0.8;
 
 	const formattedStats: number[] = [
+		wisdom / maxStatOnRadarChart,
 		dexterity / maxStatOnRadarChart,
 		exploration / maxStatOnRadarChart,
 		perception / maxStatOnRadarChart,
 		stamina / maxStatOnRadarChart,
 		strength / maxStatOnRadarChart,
-		wisdom / maxStatOnRadarChart,
 	];
 
 	return formattedStats;
 }
-
 
 export function missingWordGame(
 	requiredWords: string[],
@@ -74,4 +77,3 @@ export function missingWordGame(
 	}
 	return true;
 }
-
