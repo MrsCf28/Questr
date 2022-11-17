@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
-import { StyleSheet, Text, View, Button, TextInput } from "react-native";
+import { StyleSheet, Text, View, Button, TextInput, useWindowDimensions, } from "react-native";
 import { Camera, CameraType } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
 import CameraButton from "../components/CameraButton";
 import postClarifai from "../clarifaiAPI/callAPI";
 import * as FileSystem from "expo-file-system";
+
 
 export default function CameraScreen({ route }) {
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
@@ -13,6 +14,9 @@ export default function CameraScreen({ route }) {
   const [predict, setPredict] = useState({});
   const [imageErr, setImageErr] = useState(false);
   const cameraRef = useRef(null);
+
+  const { width } = useWindowDimensions();
+	const height = Math.round((width * 16) / 9);
 
   // const { questStatus, setQuestStatus } = route.params;
 
@@ -66,70 +70,74 @@ export default function CameraScreen({ route }) {
 
   return (
     <View style={styles.appContainer}>
-      {hasCameraPermission ? (
-        <View style={styles.container}>
-          <Camera
-            style={styles.camera}
-            type={type}
-            flashMode={flash}
-            ref={cameraRef}
-          >
-            <View style={styles.flexrow}>
-              <CameraButton
-                title={"take picture"}
-                color={"red"}
-                icon="camera"
-                onPress={takePicture}
-              />
-              <CameraButton
-                title={"flip camera"}
-                color={"blue"}
-                icon="retweet"
-                onPress={flipCamera}
-              />
-              <CameraButton
-                title={"flash"}
-                color={
+    {hasCameraPermission ? (
+      <View style={styles.container}>
+        <Camera
+          ratio="16:9"
+          style={
+            { width: "100%", height: height }
+          }
+          type={type}
+          flashMode={flash}
+          ref={cameraRef}
+        >
+          <View style={styles.flexrow}>
+            <CameraButton
+              title={"take picture"}
+              color={"red"}
+              icon="camera"
+              onPress={takePicture}
+            />
+            <CameraButton
+              title={"flip camera"}
+              color={"blue"}
+              icon="retweet"
+              onPress={flipCamera}
+            />
+            <CameraButton
+              title={"flash"}
+              color={
+                flash === Camera.Constants.FlashMode.off
+                  ? "yellow"
+                  : "#f1f1f1"
+              }
+              icon="flash"
+              onPress={() => {
+                setFlash(
                   flash === Camera.Constants.FlashMode.off
-                    ? "yellow"
-                    : "#f1f1f1"
-                }
-                icon="flash"
-                onPress={() => {
-                  setFlash(
-                    flash === Camera.Constants.FlashMode.off
-                      ? Camera.Constants.FlashMode.on
-                      : Camera.Constants.FlashMode.off
-                  );
-                }}
-              />
-            </View>
-          </Camera>
-        </View>
-      ) : (
-        <Text>Camera</Text>
-      )}
-    </View>
+                    ? Camera.Constants.FlashMode.on
+                    : Camera.Constants.FlashMode.off
+                );
+              }}
+            />
+          </View>
+        </Camera>
+      </View>
+    ) : (
+      <Text>Camera</Text>
+    )}
+  </View>
   );
 }
 
 const styles = StyleSheet.create({
-  appContainer: {
-    flex: 1,
-    justifyContent: "center",
-  },
-  container: { flex: 1 },
-
-  camera: {
-    flex: 1,
-    borderRadius: 20,
-    padding: 50,
-    justifyContent: "flex-end",
-  },
-  flexrow: {
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "flex-end",
-    justifyContent: "center",
-  },
+	appContainer: {
+		flex: 1,
+		justifyContent: "center",
+	},
+	container: { flex: 1, alignItems: "center",
+  justifyContent: "center",},
+	camera: {
+		flex: 1,
+		borderRadius: 20,
+		padding: 50,
+		justifyContent: "flex-end",
+	},
+	flexrow: {
+		flex: 1,
+    // backgroundColor:"black",
+		flexDirection: "row",
+		alignItems: "flex-end",
+		justifyContent: "center",
+	},
 });
