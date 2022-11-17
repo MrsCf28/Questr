@@ -45,12 +45,10 @@ function App() {
             if (user === null) {
                 setSignedUp(false);
                 setCurrentUser({ ...currentUser, id: id });
-                console.log(user, 'user if')
                 setIsLoading(false)
             } else {
                 setSignedUp(true);
                 setCurrentUser(user);
-                console.log(user, 'user else')
                 setIsLoading(false)
             }   
         });
@@ -63,7 +61,6 @@ function App() {
     } else {
         return (
             <SafeAreaProvider>
-                {console.log(currentUser, 'current')}
                 <CurrentUser.Provider
                     value={{ currentUser, setCurrentUser }}
                 >
