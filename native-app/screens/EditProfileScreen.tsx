@@ -1,15 +1,13 @@
+
 import React, { useContext, useEffect, useState } from 'react';
-import {
-    Pressable,
-    StyleSheet,
-    TextInput,
-    Image,
-} from 'react-native';
-import { Text, View } from '../components/Themed';
-import * as ImagePicker from 'expo-image-picker';
-import { CurrentUser } from '../context/CurrentUser';
+import { Pressable, StyleSheet, TextInput, Image } from "react-native";
+import { Text, View } from "../components/Themed";
+import * as ImagePicker from "expo-image-picker";
+import { CurrentUser } from "../context/CurrentUser";
 import { addUser, patchUser } from '../utils/userApi';
 import { SignedUp } from '../context/SignedUp';
+
+import { useNavigation } from "@react-navigation/native";
 
 type User = {
     id: string;
@@ -23,11 +21,16 @@ type User = {
 };
 
 export default function EditProfileScreen() {
+  
+  const {currentUser, setCurrentUser} = useContext(CurrentUser)
+  const {image} = currentUser
+  const [newImage, setNewImage] = useState(image);
+  const navigation = useNavigation();
+
     // const [image, setImage] = useState(
     //     'https://picsum.photos/200/300'
     // );
     const [imagePicked, setImagePicked] = useState(1)
-    const { currentUser, setCurrentUser } = useContext(CurrentUser);
     const { signedUp, setSignedUp } = useContext(SignedUp);
 
     let displayImage = <Image style={styles.image} source={{ uri: currentUser.image }} />;
@@ -35,6 +38,7 @@ export default function EditProfileScreen() {
     useEffect(() => {
         displayImage = <Image style={styles.image} source={{ uri: currentUser.image }} />
     }, [imagePicked])
+
 
     async function pickImage() {
         const result = await ImagePicker.launchImageLibraryAsync({
@@ -46,14 +50,12 @@ export default function EditProfileScreen() {
         });
 
         if (!result.canceled) {
+
             setImagePicked(prev => prev++);
             setCurrentUser({ ...currentUser, image: result.assets[0].uri })
         }
     }
-    // we need to handle the async aspect.
-    // I can get the image to stay after sign in and out and reload,
-    // but only if I go back and forth between the pages
-
+  
     function handleSubmit() {
         if (signedUp) {
             const updatedUser: User = {
@@ -69,6 +71,7 @@ export default function EditProfileScreen() {
             patchUser(updatedUser).catch((err: any) => {
                 console.log('error in patch user', err);
             });
+            navigation.goBack()
         } else {
             currentUser.avatar_uri = "../assets/images/knight.png"
             currentUser.current_quest_id = "0";
@@ -77,6 +80,16 @@ export default function EditProfileScreen() {
             setSignedUp(true);
         }
     }
+    // we need to handle the async aspect.
+    // I can get the image to stay after sign in and out and reload,
+    // but only if I go back and forth between the pages
+    
+
+
+
+
+
+
 
     return (
         <View style={styles.container}>
@@ -119,6 +132,7 @@ export default function EditProfileScreen() {
             </Pressable>
         </View>
     );
+
 }
 
 const styles = StyleSheet.create({

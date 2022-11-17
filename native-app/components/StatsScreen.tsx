@@ -10,7 +10,6 @@ export function StatsScreen({ selectedTab }: tabProp) {
     <View
       style={[
         styles.container,
-        selectedTab === "stats" ? null : styles.hidden,
       ]}>
       <ImageBackground source={require('../assets/images/scroll.png')} resizeMode="contain" style={styles.image}>
         <Graph />
@@ -21,7 +20,7 @@ export function StatsScreen({ selectedTab }: tabProp) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 4,
+    flex: 1,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",

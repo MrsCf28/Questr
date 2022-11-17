@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { View, Pressable, StyleSheet, Text } from "react-native";
+import { View, Pressable, StyleSheet, Text, ImageBackground } from "react-native";
 import { StatsScreen } from "./StatsScreen";
 import { HistoryScreen } from "./HistoryScreen";
 import { TabHolder } from "./TabHolder";
 import { ItemsScreen } from "./ItemsScreen";
 import { useEffect } from "react";
 import { AvatarScreen } from "../screens/AvatarScreen";
+import { ProfileInfo } from "./ProfileInfo";
+import { ProfileController } from "./ProfileController";
 
 export function ProfileData() {
   const [selectedTab, setSelectedTab] = useState<string>("stats");
@@ -16,20 +18,20 @@ export function ProfileData() {
 
   return (
     <View style={styles.container}>
-      <TabHolder selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
-      <StatsScreen selectedTab={selectedTab} />
-      <HistoryScreen selectedTab={selectedTab} />
-      <ItemsScreen selectedTab={selectedTab} />
-      <AvatarScreen selectedTab={selectedTab}/>
+      <ImageBackground source={require('../assets/images/wood.jpg')} style={styles.container} resizeMode="cover">
+        <ProfileInfo/>
+        <ProfileController/>
+      </ImageBackground>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 6,
+    flex: 1,
     alignItems: "center",
-    justifyContent: "flex-start",
+    justifyContent: "center",
     width: "100%",
+    borderWidth: 3,
   },
 });

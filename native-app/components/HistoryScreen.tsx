@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Text, ScrollView } from "react-native";
+import { View, StyleSheet, Text, ScrollView, ImageBackground } from "react-native";
 import { HistoryCard } from "./HistoryCard";
 
 interface tabProp {
@@ -96,22 +96,23 @@ export function HistoryScreen({ selectedTab }: tabProp) {
     <View
       style={[
         styles.container,
-        selectedTab === "history" ? null : styles.hidden,
       ]}>
+      <ImageBackground source={require('../assets/images/stones.jpg')} style={styles.container} resizeMode="cover">
+      <View style={styles.separator}/>
       <ScrollView style={styles.scrollableArea}>
         {completedQuests.map((quest) => {
           return <HistoryCard key={quest.id} quest={quest} />;
         })}
       </ScrollView>
+      </ImageBackground>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 7,
+    flex: 1,
     width: "100%",
-    paddingBottom: 10,
   },
   hidden: {
     display: "none",
@@ -120,5 +121,9 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     padding: 10,
+  },
+  separator: {
+    marginVertical: 30,
+    width: '80%',
   },
 });
