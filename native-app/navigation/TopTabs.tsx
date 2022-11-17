@@ -22,7 +22,7 @@ export function TopTabs() {
       initialRouteName="Home">
         <TopTab.Screen name="Home" component={TabOneScreen} />
         <TopTab.Screen name="History" component={HistoryScreen} />
-        <TopTab.Screen name="CurrentQuest" component={currentUser.currentQuest ? CurrentQuestScreen : NoQuestScreen} />
+        <TopTab.Screen name="CurrentQuest" component={currentUser.current_quest_id !=='0' ? CurrentQuestScreen : NoQuestScreen} />
       </TopTab.Navigator>
       <StatusBar />
     </SafeAreaView>  
