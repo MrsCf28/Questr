@@ -8,10 +8,10 @@ import * as FileSystem from "expo-file-system";
 
 export default function CameraPage() {
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
-  const [image, setImage] = useState({});
   const [type, setType] = useState(Camera.Constants.Type.back);
   const [flash, setFlash] = useState(Camera.Constants.FlashMode.off);
   const [predict, setPredict] = useState({});
+  const [imageErr, setImageErr] = useState(false);
   const cameraRef = useRef(null);
 
   useEffect(() => {
@@ -24,16 +24,19 @@ export default function CameraPage() {
 
   const takePicture = async () => {
     if (cameraRef) {
-      try {
-        const data = await cameraRef.current.takePictureAsync();
-        const base64Img = await FileSystem.readAsStringAsync(data.uri, {
-          encoding: "base64",
+      const data = await cameraRef.current.takePictureAsync();
+      const base64Img = await FileSystem.readAsStringAsync(data.uri, {
+        encoding: "base64",
+      });
+      postClarifai(base64Img, predict, setPredict)
+        .then((res) => {
+          //setPredict(() => setPredict(res));
+          console.log("CameraPage", res, predict);
+        })
+        .catch((err) => {
+          console.log(err);
+          setImageErr(true);
         });
-        await postClarifai(base64Img, predict, setPredict);
-        console.log(predict, "--- in the component");
-      } catch (err) {
-        console.log("takePicture", err);
-      }
     }
   };
 
@@ -45,6 +48,9 @@ export default function CameraPage() {
 
   if (hasCameraPermission === false) {
     return <Text>No access</Text>;
+  }
+  if (imageErr) {
+    return <Text>Error sending image. Please reload and try again.</Text>;
   }
 
   return (
