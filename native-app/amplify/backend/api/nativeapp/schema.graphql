@@ -31,6 +31,8 @@ type UserApi @model {
 	display_name: String
 	image: String
 	age: Int!
+	current_quest_id: String!
+	avatar_uri: String
 	quest_history: [QuestHistory]
 	stats: Rewards
 	preferred_region: [String]

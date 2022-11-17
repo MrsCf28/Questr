@@ -9,13 +9,12 @@ export function ProfileInfo() {
 
     const {image} = currentUser
 
-    // console.log(image)
-
     return (
         <View style={styles.container}>
             <Image style={styles.image} source={{uri:image}}/> 
+
             <View style={styles.holder}>
-                <Text style={styles.title}>{currentUser.user}</Text>
+                <Text style={styles.title}>{currentUser.display_name}</Text>
                 <Text style={styles.text}>Rank: BigDaddy</Text>
                 <View style={styles.flexRow}>
                   <Text style={styles.text}>XP: 100      </Text>

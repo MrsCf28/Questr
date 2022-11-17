@@ -74,6 +74,14 @@ function RootNavigator() {
       <Stack.Group screenOptions={{ 
         presentation: "modal" }}>
         <Stack.Screen name="AvatarSelector" component={AvatarSelector} />
+       </Stack.Group>
+
+      <Stack.Group screenOptions={{ presentation: "modal" }}>
+        <Stack.Screen
+          name="CurrentQuest"
+          component={currentUser.current_quest_id !== '0'? CurrentQuestScreen : NoQuestScreen}
+        />
+
       </Stack.Group>
       <Stack.Group screenOptions={{ 
         presentation: "modal",
@@ -98,6 +106,9 @@ const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
   const colorScheme = useColorScheme();
+  const { currentUser } = useContext(CurrentUser);
+
+
 
   return (
     <BottomTab.Navigator

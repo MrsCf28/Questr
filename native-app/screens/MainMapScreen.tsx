@@ -7,6 +7,13 @@ import * as Location from "expo-location"; //library used to get the location fr
 import { CurrentUser } from "../context/CurrentUser";
 import CurrentQuestMap from "../components/CurrentQuestMap";
 import AllQuestMap from "../components/AllQuestsMap";
+import { Float } from "react-native/Libraries/Types/CodegenTypes";
+
+type Quest = {
+  latitude: Float,
+  longitude: Float,
+  region: String
+}
 
 export default function TabTwoScreen() {
   const [location, setLocation] = useState({});
@@ -20,7 +27,7 @@ export default function TabTwoScreen() {
 
   const {currentUser} = useContext(CurrentUser)
 
-  const {image, currentQuest} = currentUser
+  const image = currentUser.image
 
   useEffect(() => {
     (async () => {
@@ -51,10 +58,10 @@ export default function TabTwoScreen() {
     );
   }
 
-  if(currentQuest === null) {
+  if(currentUser.current_quest_id === '0') {
     return <AllQuestMap currentLocation ={currentLocation} image={image}/>
-  } else if (currentQuest !== null) {
-    return <CurrentQuestMap currentLocation ={currentLocation} image={image} currentQuest={currentQuest}/>
+  } else if (currentUser.current_quest_id !== '0') {
+    return <CurrentQuestMap currentLocation ={currentLocation} image={image} currentQuestId={currentUser.current_quest_id}/>
   }
   else return <Text>Something Went Wrong</Text>
 }
