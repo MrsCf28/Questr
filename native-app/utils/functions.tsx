@@ -30,15 +30,26 @@ export function formatUserStats({
 	strength,
 	wisdom,
 }: {
-	stamina: number;
-	wisdom: number;
-	dexterity: number;
-	perception: number;
-	exploration: number;
-	strength: number;
+    dexterity: number;
+    exploration: number;
+    perception: number;
+    stamina: number;
+    strength: number;
+    wisdom: number;
 }) {
 	const maxStatOnRadarChart =
-		Math.max.apply(
+	Math.max.apply(
+		Math,
+		Object.values({
+			dexterity,
+			exploration,
+			perception,
+			stamina,
+			strength,
+			wisdom,
+		})
+		) / 0.8;
+		console.log('maxStatOnRadarChart: ', Math.max.apply(
 			Math,
 			Object.values({
 				dexterity,
@@ -48,15 +59,15 @@ export function formatUserStats({
 				strength,
 				wisdom,
 			})
-		) * 0.9;
+			));
 
 	const formattedStats: number[] = [
+		wisdom / maxStatOnRadarChart,
 		dexterity / maxStatOnRadarChart,
 		exploration / maxStatOnRadarChart,
 		perception / maxStatOnRadarChart,
 		stamina / maxStatOnRadarChart,
 		strength / maxStatOnRadarChart,
-		wisdom / maxStatOnRadarChart,
 	];
 
 	return formattedStats;
