@@ -15,6 +15,7 @@ import { fetchQuestById } from "./utils/questApi";
 import { fetchUserById } from "./utils/userApi";
 import { addUser, fetchUser } from "./utils/userApi";
 import EditProfileScreen from './screens/EditProfileScreen';
+import { Text } from "react-native";
 
 Amplify.configure({
     ...awsExports,
@@ -35,25 +36,34 @@ function App() {
     const [userId, setUserId] = useState('4');
     const [newUser, setNewUser] = useState({ id: '24', age: 22 });
     const [signedUp, setSignedUp] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
 
 
     useEffect(() => {
+        setIsLoading(true)
         fetchUserById(id).then(user => {
             if (user === null) {
                 setSignedUp(false);
                 setCurrentUser({ ...currentUser, id: id });
+                console.log(user, 'user if')
+                setIsLoading(false)
             } else {
                 setSignedUp(true);
                 setCurrentUser(user);
-            }
+                console.log(user, 'user else')
+                setIsLoading(false)
+            }   
         });
     }, []);
 
     if (!isLoadingComplete) {
         return null;
+    } else if (isLoading) {
+        return <Text>Loading</Text>
     } else {
         return (
             <SafeAreaProvider>
+                {console.log(currentUser, 'current')}
                 <CurrentUser.Provider
                     value={{ currentUser, setCurrentUser }}
                 >

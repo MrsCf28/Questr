@@ -76,7 +76,7 @@ export default function CurrentQuestScreen() {
             longitudeDelta: 0.01,
           });
         }
-        setArrived(locationChecker(currentQuest.location, currentLocation, 3))
+        setArrived(locationChecker(currentQuest.location, currentLocation, 2))
         setIsLoading(false);
       })();
     };
@@ -97,7 +97,7 @@ export default function CurrentQuestScreen() {
     <Pressable
           style={styles.button}
           onPress={() => {
-            navigation.navigate("CameraPage");
+            navigation.navigate("CameraScreen");
           }}
         >
           <Text>Submit Quest Update</Text>
