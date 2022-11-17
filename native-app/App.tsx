@@ -1,21 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import React, { useState, useEffect } from "react";
+import { StatusBar } from "expo-status-bar";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Amplify, API, graphqlOperation, Auth } from 'aws-amplify';
-import { withAuthenticator } from 'aws-amplify-react-native';
+import { withAuthenticator } from "aws-amplify-react-native";
+import useCachedResources from "./hooks/useCachedResources";
+import useColorScheme from "./hooks/useColorScheme";
+import Navigation from "./navigation";
 
-import useCachedResources from './hooks/useCachedResources';
-import useColorScheme from './hooks/useColorScheme';
-import Navigation from './navigation';
-
-import { CurrentUser } from './context/CurrentUser';
+import { CurrentUser } from "./context/CurrentUser";
 import { SignedUp } from './context/SignedUp';
 
-import awsExports from './src/aws-exports';
-import {
-    fetchUserById,
-
-} from './utils/userApi';
+import awsExports from "./src/aws-exports";
+import { fetchQuestById } from "./utils/questApi";
+import { fetchUserById } from "./utils/userApi";
+import { addUser, fetchUser } from "./utils/userApi";
 import EditProfileScreen from './screens/EditProfileScreen';
 
 Amplify.configure({
@@ -26,17 +24,18 @@ Amplify.configure({
 });
 
 function App() {
-    const isLoadingComplete = useCachedResources();
-    const colorScheme = useColorScheme();
+
+	const isLoadingComplete = useCachedResources();
+	const colorScheme = useColorScheme();
 
     const [currentUser, setCurrentUser] = useState({
         image: 'https://picsum.photos/200/300',
     });
-    // const [allQuests, setAllQuests] = useState([]);
     const [id, setId] = useState(Auth.user.attributes.sub);
     const [userId, setUserId] = useState('4');
     const [newUser, setNewUser] = useState({ id: '24', age: 22 });
     const [signedUp, setSignedUp] = useState(false);
+
 
     useEffect(() => {
         fetchUserById(id).then(user => {

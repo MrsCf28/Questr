@@ -42,7 +42,6 @@ export function ItemsScreen({ selectedTab }: tabProp) {
     <View
       style={[
         styles.container,
-        selectedTab === "items" ? null : styles.hidden,
       ]}>
       <ScrollView style={styles.scrollableArea}>
         {completedQuests.map((quest) => {

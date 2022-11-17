@@ -5,11 +5,8 @@ import { CurrentUser } from "../context/CurrentUser";
 
 export function ProfileInfo() {
 	const { currentUser } = useContext(CurrentUser);
+	const { display_name, image, stats } = currentUser;
 
-	const { image } = currentUser;
-
-	const stats: { xp: number; coins: number } = { xp: 0, coins: 100 };
-	// console.log(image)
 	const ranks: string[] = [
 		"ToddlerTime",
 		"LilPete",
@@ -18,21 +15,22 @@ export function ProfileInfo() {
 		"BigDaddy",
 	];
 
-	console.log("ranks[-1]: ", ranks[ranks.length - 1]);
-
 	return (
 		<View style={styles.container}>
 			<Image style={styles.image} source={{ uri: image }} />
-			<View>
-				<Text style={styles.title}>{currentUser.user}</Text>
+
+			<View style={styles.holder}>
+				<Text style={styles.title}>{display_name}</Text>
 				<Text style={styles.text}>
 					Rank:{" "}
-					{stats.xp >= ((ranks.length) * 100)
-						? ranks[ranks.length-1]
+					{stats.xp >= ranks.length * 100
+						? ranks[ranks.length - 1]
 						: ranks[Math.floor(stats.xp / 100)]}
 				</Text>
-				<Text style={styles.text}>XP: {stats.xp}</Text>
-				<Text style={styles.text}>Coins: {stats.coins}</Text>
+				<View style={styles.flexRow}>
+					<Text style={styles.text}>XP: {stats.xp} </Text>
+					<Text style={styles.text}>Coins: {stats.coins}</Text>
+				</View>
 			</View>
 		</View>
 	);
@@ -40,17 +38,27 @@ export function ProfileInfo() {
 const styles = StyleSheet.create({
 	container: {
 		flex: 2,
-		flexDirection: "row",
 		alignItems: "center",
 		justifyContent: "center",
 		paddingTop: 20,
 	},
+	holder: {
+		flex: 1,
+		alignItems: "center",
+		justifyContent: "center",
+		padding: 10,
+		paddingHorizontal: 50,
+		borderWidth: 3,
+		borderColor: "#d4d4d4",
+		backgroundColor: "#292936",
+		borderRadius: 20,
+	},
 	title: {
 		fontWeight: "bold",
-		color: "#291403",
+		color: "#d4d4d4",
 	},
 	text: {
-		color: "#291403",
+		color: "#d4d4d4",
 	},
 	separator: {
 		marginVertical: 30,
@@ -63,6 +71,11 @@ const styles = StyleSheet.create({
 		borderRadius: 100,
 		margin: 10,
 		borderWidth: 5,
-		borderColor: "#291403",
+		borderColor: "#d4d4d4",
+	},
+	flexRow: {
+		flexDirection: "row",
+		justifyContent: "space-evenly",
+		flex: 1,
 	},
 });

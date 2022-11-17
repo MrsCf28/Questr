@@ -1,49 +1,95 @@
-import React from "react";
-import { View, StyleSheet, Text, ImageBackground } from "react-native";
+import React, { useContext } from "react";
+import { View, StyleSheet, Text, ImageBackground, Image } from "react-native";
+import { ChangeAvatar } from "../components/ChangeAvatar";
+import { ProfileController } from "../components/ProfileController";
+import { CurrentUser } from "../context/CurrentUser";
 interface tabProp {
-  selectedTab: string;
+	selectedTab: string;
 }
 
-export function AvatarScreen({ selectedTab }: tabProp) {
-  return (
-    <View
-      style={[
-        styles.container,
-        selectedTab === "avatar" ? null : styles.hidden,
-      ]}>
-        <ImageBackground style={styles.image} source={require('../assets/images/knight.png')}>
-          <View>
-            <Text style={styles.text}>Stamina: 8</Text>
-            <Text style={styles.text}>Exploration: 4</Text>
-            <Text style={styles.text}>Perception: 6</Text>
-            <Text style={styles.text}>Dexterity: 8</Text>
-            <Text style={styles.text}>Wisdom: 14</Text>
-            <Text style={styles.text}>Strength: 14</Text>
-          </View>  
-        </ImageBackground>
-    </View>
-  );
+export function AvatarScreen({ setMyAvatar, myAvatar }: tabProp) {
+	const { currentUser } = useContext(CurrentUser);
+
+	const { dexterity, exploration, perception, stamina, strength, wisdom } =
+		currentUser.stats;
+
+	return (
+		<View style={[styles.container]}>
+			<ImageBackground
+				source={require("../assets/images/wood.jpg")}
+				style={styles.background}
+				resizeMode="cover"
+			>
+				<View style={styles.holder}>
+					<View style={styles.frame}>
+						<Image
+							style={styles.image}
+							resizeMode="contain"
+							source={myAvatar}
+						/>
+					</View>
+					<View>
+						<Text style={styles.text}>Stamina: {stamina}</Text>
+						<Text style={styles.text}>
+							Exploration: {exploration}
+						</Text>
+						<Text style={styles.text}>
+							Perception: {perception}
+						</Text>
+						<Text style={styles.text}>Dexterity: {dexterity}</Text>
+						<Text style={styles.text}>Wisdom: {wisdom}</Text>
+						<Text style={styles.text}>Strength: {strength}</Text>
+					</View>
+				</View>
+				<ChangeAvatar setMyAvatar={setMyAvatar} />
+			</ImageBackground>
+		</View>
+	);
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 7,
-    width: "100%",
-    flexDirection: 'row',
-    justifyContent: 'flex-start'
-  },
-  image: {
-    width: '75%',
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: "flex-end",
-    padding: 50,
-  },
-  hidden: {
-    display: "none",
-  },
-  text: {
-    fontWeight: 'bold',
-    lineHeight: 30
-  }
+	container: {
+		flex: 1,
+		alignItems: "center",
+		justifyContent: "center",
+		width: "100%",
+		borderWidth: 6,
+	},
+	background: {
+		flex: 1,
+		alignItems: "center",
+		justifyContent: "center",
+		width: "100%",
+	},
+	frame: {
+		flex: 1,
+		alignItems: "center",
+		justifyContent: "center",
+		borderWidth: 3,
+		borderColor: "#d4d4d4",
+		backgroundColor: "#292936",
+		borderRadius: 20,
+		height: 300,
+		marginRight: 10,
+	},
+	holder: {
+		flex: 1,
+		flexDirection: "row",
+		padding: 20,
+		alignItems: "center",
+	},
+	image: {
+		flex: 1,
+		justifyContent: "center",
+		alignItems: "center",
+		padding: 5,
+	},
+	hidden: {
+		display: "none",
+	},
+	text: {
+		fontWeight: "bold",
+		lineHeight: 30,
+		color: "#d4d4d4",
+	},
 });

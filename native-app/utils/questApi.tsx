@@ -16,13 +16,10 @@ export async function fetchAllQuests() {
 }
 
 export async function fetchQuestById(id: string) {
-    try {
-        const trialQuest = await API.graphql(
+   return API.graphql(
             graphqlOperation(getQuestApi, { id: id })
-        );
-        // console.log(trialQuest.data.getQuestApi);
-        // console.log(trialQuest.data.getQuestApi.objectives[0].endpoint);
-    } catch (err) {
-        console.log('ERROR fetching questById: ', err);
-    }
+        ).then((quest) => {
+            return quest.data.getQuestApi;
+        });
+    
 }

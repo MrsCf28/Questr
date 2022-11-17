@@ -12,7 +12,7 @@ import {
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
-import { ColorSchemeName, Pressable } from "react-native";
+import { ColorSchemeName, Pressable, ImageBackground, StyleSheet } from "react-native";
 import { useContext } from "react";
 import { CurrentUser } from "../context/CurrentUser";
 
@@ -32,6 +32,8 @@ import {
 import LinkingConfiguration from "./LinkingConfiguration";
 import NoQuestScreen from "../screens/NoQuestScreen";
 import CameraPage from "../components/CameraPage";
+import { TopTabs } from "./TopTabs";
+import { AvatarSelector } from "../screens/AvatarSelector";
 
 export default function Navigation({
   colorScheme,
@@ -69,15 +71,21 @@ function RootNavigator() {
         component={NotFoundScreen}
         options={{ title: "Oops!" }}
       />
+      <Stack.Group screenOptions={{ 
+        presentation: "modal" }}>
+        <Stack.Screen name="AvatarSelector" component={AvatarSelector} />
+       </Stack.Group>
+
       <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen
           name="CurrentQuest"
-          component={
-          NoQuestScreen
-          }
+          component={currentUser.current_quest_id !== '0'? CurrentQuestScreen : NoQuestScreen}
         />
+
       </Stack.Group>
-      <Stack.Group screenOptions={{ presentation: "modal" }}>
+      <Stack.Group screenOptions={{ 
+        presentation: "modal",
+        headerShown: false }}>
         <Stack.Screen name="CameraPage" component={CameraPage} />
       </Stack.Group>
       <Stack.Group screenOptions={{ presentation: "modal" }}>
@@ -107,11 +115,12 @@ function BottomTabNavigator() {
       initialRouteName="TabOne"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
+        headerShown: false
       }}
     >
       <BottomTab.Screen
         name="TabOne"
-        component={TabOneScreen}
+        component={TopTabs}
         options={({ navigation }: RootTabScreenProps<"TabOne">) => ({
           title: "Profile",
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
@@ -153,3 +162,11 @@ function TabBarIcon(props: {
 }) {
   return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+}
+});
