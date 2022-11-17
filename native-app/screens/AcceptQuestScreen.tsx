@@ -12,7 +12,7 @@ export default function AcceptQuestScreen({route}) {
   const quest = route.params
 
   function acceptQuest() {
-    setCurrentUser({...currentUser, currentQuest: quest})
+    setCurrentUser({...currentUser, current_quest_id: quest.id})
     navigation.navigate("CurrentQuest")
   }
 

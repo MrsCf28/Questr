@@ -72,9 +72,7 @@ function RootNavigator() {
       <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen
           name="CurrentQuest"
-          component={
-          NoQuestScreen
-          }
+          component={currentUser.current_quest_id !== '0'? CurrentQuestScreen : NoQuestScreen}
         />
       </Stack.Group>
       <Stack.Group screenOptions={{ presentation: "modal" }}>

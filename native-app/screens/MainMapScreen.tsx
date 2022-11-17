@@ -27,7 +27,6 @@ export default function TabTwoScreen() {
 
   const {currentUser} = useContext(CurrentUser)
 
-  const currentQuest: Quest = { latitude: 53.80129139918636, longitude: -1.548085642328802, region: "Leeds" }
   const image = currentUser.image
 
   useEffect(() => {
@@ -59,10 +58,10 @@ export default function TabTwoScreen() {
     );
   }
 
-  if(currentQuest === null) {
+  if(currentUser.current_quest_id === '0') {
     return <AllQuestMap currentLocation ={currentLocation} image={image}/>
-  } else if (currentQuest !== null) {
-    return <CurrentQuestMap currentLocation ={currentLocation} image={image} currentQuest={currentQuest}/>
+  } else if (currentUser.current_quest_id !== '0') {
+    return <CurrentQuestMap currentLocation ={currentLocation} image={image} currentQuestId={currentUser.current_quest_id}/>
   }
   else return <Text>Something Went Wrong</Text>
 }

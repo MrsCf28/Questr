@@ -5,12 +5,14 @@ import { Text, View } from "../components/Themed";
 import { CurrentUser } from "../context/CurrentUser";
 import * as Location from "expo-location";
 import { locationChecker } from "../utils/functions";
+import { fetchQuestById } from "../utils/questApi";
 
 
 export default function CurrentQuestScreen() {
   const navigation = useNavigation();
 
   const { currentUser, setCurrentUser } = useContext(CurrentUser);
+  const [currentQuest, setCurrentQuest] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
   const [location, setLocation] = useState({});
   const [currentLocation, setCurrentLocation] = useState({
@@ -22,29 +24,39 @@ export default function CurrentQuestScreen() {
   const [arrived, setArrived] = useState('null')
 
   const cancelQuest = () => {
-    setCurrentUser({ ...currentUser, currentQuest: null });
+    setCurrentUser({ ...currentUser, current_quest_id: '0' });
   };
 
   useEffect(() => {
-    (async () => {
-      setIsLoading(true)
-      let { status } = await Location.requestForegroundPermissionsAsync(); //asks the phone for permission to use location
-      if (status !== "granted") {
-        return;
-      }
-      let location = await Location.getCurrentPositionAsync({}); //gets the last known location this is quicker than  requesting the current location the alternative is to use Location.getCurrentPositionAsync(options)
-      if (location !== null) {
-        setLocation(location);
-        setCurrentLocation({
-          latitude: location.coords.latitude,
-          longitude: location.coords.longitude,
-          latitudeDelta: 0.01,
-          longitudeDelta: 0.01,
-        });
-      }
-      setIsLoading(false);
-    })();
+    setIsLoading(true)
+    fetchQuestById(currentUser.current_quest_id).then((quest) => {
+      setCurrentQuest(quest);
+      setIsLoading(false)
+    }).catch((err) => {
+      console.log(err, 'error')
+    })
   }, [])
+
+  // useEffect(() => {
+  //   (async () => {
+  //     setIsLoading(true)
+  //     let { status } = await Location.requestForegroundPermissionsAsync(); //asks the phone for permission to use location
+  //     if (status !== "granted") {
+  //       return;
+  //     }
+  //     let location = await Location.getCurrentPositionAsync({}); //gets the last known location this is quicker than  requesting the current location the alternative is to use Location.getCurrentPositionAsync(options)
+  //     if (location !== null) {
+  //       setLocation(location);
+  //       setCurrentLocation({
+  //         latitude: location.coords.latitude,
+  //         longitude: location.coords.longitude,
+  //         latitudeDelta: 0.01,
+  //         longitudeDelta: 0.01,
+  //       });
+  //     }
+  //     setIsLoading(false);
+  //   })();
+  // }, [])
 
   const updateLocation = () => {
       (async () => {
@@ -63,19 +75,21 @@ export default function CurrentQuestScreen() {
             longitudeDelta: 0.01,
           });
         }
-        setArrived(locationChecker(currentUser.currentQuest.location, currentLocation, 3))
+        setArrived(locationChecker(currentQuest.location, currentLocation, 3))
         setIsLoading(false);
       })();
     };
 
   
-  if(isLoading) return <Text>Loading</Text>
-  if(arrived==='true') return (
+  if(isLoading) {
+    return <Text>Loading</Text>
+  } else if(arrived==='true') {
+    return (
   <View style={styles.main}>
     <Text>You Have arrived</Text>
     <Text>Now complete the tasks at hand</Text>
     <View style={styles.container}>
-        {currentUser.currentQuest.objectives.map((objective) => {
+        {currentQuest.objectives.map((objective) => {
           return <Text key={objective.desc}>{objective.desc}</Text>;
         })}
       </View>
@@ -89,24 +103,25 @@ export default function CurrentQuestScreen() {
     </Pressable>
   </View>
   )
+  } else {
   return (
     <View style={styles.main}>
-      <Text style={styles.title}>{currentUser.currentQuest.title}</Text>
+      <Text style={styles.title}>{currentQuest.title}</Text>
       <View style={styles.container}>
-        <Text>{currentUser.currentQuest.category}</Text>
-        <Text>Time Limit: {currentUser.currentQuest.time_limit_hours} hrs</Text>
+        <Text>{currentQuest.category}</Text>
+        <Text>Time Limit: {currentQuest.time_limit_hours} hrs</Text>
       </View>
       <View style={styles.container}>
         <Text>
-          {currentUser.currentQuest.rewards.coins} coins{" "}
-          {currentUser.currentQuest.rewards.xp}XP
+          {currentQuest.rewards.coins} coins{" "}
+          {currentQuest.rewards.xp}XP
         </Text>
       </View>
       <View style={styles.container}>
-        <Text>{currentUser.currentQuest.description}</Text>
+        <Text>{currentQuest.description}</Text>
       </View>
       <View style={styles.container}>
-        {currentUser.currentQuest.objectives.map((objective) => {
+        {currentQuest.objectives.map((objective) => {
           return <Text key={objective.desc}>{objective.desc}</Text>;
         })}
       </View>
@@ -121,6 +136,7 @@ export default function CurrentQuestScreen() {
       </View>
     </View>
   );
+  }
 }
 
 const styles = StyleSheet.create({

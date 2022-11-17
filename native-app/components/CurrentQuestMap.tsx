@@ -1,13 +1,25 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import MapView, { Callout, Marker, Polyline } from "react-native-maps";
 import { StyleSheet, Text, View, Dimensions, Pressable, Image } from "react-native";
+import { fetchQuestById } from "../utils/questApi";
 
 import { CurrentQuestMarker } from "./CurrentQuestMarker";
 
-export default function CurrentQuestMap ({currentLocation, currentQuest, image}) {
 
-    const {latitude, longitude} = currentQuest.location
+export default function CurrentQuestMap ({currentLocation, currentQuestId, image}) {
 
+    const [currentQuest, setCurrentQuest] = useState(null)
+    const [isLoading, setIsLoading] = useState(true)
+
+    useEffect(() => {
+      setIsLoading(true)
+      fetchQuestById(currentQuestId).then((quest) => {
+        setCurrentQuest(quest);
+        setIsLoading(false)
+      })
+    }, [currentQuestId])
+
+    if(isLoading) return <Text>Loading</Text>
     return (
         <View style={styles.container}>
         <MapView
@@ -30,7 +42,7 @@ export default function CurrentQuestMap ({currentLocation, currentQuest, image})
                 quest={currentQuest}
               />
                     <Polyline
-          coordinates={[currentLocation, {latitude, longitude}]}
+          coordinates={[currentLocation, {latitude: currentQuest.location.latitude, longitude: currentQuest.location.longitude}]}
           strokeColor={"#000"}
           strokeWidth={3}
           lineDashPattern={[1]}
