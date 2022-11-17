@@ -36,13 +36,13 @@ export default function CameraScreen({ route }) {
           console.log("CameraPage", res, predict);
         })
         .then(() => {
-          let correctTerms = [];
+          /*    let correctTerms = [];
           predict.forEach((concept) => {
             if (correctTerms.includes(concept.name)) {
               setQuestStatus(true);
               console.log("Correct term detected.");
             }
-          });
+          }); */
         })
         .catch((err) => {
           console.log(err);
