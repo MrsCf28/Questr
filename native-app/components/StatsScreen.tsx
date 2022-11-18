@@ -1,11 +1,9 @@
 import React from "react";
 import { View, ImageBackground, StyleSheet, Text } from "react-native";
 import { Graph } from "./Graph";
-interface tabProp {
-  selectedTab: string;
-}
 
-export function StatsScreen({ selectedTab }: tabProp) {
+
+export function StatsScreen() {
   return (
     <View
       style={[

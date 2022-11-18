@@ -74,7 +74,7 @@ export default function EditProfileScreen() {
 			});
 			navigation.goBack()
 		} else {
-			currentUser.avatar_uri = "../assets/images/knight.png";
+			currentUser.avatar_uri = "0";
 			currentUser.current_quest_id = "0";
 			currentUser.quest_history = [];
 			currentUser.owned_avatar_ids = [1]

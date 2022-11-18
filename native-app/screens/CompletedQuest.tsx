@@ -23,27 +23,27 @@ export default function CompletedQuestScreen({ route }) {
   const quest = currentQuest;
   function updateUserStats() {
     let currentStats = { ...currentUser.stats };
-    // let currentHistory = [...currentUser. currentQuest];
-    
+    let updatedHistory = {quest_id: String(quest.id), quest_title: quest.title, completed_status: 'complete', start_time: String(Date.now())}
     
     Object.keys(currentStats).forEach((stat) => {
       currentStats[stat] += quest.rewards[stat];
     });
-    //had to do like this as patch requires some fields but not all
+
+    setCurrentUser({...currentUser, stats: currentStats, current_quest_id: '0', quest_history:[...currentUser.quest_history, updatedHistory] })
+
     const updatedUser = {
       id: currentUser.id,
       display_name: currentUser.display_name,
       age: currentUser.age,
       preferred_region: currentUser.preferred_region,
       image: currentUser.image,
-      current_quest_id: currentUser.current_quest_id,
-      quest_history: currentUser.quest_id,
+      current_quest_id: '0',
+      quest_history: [...currentUser.quest_history, updatedHistory],
       avatar_uri: currentUser.avatar_uri,
       stats: currentStats,
-      //quest history needs work graphQL wants weird inputs and not the useful ones can we edit??
     };
 
-    setCurrentUser({...currentUser, stats: currentStats, current_quest_id: '0'})
+
 
     patchUser(updatedUser).then(() => {
       console.log('patched')

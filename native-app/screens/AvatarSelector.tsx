@@ -1,8 +1,8 @@
-import React, {useState, useEffect, useContext} from "react";
+import React, {useState, useContext} from "react";
 import { View, StyleSheet, Text, ImageBackground, Image, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { CurrentUser } from "../context/CurrentUser";
-import { StatsScreen } from "../components/StatsScreen";
+import { patchUser } from '../utils/userApi';
 
 interface tabProp {
   selectedTab: string;
@@ -19,28 +19,22 @@ const ManAtArms = require('../assets/images/manAtArms.png')
 const Princess = require('../assets/images/Princess.png')
 const Elf = require('../assets/images/elfknight.png')
 
-export function AvatarSelector({route}) {
+export function AvatarSelector() {
 
-  useEffect(() => {
-    
-  }, [])
 
     
     const navigation = useNavigation();
-    const setMyAvatar = route.params
 
     const {setCurrentUser, currentUser} = useContext(CurrentUser)
-    const [avatarArray, setAvatarArray] = useState([{id:1, image: Bard, cost: 100}, {id:2, image: Jester, cost: 200}, {id:3, image: BlackSmith, cost: 300}, {id:4, image: Knight, cost: 400}, {id:5, image: ManAtArms, cost: 500}, {id:6, image: Mage, cost: 600}, {id:7, image: Elf, cost: 700}, {id:8, image: Princess, cost: 800}, {id:9, image: King, cost: 900}, {id:10, image: DeathKnight, cost: 1000}])
+    const [avatarArray, setAvatarArray] = useState([{id:0, image: Bard, cost: 100}, {id:1, image: Jester, cost: 200}, {id:2, image: BlackSmith, cost: 300}, {id:3, image: Knight, cost: 400}, {id:4, image: ManAtArms, cost: 500}, {id:5, image: Mage, cost: 600}, {id:6, image: Elf, cost: 700}, {id:7, image: Princess, cost: 800}, {id:8, image: King, cost: 900}, {id:9, image: DeathKnight, cost: 1000}])
     const [currentAvatar, setCurrentAvatar] = useState(0)
 
     //can this array exsit on the user??
-    const [boughtAvatars, setBoughtAvatars] = useState([{id:1, image: Bard, cost: 'Owned'}])
-
 
     const {coins} = currentUser.stats
     // working on this to check if avatar exists in bought array
     function avatarChecker() {
-      if(boughtAvatars.some(avatar => avatar.id === avatarArray[currentAvatar].id)) {
+      if(currentUser.owned_avatar_ids.some((avatar) => avatar === avatarArray[currentAvatar].id)) {
         return true
       } else {
         return false
@@ -52,7 +46,6 @@ export function AvatarSelector({route}) {
         setCurrentAvatar(0)
       } else {
         setCurrentAvatar((current) => current + 1)
-        console.log(currentUser.stats.coins, 'user', coins, 'coins')
       }
     }
 
@@ -65,21 +58,51 @@ export function AvatarSelector({route}) {
     }
 
     function select() {
-        setMyAvatar(avatarArray[currentAvatar].image)
+        
+      setCurrentUser({...currentUser, avatar_uri: `${currentAvatar}` })
+
+      const updatedUser = {
+        id: currentUser.id,
+        display_name: currentUser.display_name,
+        age: currentUser.age,
+        preferred_region: currentUser.preferred_region,
+        image: currentUser.image,
+        current_quest_id: currentUser.current_quest_id,
+        quest_history: currentUser.quest_history,
+        avatar_uri: `${currentAvatar}`,
+        stats: currentUser.stats
+      };
+      patchUser(updatedUser).then(() => {
+        console.log('patched')
+      }).catch((err: any) => {
+        
+        console.log("error in patch user", err);
+      });
         navigation.goBack()
     }
 
-    function buy() {
-      setBoughtAvatars([...boughtAvatars, avatarArray[currentAvatar]])
 
-      // how the fuck do i deconstruct this properly
-      // setCurrentUser(() => {
-      //   const newCoins = currentUser.stats.coins - avatarArray[currentAvatar].cost;
-      //   console.log(newCoins)
-      // this is wrong deleted all my stats except coins!!
-        // return {...currentUser, stats: { coins: newCoins}}
-      // })
-      console.log(currentUser)
+    function buy() {
+
+      const newBoughtAvatars = [...currentUser.owned_avatar_ids, avatarArray[currentAvatar].id]
+      const newStats = {...currentUser.stats, coins: currentUser.stats.coins - avatarArray[currentAvatar].cost}
+
+      setCurrentUser({...currentUser, owned_avatar_ids: newBoughtAvatars, stats: newStats })
+
+      const updatedUser = {
+        id: currentUser.id,
+        age: currentUser.age,
+        current_quest_id: currentUser.current_quest_id,
+        stats: newStats,
+        owned_avatar_ids: newBoughtAvatars
+      };
+
+      patchUser(updatedUser).then(() => {
+        console.log('patched')
+      }).catch((err: any) => {
+        
+        console.log("error in patch user", err);
+      });
     }
 
   return (
