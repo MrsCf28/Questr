@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Pressable, StyleSheet, TextInput, Image } from "react-native";
+import { Pressable, StyleSheet, TextInput, Image, ImageBackground } from "react-native";
 import { Text, View } from "../components/Themed";
 import * as ImagePicker from "expo-image-picker";
 import { CurrentUser } from "../context/CurrentUser";
@@ -97,78 +97,129 @@ export default function EditProfileScreen() {
 	// but only if I go back and forth between the pages
 
 	return (
-		<View style={styles.container}>
-			{displayImage}
-			<TextInput
-				placeholder="Name"
-				style={styles.input}
-				onChangeText={(text) =>
-					setCurrentUser({
-						...currentUser,
-						display_name: text,
-					})
-				}
-			></TextInput>
-			<TextInput
-				placeholder="Age"
-				style={styles.input}
-				onChangeText={(text) =>
-					setCurrentUser({ ...currentUser, age: text })
-				}
-			></TextInput>
-			<TextInput
-				placeholder="Region"
-				style={styles.input}
-				onChangeText={(text) =>
-					setCurrentUser({
-						...currentUser,
-						preferred_region: [text],
-					})
-				}
-			></TextInput>
-			<Pressable style={styles.button} onPress={() => pickImage()}>
-				<Text style={styles.text}>Pick Image</Text>
-			</Pressable>
-			<Pressable style={styles.button} onPress={handleSubmit}>
-				<Text style={styles.text}>Submit</Text>
-			</Pressable>
-		</View>
+	<View style={[styles.container]}>
+		  <ImageBackground source={require('../assets/images/wood.jpg')} style={styles.background} resizeMode="cover">
+
+			<View style={styles.holder}>
+				{displayImage}
+				<TextInput
+					placeholder="Name"
+					placeholderTextColor={'#d4d4d4'}
+					style={styles.input}
+					onChangeText={(text) =>
+						setCurrentUser({
+							...currentUser,
+							display_name: text,
+						})
+					}
+				></TextInput>
+				<TextInput
+					placeholder="Age"
+					placeholderTextColor={'#d4d4d4'}
+					style={styles.input}
+					onChangeText={(text) =>
+						setCurrentUser({ ...currentUser, age: text })
+					}
+				></TextInput>
+				<TextInput
+					placeholder="Region"
+					placeholderTextColor={'#d4d4d4'}
+					style={styles.input}
+					onChangeText={(text) =>
+						setCurrentUser({
+							...currentUser,
+							preferred_region: [text],
+						})
+					}
+				></TextInput>
+				<Pressable style={styles.button} onPress={() => pickImage()}>
+					<Text style={styles.text}>Pick Image</Text>
+				</Pressable>
+				<Pressable style={styles.button} onPress={handleSubmit}>
+					<Text style={styles.text}>Submit</Text>
+				</Pressable>
+			</View>
+		</ImageBackground>
+    </View>
 	);
 
 }
 
 const styles = StyleSheet.create({
-	container: {
+    container: {
+      flex: 1,
+      alignItems: "center",
+      justifyContent: "center",
+      width: "100%",
+    },
+    background: {
+      flex: 1,
+      alignItems: "center",
+      justifyContent: "center",
+      width: "100%",
+    },
+    holder: {
 		flex: 1,
-		alignItems: "center",
-		justifyContent: "center",
-		flexDirection: "column",
-		padding: 20,
-	},
-	input: {
-		height: 40,
-		margin: 12,
-		borderWidth: 1,
-		width: "80%",
-		padding: 10,
-		borderRadius: 20,
-	},
-	button: {
-		margin: 10,
-		backgroundColor: "pink",
-		width: "80%",
-		padding: 10,
-		borderRadius: 20,
-		justifyContent: "center",
-		alignItems: "center",
-	},
-	text: {
-		color: "black",
-	},
+    	alignItems: 'center',
+    	justifyContent: 'center',
+		width: '100%',
+		backgroundColor: 'rgba(0, 0, 0, 0.0)'
+    },
 	image: {
 		height: 150,
 		width: 150,
 		borderRadius: 100,
 		margin: 10,
+		borderWidth: 5,
+		borderColor: "#d4d4d4",
 	},
+    text: {
+      fontWeight: 'bold',
+      lineHeight: 30,
+      color: '#d4d4d4'
+    },
+    button: {
+        margin: 5,
+        padding: 5,
+        color: "white",
+        borderRadius: 20,
+		width: '80%',
+		height: 50,
+        justifyContent: "center",
+        alignItems: "center",
+        borderWidth: 5,
+        borderColor: '#7a7877',
+        backgroundColor: '#014c54',
+      },
+    selectButton: {
+        flex:1, 
+        width: '100%', 
+        justifyContent:'center',
+        alignItems: 'center'
+    },
+    plaque: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth: 3,
+        borderColor: '#d4d4d4',
+        backgroundColor: '#292936',
+        borderRadius: 20,
+        padding: 5,
+    },
+    disabledButton: {
+      backgroundColor: '#4a040c'
+    },
+	input: {
+		alignItems: "center",
+		justifyContent: "center",
+		borderColor: "#d4d4d4",
+		backgroundColor: "#292936",
+		borderRadius: 15,
+		width: '80%',
+		height: 50,
+		margin: 12,
+		borderWidth: 1,
+		padding: 10,
+	}
 });
