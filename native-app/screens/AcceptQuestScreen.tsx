@@ -28,13 +28,12 @@ export default function AcceptQuestScreen({route}) {
     };
 
     patchUser(updatedUser).then(() => {
-      navigation.navigate("TabOne", {screen: 'Home'})
     }).catch((err: any) => {
       
       console.log("error in patch user", err);
     });
-
     navigation.navigate('TabTwo')
+    
   }
 
   return (

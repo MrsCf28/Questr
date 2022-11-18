@@ -1,11 +1,13 @@
 import React from "react";
 import { Text, View, StyleSheet } from "react-native";
 
+//will need to format date to some thing actually readable
+
 export function HistoryCard({ quest }) {
   return (
     <View style={styles.container}>
-      <Text style={styles.text} >{quest.title}</Text>
-      <Text style={styles.text} >Completed: 10/11/2022</Text>
+      <Text style={styles.text} >{quest.quest_title}</Text>
+      <Text style={styles.text} >Completed: {quest.start_time}</Text>
     </View>
   );
 }

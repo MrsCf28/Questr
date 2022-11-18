@@ -39,14 +39,12 @@ export default function CurrentQuestScreen() {
       stats: currentUser.stats
     };
 
-    patchUser(updatedUser).then(() => {
-      navigation.navigate("TabOne", {screen: 'Home'})
-    }).catch((err: any) => {
-      
+    patchUser(updatedUser).then(() => {  
+    }).catch((err: any) => {     
       console.log("error in patch user", err);
     });
-
     navigation.navigate('TabTwo')
+
   };
 
   useEffect(() => {

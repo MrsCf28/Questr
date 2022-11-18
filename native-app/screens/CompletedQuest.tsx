@@ -23,7 +23,7 @@ export default function CompletedQuestScreen({ route }) {
   const quest = currentQuest;
   function updateUserStats() {
     let currentStats = { ...currentUser.stats };
-    let updatedHistory = {quest_id: String(quest.id), quest_title: quest.title, completed_status: 'complete', start_time: '18/11/2022'}
+    let updatedHistory = {quest_id: String(quest.id), quest_title: quest.title, completed_status: 'complete', start_time: String(Date.now())}
     
     Object.keys(currentStats).forEach((stat) => {
       currentStats[stat] += quest.rewards[stat];
