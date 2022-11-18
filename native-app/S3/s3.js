@@ -6,8 +6,7 @@ const randomBytes = promisify(crypto.randomBytes);
 
 const region = "eu-west-2";
 const bucketName = "questr-image-bucket";
-const accessKeyId = "AKIAZWU7ACTO6VV2VXDN";
-const secretAccessKey = "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";
+
 
 const s3 = new aws.S3({
   region,
