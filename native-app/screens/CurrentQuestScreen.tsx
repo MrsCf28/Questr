@@ -87,24 +87,34 @@ export default function CurrentQuestScreen() {
   } else if(arrived==='true') {
     return (
   <View style={styles.main}>
-    <Text>You Have arrived</Text>
-    <Text>Now complete the tasks at hand</Text>
-    <View style={styles.container}>
-        {currentQuest.objectives.map((objective) => {
-          return <Text key={objective.desc}>{objective.desc}</Text>;
-        })}
+      <ImageBackground source={require('../assets/images/stones.jpg')} style={styles.container} resizeMode="cover">
+      <ImageBackground source={require('../assets/images/bigScroll.png')} resizeMode="cover" style={styles.scroll}>
+      <View style={styles.holder}>
+      <View style={styles.container}>
+        <Text>You Have arrived</Text>
+        <Text>Now complete the tasks at hand</Text>
       </View>
-    <Pressable
-          style={styles.button}
-          onPress={() => {
-            navigation.navigate("CameraScreen");
-          }}
-        >
-          <Text>Submit Quest Update</Text>
-    </Pressable>
-    <Pressable style={[styles.button, styles.cancel]} onPress={cancelQuest}>
-                <Text style={styles.buttonText}>Cancel Quest</Text>
-    </Pressable>
+      <View style={styles.container}>
+          {currentQuest.objectives.map((objective) => {
+            return <Text key={objective.desc}>{objective.desc}</Text>;
+          })}
+        </View>
+      <View style={styles.buttonContainer}>
+        <Pressable
+              style={styles.button}
+              onPress={() => {
+                navigation.navigate("CameraScreen");
+              }}
+            >
+              <Text>Submit Quest Update</Text>
+        </Pressable>
+        <Pressable style={[styles.button, styles.cancel]} onPress={cancelQuest}>
+                    <Text style={styles.buttonText}>Cancel Quest</Text>
+        </Pressable>
+      </View>
+    </View>
+    </ImageBackground>
+    </ImageBackground>
   </View>
   )
   } else {
@@ -140,6 +150,9 @@ export default function CurrentQuestScreen() {
               </Pressable>
               <Pressable style={[styles.button, styles.cancel]} onPress={cancelQuest}>
                 <Text style={styles.buttonText}>Cancel Quest</Text>
+              </Pressable>
+              <Pressable style={[styles.button, styles.cancel]} onPress={()=> setArrived('true')}>
+                <Text style={styles.buttonText}>CHEAT!!! Skip Location</Text>
               </Pressable>
             </View>
           </View> 

@@ -66,7 +66,6 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
   const { currentUser } = useContext(CurrentUser);
-  console.log(currentUser, "nav page");
 
   return (
     <Stack.Navigator>
@@ -110,7 +109,6 @@ function RootNavigator() {
       <Stack.Group
         screenOptions={{
           presentation: "modal",
-          headerShown: false,
         }}
       >
         <Stack.Screen

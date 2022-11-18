@@ -24,6 +24,7 @@ export type RootStackParamList = {
   EditProfile: undefined;
   CameraScreen: undefined;
   AvatarSelector: undefined;
+  CompletedQuestScreen: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =

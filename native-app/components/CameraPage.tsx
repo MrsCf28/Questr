@@ -30,11 +30,11 @@ export default function CameraPage() {
 	}, []);
 
 	const takePicture = async () => {
-		console.log(CameraType);
+		// console.log(CameraType);
 		if (cameraRef) {
 			try {
 				const data = await cameraRef.current.takePictureAsync();
-				console.log(data);
+				// console.log(data);
 				setImage(data.uri);
 			} catch (err) {
 				console.log(err);

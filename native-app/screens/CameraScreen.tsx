@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useRef, useContext } from "react";
-import { StyleSheet, Text, View, Button, TextInput, useWindowDimensions, } from "react-native";
+import { StyleSheet, Text, View, Button, TextInput, useWindowDimensions, Pressable } from "react-native";
 
 import { Camera, CameraType } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
@@ -73,7 +73,7 @@ export default function CameraScreen({ route }) {
       postClarifai(base64Img, predict, setPredict)
         .then((res) => {
           let endpoints = currentQuest.objectives[0].endpoint;
-          console.log("here", currentQuest.objectives[0].endpoint);
+          // console.log("here", currentQuest.objectives[0].endpoint);
           //console.log(predict, "predict in camerascreen");
           //setPredict(() => setPredict(res));
           //console.log("CameraPage", res, predict);
@@ -81,7 +81,7 @@ export default function CameraScreen({ route }) {
           Object.values(predict).forEach((concept) => {
             if (endpoints.includes(concept.name)) {
               //setQuestStatus(true);
-              console.log("Correct term detected.", concept.name);
+              // console.log("Correct term detected.", concept.name);
               setQuestStatus(true);
             }
           });
@@ -149,6 +149,9 @@ export default function CameraScreen({ route }) {
               }}
             />
           </View>
+          <Pressable style={[styles.button, styles.cancel]} onPress={() => navigation.navigate("CompletedQuestScreen", {currentQuest, currentUser})}>
+                <Text style={styles.buttonText}>CHEAT!!!! COMPLETE QUEST</Text>
+            </Pressable>
         </Camera>
       </View>
     ) : (
@@ -178,4 +181,19 @@ const styles = StyleSheet.create({
 		alignItems: "flex-end",
 		justifyContent: "center",
 	},
+  button: {
+    margin: 20,
+    width: "80%",
+    borderColor: '#7a7877',
+    backgroundColor: '#014c54',
+    borderWidth: 3,
+    padding: 10,
+    color: "white",
+    borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  buttonText: {
+    color: "white",
+  },
 });
