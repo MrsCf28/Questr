@@ -13,6 +13,7 @@ import { Camera, CameraType } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
 import CameraButton from "../components/CameraButton";
 import postClarifai from "../clarifaiAPI/callAPI";
+import postUrlClarifai from "../clarifaiAPI/urlAPI";
 import * as FileSystem from "expo-file-system";
 import { fetchQuestById } from "../utils/questApi";
 import { CurrentUser } from "../context/CurrentUser";
@@ -69,15 +70,15 @@ export default function CameraScreen({ route }) {
   }, [questStatus]);
 
   const takePicture = async () => {
-    const { url } = await fetch("/s3Url").then((res) => res.json());
-    console.log(url);
+    //const { url } = await fetch("/s3Url").then((res) => res.json());
+    //console.log(url);
     // post the image direclty to the s3 bucket
     if (cameraRef) {
       const data = await cameraRef.current.takePictureAsync();
 
       console.log(data, data.uri);
 
-      await fetch(url, {
+      /*       await fetch(url, {
         method: "PUT",
         headers: {
           "Content-Type": "multipart/form-data",
@@ -87,7 +88,7 @@ export default function CameraScreen({ route }) {
 
       const imageUrl = url.split("?")[0];
       console.log(imageUrl);
-
+ */
       const base64Img = await FileSystem.readAsStringAsync(data.uri, {
         encoding: "base64",
       });
