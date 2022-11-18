@@ -95,7 +95,7 @@ export default function CurrentQuestScreen() {
             longitudeDelta: 0.01,
           });
         }
-        setArrived(locationChecker(currentQuest.location, currentLocation, 2))
+        setArrived(locationChecker(currentQuest.location, currentLocation, 3))
         setIsLoading(false);
       })();
     };
@@ -125,7 +125,7 @@ export default function CurrentQuestScreen() {
                 navigation.navigate("CameraScreen");
               }}
             >
-              <Text>Submit Quest Update</Text>
+              <Text style={styles.buttonText}>Submit Quest Update</Text>
         </Pressable>
         <Pressable style={[styles.button, styles.cancel]} onPress={cancelQuest}>
                     <Text style={styles.buttonText}>Cancel Quest</Text>
@@ -145,22 +145,17 @@ export default function CurrentQuestScreen() {
           <View style={styles.holder}>
             <Text style={styles.title}>{currentQuest.title}</Text>
             <View style={styles.container}>
-              <Text>{currentQuest.category}</Text>
+            <Text style={styles.text}>Quest Type: {currentQuest.category}</Text>
               <Text>Time Limit: {currentQuest.time_limit_hours} hrs</Text>
             </View>
             <View style={styles.container}>
               <Text>
-                {currentQuest.rewards.coins} coins{" "}
-                {currentQuest.rewards.xp}XP
+                {currentQuest.rewards.coins} Coins{" "}
+                {currentQuest.rewards.xp} XP
               </Text>
             </View>
             <View style={styles.container}>
               <Text>{currentQuest.description}</Text>
-            </View>
-            <View style={styles.container}>
-              {currentQuest.objectives.map((objective) => {
-                return <Text key={objective.desc}>{objective.desc}</Text>;
-              })}
             </View>
             <View style={styles.buttonContainer}>
               {arrived==='false'? <Text style={styles.redText}>I don't think we are there yet, move around and check again</Text> : <Text style={styles.blueText}>Adventurer press the button when you have arrived</Text>}
@@ -244,5 +239,8 @@ const styles = StyleSheet.create({
   },
   blueText: {
     color: 'blue',
+  },
+  text: {
+    textTransform: "capitalize",
   }
 });

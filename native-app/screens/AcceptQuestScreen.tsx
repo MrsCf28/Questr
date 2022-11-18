@@ -43,19 +43,14 @@ export default function AcceptQuestScreen({route}) {
           <View style={styles.holder}>
             <Text style={styles.title}>{quest.title}</Text>
             <View style={styles.container}>
-              <Text>{quest.category}</Text>
+              <Text style={styles.text}>Quest Type: {quest.category}</Text>
               <Text>Time Limit: {quest.time_limit_hours} hr</Text>
             </View>
             <View style={styles.container}>
-              <Text>{quest.rewards.coins} coins {quest.rewards.xp}XP</Text>
+              <Text>{quest.rewards.coins} Coins {quest.rewards.xp}XP</Text>
             </View>
             <View style={styles.container}>
               <Text>{quest.description}</Text>
-              <View style={styles.container}>
-                {quest.objectives.map((objective) => {
-                  return <Text key={objective.desc}>{objective.desc}</Text>
-                })}
-              </View>
             </View>
             <Pressable
               style={styles.button}
@@ -122,5 +117,8 @@ export default function AcceptQuestScreen({route}) {
     buttonText: {
       color: "white",
     },
+    text: {
+      textTransform: "capitalize",
+    }
   });
 
