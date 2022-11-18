@@ -33,17 +33,11 @@ export default function CompletedQuestScreen({ route }) {
 
     const updatedUser = {
       id: currentUser.id,
-      display_name: currentUser.display_name,
       age: currentUser.age,
-      preferred_region: currentUser.preferred_region,
-      image: currentUser.image,
       current_quest_id: '0',
       quest_history: [...currentUser.quest_history, updatedHistory],
-      avatar_uri: currentUser.avatar_uri,
       stats: currentStats,
     };
-
-
 
     patchUser(updatedUser).then(() => {
       console.log('patched')

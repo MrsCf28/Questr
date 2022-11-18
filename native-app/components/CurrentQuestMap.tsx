@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from "react";
-import MapView, { Callout, Marker, Polyline } from "react-native-maps";
-import { StyleSheet, Text, View, Dimensions, Pressable, Image } from "react-native";
+import MapView, { Callout, Marker, Polyline, } from "react-native-maps";
+import { StyleSheet, Text, View, Dimensions, TouchableOpacity, Image } from "react-native";
 import { fetchQuestById } from "../utils/questApi";
 
 import { CurrentQuestMarker } from "./CurrentQuestMarker";
 
+import {
+  useNavigation,
+} from "@react-navigation/native";
+
 
 export default function CurrentQuestMap ({currentLocation, currentQuestId, image}) {
+
+    const navigation = useNavigation();
 
     const [currentQuest, setCurrentQuest] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
@@ -47,7 +53,14 @@ export default function CurrentQuestMap ({currentLocation, currentQuestId, image
           strokeWidth={3}
           lineDashPattern={[1]}
         />
+
         </MapView>
+
+        <TouchableOpacity onPress={() => navigation.navigate('TabOne', {screen:'CurrentQuest'})} style={styles.overlay}>
+          <Text style={styles.text}>Quest Details</Text>
+        </TouchableOpacity>
+
+
       </View>
       )
 }
@@ -73,6 +86,36 @@ const styles = StyleSheet.create({
       height: 30,
       width: 30,
       borderRadius: 50,
+    },
+    button: {
+      margin: 10,
+      padding: 10,
+      color: "white",
+      borderRadius: 20,
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      borderWidth: 5,
+      borderColor: '#7a7877',
+      backgroundColor: '#014c54',
+    },
+    text: {
+      color: "white",
+    },
+    overlay: {
+      position: 'absolute',
+      bottom: 0,
+      margin: 10,
+      padding: 10,
+      color: "white",
+      borderRadius: 20,
+      width: '50%',
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      borderWidth: 5,
+      borderColor: '#7a7877',
+      backgroundColor: '#014c54',
     },
   });
   
