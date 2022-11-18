@@ -1,4 +1,4 @@
-import { TabRouter } from "@react-navigation/native";
+import React, {useContext} from 'react'
 import { StyleSheet, Button, TextInput } from "react-native";
 
 import { Pressable, ImageBackground } from "react-native";
@@ -8,35 +8,56 @@ import {
 } from "@react-navigation/native";
 import { Text, View } from "../components/Themed";
 import { useEffect } from "react";
+import { patchUser } from '../utils/userApi';
+import { CurrentUser } from '../context/CurrentUser';
 
 export default function CompletedQuestScreen({ route }) {
   const navigation = useNavigation();
 
   let { currentQuest, currentUser } = route.params;
-  console.log("In completed quest", currentQuest, currentUser);
 
+  const {setCurrentUser} = useContext(CurrentUser)
+  
+
+
+  const quest = currentQuest;
   function updateUserStats() {
     let currentStats = { ...currentUser.stats };
-    let currentHistory = [...currentUser.quest_history, currentQuest];
-    let updatedUser = { ...currentUser };
-    const quest = currentQuest;
-
+    // let currentHistory = [...currentUser. currentQuest];
+    
+    
     Object.keys(currentStats).forEach((stat) => {
-      currentStats.stat += quest.rewards[stat];
+      currentStats[stat] += quest.rewards[stat];
     });
+    //had to do like this as patch requires some fields but not all
+    const updatedUser = {
+      id: currentUser.id,
+      display_name: currentUser.display_name,
+      age: currentUser.age,
+      preferred_region: currentUser.preferred_region,
+      image: currentUser.image,
+      current_quest_id: currentUser.current_quest_id,
+      quest_history: currentUser.quest_id,
+      avatar_uri: currentUser.avatar_uri,
+      stats: currentStats,
+      //quest history needs work graphQL wants weird inputs and not the useful ones can we edit??
+    };
 
-    updatedUser.stats = currentStats;
-    updatedUser.quest_history = currentHistory;
+    setCurrentUser({...currentUser, stats: currentStats, current_quest_id: '0'})
 
-    patchUser(updatedUser).catch((err: any) => {
+    patchUser(updatedUser).then(() => {
+      console.log('patched')
+      navigation.navigate("TabOne", {screen: 'Home'})
+    }).catch((err: any) => {
+      
       console.log("error in patch user", err);
     });
-    navigation.goBack("TabOne");
+    
   }
 
-  useEffect(() => {
-    updateUserStats();
-  }, []);
+  // useEffect(() => {
+  //   updateUserStats();
+  // }, []);
 
   return (
     <View style={styles.main}>
@@ -70,6 +91,9 @@ export default function CompletedQuestScreen({ route }) {
               <Text>strength + {quest.rewards.strength}</Text>
               <Text>wisdom + {quest.rewards.wisdom}</Text>
             </View>
+            <Pressable style={[styles.button]} onPress={() => updateUserStats()}>
+                <Text style={styles.buttonText}>Claim Rewards</Text>
+            </Pressable>
           </View>
         </ImageBackground>
       </ImageBackground>
