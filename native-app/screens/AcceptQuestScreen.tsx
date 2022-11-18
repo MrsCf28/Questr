@@ -3,6 +3,7 @@ import { Pressable, StyleSheet, ImageBackground } from "react-native";
 import { useNavigation, usePreventRemoveContext } from "@react-navigation/native";
 import { Text, View } from "../components/Themed";
 import { CurrentUser } from "../context/CurrentUser";
+import { patchUser } from "../utils/userApi";
 
 export default function AcceptQuestScreen({route}) {
   const navigation = useNavigation();
@@ -13,6 +14,26 @@ export default function AcceptQuestScreen({route}) {
 
   function acceptQuest() {
     setCurrentUser({...currentUser, current_quest_id: quest.id})
+    
+    const updatedUser = {
+      id: currentUser.id,
+      display_name: currentUser.display_name,
+      age: currentUser.age,
+      preferred_region: currentUser.preferred_region,
+      image: currentUser.image,
+      current_quest_id: quest.id,
+      quest_history: currentUser.quest_history,
+      avatar_uri: currentUser.avatar_uri,
+      stats: currentUser.stats
+    };
+
+    patchUser(updatedUser).then(() => {
+      navigation.navigate("TabOne", {screen: 'Home'})
+    }).catch((err: any) => {
+      
+      console.log("error in patch user", err);
+    });
+
     navigation.navigate('TabTwo')
   }
 

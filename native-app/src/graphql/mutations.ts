@@ -149,8 +149,10 @@ export const createUserApi = /* GraphQL */ `
       age
       current_quest_id
       avatar_uri
+      owned_avatar_ids
       quest_history {
         quest_id
+        quest_title
         completed_status
         start_time
         end_time
@@ -184,8 +186,10 @@ export const updateUserApi = /* GraphQL */ `
       age
       current_quest_id
       avatar_uri
+      owned_avatar_ids
       quest_history {
         quest_id
+        quest_title
         completed_status
         start_time
         end_time
@@ -219,8 +223,10 @@ export const deleteUserApi = /* GraphQL */ `
       age
       current_quest_id
       avatar_uri
+      owned_avatar_ids
       quest_history {
         quest_id
+        quest_title
         completed_status
         start_time
         end_time

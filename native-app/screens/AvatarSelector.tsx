@@ -52,7 +52,7 @@ export function AvatarSelector({route}) {
         setCurrentAvatar(0)
       } else {
         setCurrentAvatar((current) => current + 1)
-        console.log(currentUser.stats.coins, 'user', coins, 'coins')
+        console.log(currentUser)
       }
     }
 

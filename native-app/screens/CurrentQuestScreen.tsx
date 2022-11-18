@@ -6,6 +6,7 @@ import { CurrentUser } from "../context/CurrentUser";
 import * as Location from "expo-location";
 import { locationChecker } from "../utils/functions";
 import { fetchQuestById } from "../utils/questApi";
+import { patchUser } from "../utils/userApi";
 
 
 export default function CurrentQuestScreen() {
@@ -25,6 +26,26 @@ export default function CurrentQuestScreen() {
 
   const cancelQuest = () => {
     setCurrentUser({ ...currentUser, current_quest_id: '0' });
+    
+    const updatedUser = {
+      id: currentUser.id,
+      display_name: currentUser.display_name,
+      age: currentUser.age,
+      preferred_region: currentUser.preferred_region,
+      image: currentUser.image,
+      current_quest_id: '0',
+      quest_history: currentUser.quest_history,
+      avatar_uri: currentUser.avatar_uri,
+      stats: currentUser.stats
+    };
+
+    patchUser(updatedUser).then(() => {
+      navigation.navigate("TabOne", {screen: 'Home'})
+    }).catch((err: any) => {
+      
+      console.log("error in patch user", err);
+    });
+
     navigation.navigate('TabTwo')
   };
 

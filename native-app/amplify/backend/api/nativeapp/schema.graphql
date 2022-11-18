@@ -33,6 +33,7 @@ type UserApi @model {
 	age: Int!
 	current_quest_id: String!
 	avatar_uri: String
+	owned_avatar_ids: [Int]
 	quest_history: [QuestHistory]
 	stats: Rewards
 	preferred_region: [String]
@@ -40,6 +41,7 @@ type UserApi @model {
 
 type QuestHistory {
 	quest_id: String!
+	quest_title: String!
 	completed_status: String!
 	start_time: String!
 	end_time: String
