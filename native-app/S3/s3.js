@@ -1,13 +1,14 @@
 import { AWSAppSyncRealTimeProvider } from "@aws-amplify/pubsub";
 import aws from "aws-sdk";
+import dotenv from "dotenv";
 import crypto from "crypto";
 import { promisify } from "util";
 const randomBytes = promisify(crypto.randomBytes);
 
 const region = "eu-west-2";
 const bucketName = "questr-image-bucket";
-const accessKeyId = "AKIAZWU7ACTO6VV2VXDN";
-const secretAccessKey = "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";
+const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
+const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
 
 const s3 = new aws.S3({
   region,
@@ -27,3 +28,21 @@ export async function generateUploadURL() {
   const uploadURL = await S3.getSignedUrlPromise("putObject", params);
   return uploadURL;
 }
+
+/* 
+
+  // get secure url from our server
+  const { url } = await fetch("/s3Url").then(res => res.json())
+  console.log(url)
+
+  // post the image direclty to the s3 bucket
+  await fetch(url, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "multipart/form-data"
+    },
+    body: file
+  })
+
+  const imageUrl = url.split('?')[0]
+  console.log(imageUrl) */
