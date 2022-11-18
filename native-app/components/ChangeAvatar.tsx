@@ -9,12 +9,12 @@ import {
 
 
 
-export function ChangeAvatar({setMyAvatar}) {
+export function ChangeAvatar() {
 const navigation = useNavigation();
 
     return (
         <View style={styles.container}>
-            <Pressable style={styles.button} onPress={() => navigation.navigate('AvatarSelector', setMyAvatar)}>
+            <Pressable style={styles.button} onPress={() => navigation.navigate('AvatarSelector')}>
                 <Text style={styles.text}>Change Avatar</Text>
             </Pressable>
         </View>

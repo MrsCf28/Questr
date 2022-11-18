@@ -1,13 +1,14 @@
+import { useFocusEffect } from "@react-navigation/native";
 import React, { useContext } from "react";
 import { View, StyleSheet, Text, ImageBackground, Image } from "react-native";
 import { ChangeAvatar } from "../components/ChangeAvatar";
 import { ProfileController } from "../components/ProfileController";
 import { CurrentUser } from "../context/CurrentUser";
 interface tabProp {
-	selectedTab: string;
+	myAvatar: string;
 }
 
-export function AvatarScreen({ setMyAvatar, myAvatar }: tabProp) {
+export function AvatarScreen({ myAvatar }: tabProp) {
 	const { currentUser } = useContext(CurrentUser);
 
 	const { dexterity, exploration, perception, stamina, strength, wisdom } =
@@ -41,7 +42,7 @@ export function AvatarScreen({ setMyAvatar, myAvatar }: tabProp) {
 						<Text style={styles.text}>Strength: {strength}</Text>
 					</View>
 				</View>
-				<ChangeAvatar setMyAvatar={setMyAvatar} />
+				<ChangeAvatar />
 			</ImageBackground>
 		</View>
 	);
