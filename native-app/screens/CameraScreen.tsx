@@ -1,6 +1,13 @@
-
 import React, { useState, useEffect, useRef, useContext } from "react";
-import { StyleSheet, Text, View, Button, TextInput, useWindowDimensions, Pressable } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  TextInput,
+  useWindowDimensions,
+  Pressable,
+} from "react-native";
 
 import { Camera, CameraType } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
@@ -11,8 +18,6 @@ import { fetchQuestById } from "../utils/questApi";
 import { CurrentUser } from "../context/CurrentUser";
 
 import { useNavigation } from "@react-navigation/native";
-
-
 
 export default function CameraScreen({ route }) {
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
@@ -30,8 +35,7 @@ export default function CameraScreen({ route }) {
   const navigation = useNavigation();
 
   const { width } = useWindowDimensions();
-	const height = Math.round((width * 16) / 9);
-
+  const height = Math.round((width * 16) / 9);
 
   // const { questStatus, setQuestStatus } = route.params;
 
@@ -65,8 +69,25 @@ export default function CameraScreen({ route }) {
   }, [questStatus]);
 
   const takePicture = async () => {
+    const { url } = await fetch("/s3Url").then((res) => res.json());
+    console.log(url);
+    // post the image direclty to the s3 bucket
     if (cameraRef) {
       const data = await cameraRef.current.takePictureAsync();
+
+      console.log(data, data.uri);
+
+      await fetch(url, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        body: data.uri,
+      });
+
+      const imageUrl = url.split("?")[0];
+      console.log(imageUrl);
+
       const base64Img = await FileSystem.readAsStringAsync(data.uri, {
         encoding: "base64",
       });
@@ -77,7 +98,6 @@ export default function CameraScreen({ route }) {
           //console.log(predict, "predict in camerascreen");
           //setPredict(() => setPredict(res));
           //console.log("CameraPage", res, predict);
-
           Object.values(predict).forEach((concept) => {
             if (endpoints.includes(concept.name)) {
               //setQuestStatus(true);
@@ -108,84 +128,89 @@ export default function CameraScreen({ route }) {
 
   return (
     <View style={styles.appContainer}>
-    {hasCameraPermission ? (
-      <View style={styles.container}>
-        <Camera
-          ratio="16:9"
-          style={
-            { width: "100%", height: height }
-          }
-          type={type}
-          flashMode={flash}
-          ref={cameraRef}
-        >
-          <View style={styles.flexrow}>
-            <CameraButton
-              title={"take picture"}
-              color={"red"}
-              icon="camera"
-              onPress={takePicture}
-            />
-            <CameraButton
-              title={"flip camera"}
-              color={"blue"}
-              icon="retweet"
-              onPress={flipCamera}
-            />
-            <CameraButton
-              title={"flash"}
-              color={
-                flash === Camera.Constants.FlashMode.off
-                  ? "yellow"
-                  : "#f1f1f1"
-              }
-              icon="flash"
-              onPress={() => {
-                setFlash(
+      {hasCameraPermission ? (
+        <View style={styles.container}>
+          <Camera
+            ratio="16:9"
+            style={{ width: "100%", height: height }}
+            type={type}
+            flashMode={flash}
+            ref={cameraRef}
+          >
+            <View style={styles.flexrow}>
+              <CameraButton
+                title={"take picture"}
+                color={"red"}
+                icon="camera"
+                onPress={takePicture}
+              />
+              <CameraButton
+                title={"flip camera"}
+                color={"blue"}
+                icon="retweet"
+                onPress={flipCamera}
+              />
+              <CameraButton
+                title={"flash"}
+                color={
                   flash === Camera.Constants.FlashMode.off
-                    ? Camera.Constants.FlashMode.on
-                    : Camera.Constants.FlashMode.off
-                );
-              }}
-            />
-          </View>
-          <Pressable style={[styles.button, styles.cancel]} onPress={() => navigation.navigate("CompletedQuestScreen", {currentQuest, currentUser})}>
-                <Text style={styles.buttonText}>CHEAT!!!! COMPLETE QUEST</Text>
+                    ? "yellow"
+                    : "#f1f1f1"
+                }
+                icon="flash"
+                onPress={() => {
+                  setFlash(
+                    flash === Camera.Constants.FlashMode.off
+                      ? Camera.Constants.FlashMode.on
+                      : Camera.Constants.FlashMode.off
+                  );
+                }}
+              />
+            </View>
+            <Pressable
+              style={[styles.button, styles.cancel]}
+              onPress={() =>
+                navigation.navigate("CompletedQuestScreen", {
+                  currentQuest,
+                  currentUser,
+                })
+              }
+            >
+              <Text style={styles.buttonText}>CHEAT!!!! COMPLETE QUEST</Text>
             </Pressable>
-        </Camera>
-      </View>
-    ) : (
-      <Text>Camera</Text>
-    )}
-  </View>
+          </Camera>
+        </View>
+      ) : (
+        <Text>Camera</Text>
+      )}
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-	appContainer: {
-		flex: 1,
-		justifyContent: "center",
-	},
-	container: { flex: 1, alignItems: "center",
-  justifyContent: "center",},
-	camera: {
-		flex: 1,
-		borderRadius: 20,
-		padding: 50,
-		justifyContent: "flex-end",
-	},
-	flexrow: {
-		flex: 1,
+  appContainer: {
+    flex: 1,
+    justifyContent: "center",
+  },
+  container: { flex: 1, alignItems: "center", justifyContent: "center" },
+  camera: {
+    flex: 1,
+    borderRadius: 20,
+    padding: 50,
+    justifyContent: "flex-end",
+  },
+  flexrow: {
+    flex: 1,
     // backgroundColor:"black",
-		flexDirection: "row",
-		alignItems: "flex-end",
-		justifyContent: "center",
-	},
+    flexDirection: "row",
+    alignItems: "flex-end",
+    justifyContent: "center",
+  },
   button: {
     margin: 20,
     width: "80%",
-    borderColor: '#7a7877',
-    backgroundColor: '#014c54',
+    borderColor: "#7a7877",
+    backgroundColor: "#014c54",
     borderWidth: 3,
     padding: 10,
     color: "white",
