@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import MapView, { Callout, Marker, Polyline, } from "react-native-maps";
-import { StyleSheet, Text, View, Dimensions, TouchableOpacity, Image } from "react-native";
+import { StyleSheet, Text, View, Dimensions, TouchableOpacity, Pressable, Image } from "react-native";
 import { fetchQuestById } from "../utils/questApi";
 
 import { CurrentQuestMarker } from "./CurrentQuestMarker";
@@ -56,9 +56,9 @@ export default function CurrentQuestMap ({currentLocation, currentQuestId, image
 
         </MapView>
 
-        <TouchableOpacity onPress={() => navigation.navigate('TabOne', {screen:'CurrentQuest'})} style={styles.overlay}>
+        <Pressable onPress={() => navigation.navigate('TabOne', {screen:'CurrentQuest'})} style={styles.overlay}>
           <Text style={styles.text}>Quest Details</Text>
-        </TouchableOpacity>
+        </Pressable>
 
 
       </View>
