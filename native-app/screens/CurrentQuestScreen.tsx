@@ -29,14 +29,8 @@ export default function CurrentQuestScreen() {
     
     const updatedUser = {
       id: currentUser.id,
-      display_name: currentUser.display_name,
       age: currentUser.age,
-      preferred_region: currentUser.preferred_region,
-      image: currentUser.image,
       current_quest_id: '0',
-      quest_history: currentUser.quest_history,
-      avatar_uri: currentUser.avatar_uri,
-      stats: currentUser.stats
     };
 
     patchUser(updatedUser).then(() => {  
@@ -44,7 +38,6 @@ export default function CurrentQuestScreen() {
       console.log("error in patch user", err);
     });
     navigation.navigate('TabTwo')
-
   };
 
   useEffect(() => {
@@ -97,45 +90,15 @@ export default function CurrentQuestScreen() {
         }
         setArrived(locationChecker(currentQuest.location, currentLocation, 3))
         setIsLoading(false);
+        if(locationChecker(currentQuest.location, currentLocation, 3) === 'true') {
+          navigation.navigate('ActiveQuest', currentQuest)
+        }
       })();
     };
 
   
   if(isLoading) {
     return <Text>Loading</Text>
-  } else if(arrived==='true') {
-    return (
-  <View style={styles.main}>
-      <ImageBackground source={require('../assets/images/stones.jpg')} style={styles.container} resizeMode="cover">
-      <ImageBackground source={require('../assets/images/bigScroll.png')} resizeMode="cover" style={styles.scroll}>
-      <View style={styles.holder}>
-      <View style={styles.container}>
-        <Text>You Have arrived</Text>
-        <Text>Now complete the tasks at hand</Text>
-      </View>
-      <View style={styles.container}>
-          {currentQuest.objectives.map((objective) => {
-            return <Text key={objective.desc}>{objective.desc}</Text>;
-          })}
-        </View>
-      <View style={styles.buttonContainer}>
-        <Pressable
-              style={styles.button}
-              onPress={() => {
-                navigation.navigate("CameraScreen");
-              }}
-            >
-              <Text style={styles.buttonText}>Submit Quest Update</Text>
-        </Pressable>
-        <Pressable style={[styles.button, styles.cancel]} onPress={cancelQuest}>
-                    <Text style={styles.buttonText}>Cancel Quest</Text>
-        </Pressable>
-      </View>
-    </View>
-    </ImageBackground>
-    </ImageBackground>
-  </View>
-  )
   } else {
   return (
     <View style={styles.main}>
@@ -165,7 +128,7 @@ export default function CurrentQuestScreen() {
               <Pressable style={[styles.button, styles.cancel]} onPress={cancelQuest}>
                 <Text style={styles.buttonText}>Cancel Quest</Text>
               </Pressable>
-              <Pressable style={[styles.button, styles.cancel]} onPress={()=> setArrived('true')}>
+              <Pressable style={[styles.button, styles.cancel]} onPress={()=> navigation.navigate('ActiveQuest', currentQuest)}>
                 <Text style={styles.buttonText}>CHEAT!!! Skip Location</Text>
               </Pressable>
             </View>

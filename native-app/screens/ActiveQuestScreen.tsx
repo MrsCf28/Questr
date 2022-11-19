@@ -1,28 +1,61 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useContext, useEffect, useState } from "react";
 import { Pressable, StyleSheet, ImageBackground } from "react-native";
+import TextQuest from "../components/QuestSteps/TextQuest";
 import { Text, View } from "../components/Themed";
+import { CurrentUser } from "../context/CurrentUser";
 
 
 
-export default function ActiveQuestScreen() {
-
+export default function ActiveQuestScreen({route}) {
+    const currentQuest = route.params
     const navigation = useNavigation();
+    const [questStep, setQuestStep] = useState(0)
+    const [currentStep, setCurrentStep] = useState(currentQuest.objectives[questStep])
 
+    const { currentUser, setCurrentUser } = useContext(CurrentUser)
+
+    const cancelQuest = () => {
+        setCurrentUser({ ...currentUser, current_quest_id: '0' });
+        
+        const updatedUser = {
+          id: currentUser.id,
+          age: currentUser.age,
+          current_quest_id: '0',
+        };
+    }
+
+    useEffect(() => {
+        if(questStep === currentQuest.objectives.length) {
+            navigation.navigate("CompletedQuestScreen", {
+                currentQuest,
+                currentUser,
+              })
+        } else {
+            setCurrentStep(currentQuest.objectives[questStep])
+        }
+        
+    }, [questStep])
+
+    if(currentStep.method === 'text') {
+        return <TextQuest setQuestStep={setQuestStep} questStep={questStep} currentStep={currentStep}/>
+    } else if(currentStep.method === 'location') {
+
+    } else if(currentStep.method === 'battle') {
+
+    } else if(currentStep.method === 'image') {
     return (
         <View style={styles.main}>
             <ImageBackground source={require('../assets/images/stones.jpg')} style={styles.container} resizeMode="cover">
             <ImageBackground source={require('../assets/images/bigScroll.png')} resizeMode="cover" style={styles.scroll}>
             <View style={styles.holder}>
             <View style={styles.container}>
-              <Text>You Have arrived</Text>
-              <Text>Now complete the tasks at hand</Text>
+              {questStep === 0? <Text>You Have arrived</Text> : null}
+              <Text>Now complete the task at hand</Text>
             </View>
             <View style={styles.container}>
-                {currentQuest.objectives.map((objective) => {
-                  return <Text key={objective.desc}>{objective.desc}</Text>;
-                })}
-              </View>
+                <Text>{currentStep.desc}</Text>
+            </View>
             <View style={styles.buttonContainer}>
               <Pressable
                     style={styles.button}
@@ -40,7 +73,8 @@ export default function ActiveQuestScreen() {
           </ImageBackground>
           </ImageBackground>
         </View>
-    )
+        )
+    }
 }
 
 const styles = StyleSheet.create({
@@ -107,5 +141,5 @@ const styles = StyleSheet.create({
     },
     text: {
       textTransform: "capitalize",
-    }
-  });
+    },
+  })

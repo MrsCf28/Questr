@@ -138,7 +138,7 @@ export function AvatarSelector() {
                   {!avatarChecker()? <Text style={styles.text}>{avatarArray[currentAvatar].cost} Gold</Text> : <Text style={styles.text}>{Number(currentUser.avatar_uri) !== currentAvatar?'Owned':'Selected'}</Text>}
               </View>
               { !avatarChecker()?
-              <Pressable style={[styles.button, coins < avatarArray[currentAvatar].cost? styles.disabledButton : null]} onPress={buy}>
+              <Pressable disabled={coins < avatarArray[currentAvatar].cost} style={[styles.button, coins < avatarArray[currentAvatar].cost? styles.disabledButton : null]} onPress={buy}>
                   <Text style={styles.text}>{coins < avatarArray[currentAvatar].cost? 'Insufficent Funds' : 'Buy'}</Text>
               </Pressable> :
               <Pressable style={[styles.button, avatarChecker()? styles.disabledButton : null]} onPress={sell}>
