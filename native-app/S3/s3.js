@@ -7,7 +7,6 @@ const randomBytes = promisify(crypto.randomBytes);
 const region = "eu-west-2";
 const bucketName = "questr-image-bucket";
 
-
 const s3 = new aws.S3({
   region,
   accessKeyId,
@@ -26,3 +25,16 @@ export async function generateUploadURL() {
   const uploadURL = await S3.getSignedUrlPromise("putObject", params);
   return uploadURL;
 }
+
+/* const { url } = await fetch("/s3Url").then((res) => res.json());
+console.log(url);
+// post the image direclty to the s3 bucket      await fetch(url, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        body: data.uri,
+      });
+
+      const imageUrl = url.split("?")[0];
+      console.log(imageUrl); */

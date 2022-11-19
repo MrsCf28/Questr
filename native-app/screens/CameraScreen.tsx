@@ -16,24 +16,30 @@ import postClarifai from "../clarifaiAPI/callAPI";
 import * as FileSystem from "expo-file-system";
 import { fetchQuestById } from "../utils/questApi";
 import { CurrentUser } from "../context/CurrentUser";
-
 import { useNavigation } from "@react-navigation/native";
 
+import { firebase } from "../firebase.config";
+
 export default function CameraScreen({ route }) {
+  // Quest and user details
+  const { currentUser, setCurrentUser } = useContext(CurrentUser);
+  const [currentQuest, setCurrentQuest] = useState(null);
+
+  // Camera permissions and controls
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
   const [flash, setFlash] = useState(Camera.Constants.FlashMode.off);
-  const [predict, setPredict] = useState({});
-  const [imageErr, setImageErr] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const cameraRef = useRef(null);
 
-  const { currentUser, setCurrentUser } = useContext(CurrentUser);
-  const [currentQuest, setCurrentQuest] = useState(null);
+  // Image, predictions and result
+  const [image, setImage] = useState({});
+  const [predict, setPredict] = useState({});
+  const [imageErr, setImageErr] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [questStatus, setQuestStatus] = useState(false);
 
   const navigation = useNavigation();
-
   const { width } = useWindowDimensions();
   const height = Math.round((width * 16) / 9);
 
@@ -68,25 +74,34 @@ export default function CameraScreen({ route }) {
     }
   }, [questStatus]);
 
+  const uploadImage = async () => {
+    setUploading(true);
+    const response = await fetch(image.uri);
+    const blob = await response.blob();
+    const filename = image.uri.substring(image.uri.lastIndexOf("/") + 1);
+    let ref = firebase.storage().ref().child(filename).put(blob);
+
+    try {
+      await ref;
+    } catch (err) {
+      console.log(err);
+    }
+    setUploading(false);
+    alert("Photo loaded...");
+    setImage({});
+  };
+
   const takePicture = async () => {
-    const { url } = await fetch("/s3Url").then((res) => res.json());
-    console.log(url);
-    // post the image direclty to the s3 bucket
     if (cameraRef) {
       const data = await cameraRef.current.takePictureAsync();
 
       console.log(data, data.uri);
 
-      await fetch(url, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-        body: data.uri,
-      });
+      const source = { uri: data.uri };
 
-      const imageUrl = url.split("?")[0];
-      console.log(imageUrl);
+      setImage(() => setImage(source));
+
+      uploadImage();
 
       const base64Img = await FileSystem.readAsStringAsync(data.uri, {
         encoding: "base64",
