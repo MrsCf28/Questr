@@ -1,24 +1,17 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useContext, useEffect, useState } from "react";
 import { Pressable, StyleSheet, ImageBackground, TextInput } from "react-native";
-import { Text, View } from "../../components/Themed";
+import { Text, View } from "../Themed";
 import { CurrentUser } from "../../context/CurrentUser";
 import { patchUser } from "../../utils/userApi";
 
 
 
-export default function TextQuest({completedSteps, currentStep, questStepNo, setQuestStepNo}) {
+export default function PreBattle({completedSteps, currentStep, questStepNo, setPreBattle}) {
 
     const navigation = useNavigation();
 
     const { currentUser, setCurrentUser } = useContext(CurrentUser)
-    const [answer, setAnswer] = useState('')
-    const [popup, setPopup] = useState(false)
-
-    // useEffect(() => {
-    //     console.log('yeah')
-    // }, [questStepNo])
-    // console.log(answer)
 
     const cancelQuest = () => {
         setCurrentUser({ ...currentUser, current_quest_id: '0' });
@@ -34,26 +27,14 @@ export default function TextQuest({completedSteps, currentStep, questStepNo, set
         navigation.navigate('TabTwo')
     }
 
-    const handleSubmit = () => {
-        if(currentStep.endpoint.includes(answer.toLowerCase())) {
-            setAnswer('')
-            setPopup(true)
-            setTimeout(() => {
-              setPopup(false)
-            }, 1000)
-            setQuestStepNo((current) => current + 1)
-        }
+   const goToMap = () => {
+      setPreBattle(false)
     }
 
 
     return (
         <View style={styles.main}>
-            <ImageBackground source={require('../../assets/images/stones.jpg')} style={styles.main} resizeMode="cover">
-            {popup?             
-            <View style={[styles.holder, styles.correct]}>
-              <Text style={styles.text}>Correct Answer!</Text>
-            </View>
-            :
+            <ImageBackground source={require('../../assets/images/stones.jpg')} style={styles.main} resizeMode="cover">           
             <View style={styles.holder}>
                 <View style={styles.container}>
                 {questStepNo === 0? <Text style={styles.text}>You Have arrived</Text> : null}
@@ -63,29 +44,20 @@ export default function TextQuest({completedSteps, currentStep, questStepNo, set
                     <Text style={styles.text}>{currentStep.desc}</Text>
                 </View>
                 <View style={styles.container}>
-                    <TextInput placeholder="Answer"
-                        placeholderTextColor={'#d4d4d4'}
-                        style={styles.input}
-                        value={answer}
-                        onChangeText={(text) => {
-                            console.log(text)
-                            setAnswer(text)}}>
-                    </TextInput>
                 </View>
                 <View style={styles.buttonContainer}>
-                <Pressable style={styles.button} onPress={handleSubmit}>
-					<Text style={styles.text}>Submit</Text>
-				</Pressable>
+                <Pressable style={styles.button} onPress={goToMap}>
+					        <Text style={styles.text}>To Battle</Text>
+				        </Pressable>
                 <Pressable style={[styles.button, styles.cancel]} onPress={cancelQuest}>
                             <Text style={styles.buttonText}>Cancel Quest</Text>
                 </Pressable>
                 </View>
-          </View>}
+          </View>
           </ImageBackground>
         </View>
         )
     }
-
 
 const styles = StyleSheet.create({
     container: {
@@ -145,12 +117,6 @@ const styles = StyleSheet.create({
     buttonText: {
       color: "white",
     },
-    redText: {
-      color: 'red'
-    },
-    blueText: {
-      color: 'blue',
-    },
     text: {
       textTransform: "capitalize",
       color: 'white'
@@ -159,23 +125,4 @@ const styles = StyleSheet.create({
       textTransform: "capitalize",
       color: '#01803a'
     },
-    input: {
-		alignItems: "center",
-		justifyContent: "center",
-		borderColor: "#d4d4d4",
-		backgroundColor: "#292936",
-		borderRadius: 15,
-		width: 250,
-		height: 50,
-		borderWidth: 1,
-		padding: 10,
-		color: 'white'
-	},
-    correct: {
-        backgroundColor: '#0a4a20',
-        height: 200,
-        width: '80%',
-        alignItems: 'center',
-        justifyContent: 'center'
-    }
   })

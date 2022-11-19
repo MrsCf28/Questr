@@ -1,7 +1,11 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useContext, useEffect, useState } from "react";
 import { Pressable, StyleSheet, ImageBackground } from "react-native";
+import LocationQuest from "../components/QuestSteps/LocationQuest";
+import PreLocation from "../components/QuestSteps/PreLocation";
+import PreBattle from "../components/QuestSteps/PreBattle";
 import TextQuest from "../components/QuestSteps/TextQuest";
+import BattleQuest from "../components/QuestSteps/BattleQuest";
 import { Text, View } from "../components/Themed";
 import { CurrentUser } from "../context/CurrentUser";
 
@@ -10,8 +14,11 @@ import { CurrentUser } from "../context/CurrentUser";
 export default function ActiveQuestScreen({route}) {
     const currentQuest = route.params
     const navigation = useNavigation();
-    const [questStep, setQuestStep] = useState(0)
-    const [currentStep, setCurrentStep] = useState(currentQuest.objectives[questStep])
+    const [questStepNo, setQuestStepNo] = useState(0)
+    const [currentStep, setCurrentStep] = useState(currentQuest.objectives[questStepNo])
+    const [preLocation, setPreLocation] = useState(true)
+    const [preBattle, setPreBattle] = useState(true)
+    const [completedSteps, setCompletedSteps] = useState([])
 
     const { currentUser, setCurrentUser } = useContext(CurrentUser)
 
@@ -26,23 +33,23 @@ export default function ActiveQuestScreen({route}) {
     }
 
     useEffect(() => {
-        if(questStep === currentQuest.objectives.length) {
-            navigation.navigate("CompletedQuestScreen", {
-                currentQuest,
-                currentUser,
-              })
+        if(questStepNo === currentQuest.objectives.length) {
+            navigation.navigate("CompletedQuestScreen", {currentQuest, currentUser,})
         } else {
-            setCurrentStep(currentQuest.objectives[questStep])
+            setCurrentStep(currentQuest.objectives[questStepNo])
+            setCompletedSteps(currentQuest.objectives.slice(0, questStepNo))
+            setPreBattle(true)
+            setPreLocation(true)
         }
         
-    }, [questStep])
+    }, [questStepNo])
 
     if(currentStep.method === 'text') {
-        return <TextQuest setQuestStep={setQuestStep} questStep={questStep} currentStep={currentStep}/>
+        return <TextQuest completedSteps={completedSteps} setQuestStepNo={setQuestStepNo} questStepNo={questStepNo} currentStep={currentStep}/>
     } else if(currentStep.method === 'location') {
-
+        return preLocation? <PreLocation completedSteps={completedSteps} setPreLocation={setPreLocation} questStepNo={questStepNo} currentStep={currentStep}/> : <LocationQuest setQuestStepNo={setQuestStepNo} questStepNo={questStepNo} currentStep={currentStep}/>
     } else if(currentStep.method === 'battle') {
-
+      return preBattle? <PreBattle completedSteps={completedSteps} setPreBattle={setPreBattle} questStepNo={questStepNo} currentStep={currentStep}/> : <BattleQuest setQuestStepNo={setQuestStepNo} questStepNo={questStepNo} currentStep={currentStep}/>
     } else if(currentStep.method === 'image') {
     return (
         <View style={styles.main}>
@@ -50,8 +57,8 @@ export default function ActiveQuestScreen({route}) {
             <ImageBackground source={require('../assets/images/bigScroll.png')} resizeMode="cover" style={styles.scroll}>
             <View style={styles.holder}>
             <View style={styles.container}>
-              {questStep === 0? <Text>You Have arrived</Text> : null}
-              <Text>Now complete the task at hand</Text>
+              {questStepNo === 0? <Text>You Have arrived</Text> : null}
+              {completedSteps.map(step =><Text key={step.desc} style={styles.green}>{step.desc}</Text>)}
             </View>
             <View style={styles.container}>
                 <Text>{currentStep.desc}</Text>
@@ -106,10 +113,6 @@ const styles = StyleSheet.create({
       width: '100%',
       backgroundColor: 'none'
     },
-    title: {
-      fontSize: 20,
-      fontWeight: "bold",
-    },
     buttonContainer: {
       alignItems: "center",
       width: "100%",
@@ -132,14 +135,5 @@ const styles = StyleSheet.create({
     },
     buttonText: {
       color: "white",
-    },
-    redText: {
-      color: 'red'
-    },
-    blueText: {
-      color: 'blue',
-    },
-    text: {
-      textTransform: "capitalize",
     },
   })

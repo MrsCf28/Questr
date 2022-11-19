@@ -18,26 +18,6 @@ export function CurrentQuestMarker({quest}) {
         <View>
         <Image source={require('../assets/images/marker.png')} style={{width:26, height:30 }} />
           </View>
-          {/* <Callout style={styles.callout}
-          onPress={() => navigation.navigate("CurrentQuest")}>
-            
-            <View style={styles.marker}>
-              <Text>{quest.title}</Text>
-              <View style={styles.container}>
-                <Text>{quest.category}</Text>
-                <Text> Time Limit: {quest.timeLimit}</Text>
-              </View>
-              <View style={styles.container}>
-                <Text> {quest.rewards.coins} coins {quest.rewards.xp} XP</Text>
-              </View>
-              <Pressable
-                style={styles.button}
-                onPress={() => navigation.navigate("AcceptQuest", quest)}
-                >
-                <Text style={styles.buttonText}>See Details</Text>
-              </Pressable>
-            </View>
-          </Callout> */}
         </Marker>
     )
 }
