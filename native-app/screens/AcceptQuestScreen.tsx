@@ -50,7 +50,7 @@ export default function AcceptQuestScreen({route}) {
               <Text>{quest.rewards.coins} Coins {quest.rewards.xp}XP</Text>
             </View>
             <View style={styles.container}>
-              <Text>{quest.description}</Text>
+              <Text style={styles.text}>{quest.description}</Text>
             </View>
             <Pressable
               style={styles.button}
@@ -119,6 +119,7 @@ export default function AcceptQuestScreen({route}) {
     },
     text: {
       textTransform: "capitalize",
+      textAlign: 'center'
     }
   });
 

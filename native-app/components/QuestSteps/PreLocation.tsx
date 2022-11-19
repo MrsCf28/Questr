@@ -119,10 +119,12 @@ const styles = StyleSheet.create({
     },
     text: {
       textTransform: "capitalize",
-      color: 'white'
+      color: 'white',
+      textAlign: 'center'
     },
     green: {
       textTransform: "capitalize",
-      color: '#01803a'
+      color: '#01803a',
+      textAlign: 'center'
     },
   })

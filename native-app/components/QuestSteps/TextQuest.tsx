@@ -40,8 +40,8 @@ export default function TextQuest({completedSteps, currentStep, questStepNo, set
             setPopup(true)
             setTimeout(() => {
               setPopup(false)
+              setQuestStepNo((current) => current + 1)
             }, 1000)
-            setQuestStepNo((current) => current + 1)
         }
     }
 
@@ -121,6 +121,7 @@ const styles = StyleSheet.create({
     title: {
       fontSize: 20,
       fontWeight: "bold",
+      textAlign: 'center'
     },
     buttonContainer: {
       alignItems: "center",
@@ -146,18 +147,22 @@ const styles = StyleSheet.create({
       color: "white",
     },
     redText: {
-      color: 'red'
+      color: 'red',
+      textAlign: 'center'
     },
     blueText: {
       color: 'blue',
+      textAlign: 'center'
     },
     text: {
       textTransform: "capitalize",
-      color: 'white'
+      color: 'white',
+      textAlign: 'center'
     },
     green: {
       textTransform: "capitalize",
-      color: '#01803a'
+      color: '#01803a',
+      textAlign: 'center'
     },
     input: {
 		alignItems: "center",

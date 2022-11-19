@@ -118,7 +118,7 @@ export default function CurrentQuestScreen() {
               </Text>
             </View>
             <View style={styles.container}>
-              <Text>{currentQuest.description}</Text>
+              <Text style={styles.text}>{currentQuest.description}</Text>
             </View>
             <View style={styles.buttonContainer}>
               {arrived==='false'? <Text style={styles.redText}>I don't think we are there yet, move around and check again</Text> : <Text style={styles.blueText}>Adventurer press the button when you have arrived</Text>}
@@ -198,12 +198,15 @@ const styles = StyleSheet.create({
     color: "white",
   },
   redText: {
-    color: 'red'
+    color: 'red',
+    textAlign: 'center'
   },
   blueText: {
     color: 'blue',
+    textAlign: 'center'
   },
   text: {
     textTransform: "capitalize",
+    textAlign: 'center'
   }
 });

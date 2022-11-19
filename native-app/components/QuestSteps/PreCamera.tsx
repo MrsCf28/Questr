@@ -7,7 +7,7 @@ import { patchUser } from "../../utils/userApi";
 
 
 
-export default function PreBattle({completedSteps, currentStep, questStepNo, setPreBattle}) {
+export default function PreCamera({completedSteps, currentStep, questStepNo, setPreCamera}) {
 
     const navigation = useNavigation();
 
@@ -27,8 +27,8 @@ export default function PreBattle({completedSteps, currentStep, questStepNo, set
         navigation.navigate('TabTwo')
     }
 
-   const goToMap = () => {
-      setPreBattle(false)
+   const Camera = () => {
+      setPreCamera(false)
     }
 
 
@@ -46,8 +46,8 @@ export default function PreBattle({completedSteps, currentStep, questStepNo, set
                 <View style={styles.container}>
                 </View>
                 <View style={styles.buttonContainer}>
-                <Pressable style={styles.button} onPress={goToMap}>
-					        <Text style={styles.text}>To Battle</Text>
+                <Pressable style={styles.button} onPress={Camera}>
+					        <Text style={styles.text}>Open Camera</Text>
 				        </Pressable>
                 <Pressable style={[styles.button, styles.cancel]} onPress={cancelQuest}>
                             <Text style={styles.buttonText}>Cancel Quest</Text>
@@ -93,6 +93,7 @@ const styles = StyleSheet.create({
     title: {
       fontSize: 20,
       fontWeight: "bold",
+      textAlign: 'center'
     },
     buttonContainer: {
       alignItems: "center",
@@ -124,7 +125,6 @@ const styles = StyleSheet.create({
     },
     green: {
       textTransform: "capitalize",
-      color: '#01803a',
-      textAlign: 'center'
+      color: '#01803a'
     },
   })

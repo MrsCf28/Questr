@@ -19,7 +19,7 @@ import { CurrentUser } from "../context/CurrentUser";
 
 import { useNavigation } from "@react-navigation/native";
 
-export default function CameraScreen({ route }) {
+export default function CameraScreen({ route, setQuestStepNo }) {
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
   const [flash, setFlash] = useState(Camera.Constants.FlashMode.off);
@@ -169,13 +169,8 @@ export default function CameraScreen({ route }) {
             </View>
             <Pressable
               style={[styles.button, styles.cancel]}
-              onPress={() =>
-                navigation.navigate("CompletedQuestScreen", {
-                  currentQuest,
-                  currentUser,
-                })
-              }
-            >
+              onPress={() => setQuestStepNo((current) => current + 1)}
+              >
               <Text style={styles.buttonText}>CHEAT!!!! COMPLETE QUEST</Text>
             </Pressable>
           </Camera>
