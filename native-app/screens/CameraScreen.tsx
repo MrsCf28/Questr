@@ -12,28 +12,36 @@ import {
 import { Camera, CameraType } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
 import CameraButton from "../components/CameraButton";
-import postClarifai from "../clarifaiAPI/callAPI";
+
 import * as FileSystem from "expo-file-system";
 import { fetchQuestById } from "../utils/questApi";
 import { CurrentUser } from "../context/CurrentUser";
-
 import { useNavigation } from "@react-navigation/native";
 
+import postClarifai from "../clarifaiAPI/callAPI";
+import postUrlClarifai from "../clarifaiAPI/urlAPI";
+import { Storage } from "aws-amplify";
+
 export default function CameraScreen({ route }) {
+  // Quest and user details
+  const { currentUser, setCurrentUser } = useContext(CurrentUser);
+  const [currentQuest, setCurrentQuest] = useState(null);
+
+  // Camera permissions and controls
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
   const [flash, setFlash] = useState(Camera.Constants.FlashMode.off);
-  const [predict, setPredict] = useState({});
-  const [imageErr, setImageErr] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const cameraRef = useRef(null);
 
-  const { currentUser, setCurrentUser } = useContext(CurrentUser);
-  const [currentQuest, setCurrentQuest] = useState(null);
+  // Image, predictions and result
+  const [image, setImage] = useState({});
+  const [predict, setPredict] = useState({});
+  const [imageErr, setImageErr] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [questStatus, setQuestStatus] = useState(false);
 
   const navigation = useNavigation();
-
   const { width } = useWindowDimensions();
   const height = Math.round((width * 16) / 9);
 
@@ -69,47 +77,35 @@ export default function CameraScreen({ route }) {
   }, [questStatus]);
 
   const takePicture = async () => {
-    const { url } = await fetch("/s3Url").then((res) => res.json());
-    console.log(url);
-    // post the image direclty to the s3 bucket
     if (cameraRef) {
       const data = await cameraRef.current.takePictureAsync();
-
       console.log(data, data.uri);
-
-      await fetch(url, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-        body: data.uri,
-      });
-
-      const imageUrl = url.split("?")[0];
-      console.log(imageUrl);
-
-      const base64Img = await FileSystem.readAsStringAsync(data.uri, {
-        encoding: "base64",
-      });
-      postClarifai(base64Img, predict, setPredict)
-        .then((res) => {
-          let endpoints = currentQuest.objectives[0].endpoint;
-          // console.log("here", currentQuest.objectives[0].endpoint);
-          //console.log(predict, "predict in camerascreen");
-          //setPredict(() => setPredict(res));
-          //console.log("CameraPage", res, predict);
-          Object.values(predict).forEach((concept) => {
-            if (endpoints.includes(concept.name)) {
-              //setQuestStatus(true);
-              // console.log("Correct term detected.", concept.name);
-              setQuestStatus(true);
-            }
+      const source = { uri: data.uri };
+      //setImage(() => setImage(source));
+      try {
+        const response = await fetch(data.uri);
+        const blob = await response.blob();
+        let currDate = new Date().toJSON();
+        Storage.put(currDate, blob, {
+          // contentType: 'image/jpeg' // contentType is optional
+        }).then((result) => {
+          const signedURL = Storage.get(result.key).then((res) => {
+            console.log("signedURL: ", res);
+            postUrlClarifai(res, predict, setPredict).then((res) => {
+              let endpoints = currentQuest.objectives[0].endpoint;
+              Object.values(predict).forEach((concept) => {
+                console.log(concept.name);
+                if (endpoints.includes(concept.name)) {
+                  console.log("Match --", concept.name);
+                  //setQuestStatus(true);
+                }
+              });
+            });
           });
-        })
-        .catch((err) => {
-          console.log(err);
-          setImageErr(true);
         });
+      } catch (err) {
+        console.log("Error uploading file:", err);
+      }
     }
   };
 
