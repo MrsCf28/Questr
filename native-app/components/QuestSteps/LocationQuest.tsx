@@ -43,7 +43,6 @@ export default function LocationQuest ({currentStep, questStepNo, setQuestStepNo
             longitudeDelta: 0.01,
           });
         }
-        setIsLoading(false);
       })();
     }, [location]);
 

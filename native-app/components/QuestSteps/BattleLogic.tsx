@@ -37,7 +37,7 @@ export const magicAttackLogic = (me, enemy) => {
             myDamage: false,
             enemyDamageAmount : me.wisdom + me.exploration,
             enemyDamage: true,
-            statement: 'Your Magic Breaks The Enemy Defence'
+            statement: 'Your Magic Breaks The Enemies Defence'
         }
     }
 }
@@ -52,7 +52,7 @@ export const quickAttackLogic = (me, enemy) => {
             myDamage: false,
             enemyDamageAmount : me.strength + me.dexterity,
             enemyDamage: true,
-            statement: 'You Darts In Striking The Enemy Before They Can Cast'
+            statement: 'You Dart In Striking The Enemy Before They Can Cast'
         }
     } else if(randomMove === 1) {
         return {
@@ -72,7 +72,7 @@ export const quickAttackLogic = (me, enemy) => {
             myDamage: false,
             enemyDamageAmount : 0,
             enemyDamage: true,
-            statement: 'The Enemy Smash Your Attack Aside With There Defence'
+            statement: 'The Enemy Smashed Your Attack Aside With Their Defence'
         }
     }
 }

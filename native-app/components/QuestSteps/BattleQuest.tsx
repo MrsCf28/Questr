@@ -39,6 +39,7 @@ export default function BattleQuest ({setQuestStepNo, setPreBattle, currentStep}
     const [myHealth, setMyHealth] = useState(Math.round((xp + 100) / 2 ))
 
     const [attackInfo, setAttackInfo] = useState(null)
+    const [help, sethelp] = useState(false)
 
     useEffect(() => {
           setMyAvatar(avatarArray[avatar].image)
@@ -104,7 +105,7 @@ export default function BattleQuest ({setQuestStepNo, setPreBattle, currentStep}
             <View style={styles.container}>
                 <Image resizeMode="contain" source={myAvatar} style={styles.myAvatar}></Image>
                 <View style={styles.container}>
-                    <Text>YOU WIN</Text>
+                    <Text style={styles.boldGreen}>YOU WIN</Text>
                     <TouchableOpacity style={styles.button} onPress={() => setQuestStepNo((current) => current + 1)}>
                             <Text style={styles.text}>Continue</Text>
                     </TouchableOpacity>
@@ -120,7 +121,7 @@ export default function BattleQuest ({setQuestStepNo, setPreBattle, currentStep}
             <View style={styles.container}>
                 <Image resizeMode="contain" source={enemy.image} style={styles.enemyAvatar}></Image>
                 <View style={styles.container}>
-                    <Text>YOU LOSE</Text>
+                    <Text style={styles.boldRed}>YOU LOSE</Text>
                     <TouchableOpacity style={styles.button} onPress={() => setPreBattle(true)}>
                             <Text style={styles.text}>Try Again</Text>
                     </TouchableOpacity>
@@ -164,7 +165,7 @@ export default function BattleQuest ({setQuestStepNo, setPreBattle, currentStep}
                             </View>: null}
                         </View>
                     </View>
-                    {!attack?<View style={styles.buttonContainer}>
+                    {!attack? <View style={styles.buttonContainer}>
                         <TouchableOpacity style={styles.button} onPress={() => magicAttack()}>
                             <Text style={styles.text}>Magic Attack</Text>
                         </TouchableOpacity>
@@ -174,13 +175,32 @@ export default function BattleQuest ({setQuestStepNo, setPreBattle, currentStep}
                         <TouchableOpacity style={styles.button} onPress={() => defence()}>
                             <Text style={styles.text}>Defence</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.button}>
+                        <TouchableOpacity style={styles.button} onPress={() => sethelp(true)} >
                             <Text style={styles.text}>Help</Text>
                         </TouchableOpacity>
                     </View>: <View style={styles.buttonContainer}></View>}
+                    {help? 
+                    <View style={styles.overlay}>
+                        <Text style={styles.text}>Pick What Attack To Use And Hope It Beats The Enemies</Text>
+                        <Text></Text>
+                        <Text style={styles.text}>MAGIC ATTACKS break a DEFENCE.</Text>
+                        <Text style={styles.text}>QUICK ATTACKS interrupt MAGIC.</Text>
+                        <Text style={styles.text}>DEFENCE smashes a QUICK ATTACK.</Text>
+                        <Text></Text>
+                        <Text style={styles.text}>The Damage Caused By The Winner Of Each Attack Is Based The Stats Of The Character</Text>
+                        <Text></Text>
+                        <Text style={styles.text}>Magic Power = Wisdom + Exploration</Text>
+                        <Text style={styles.text}>Attack Power = Strength + Dexterity</Text>
+                        <Text style={styles.text}>Defence Power = Stamina + Perception</Text>
+                        <Text></Text>
+                        <TouchableOpacity style={styles.button} onPress={() => sethelp(false)} >
+                            <Text style={styles.text}>Close</Text>
+                        </TouchableOpacity>
+                    </View>
+                    : null}
                     <View style={styles.containerRow}>
                         <View style={styles.holder}>
-                            <Text style={styles.text}>Health: {myHealth}</Text>
+                            <Text style={[styles.text, styles.bold]}>Health: {myHealth}</Text>
                             <Text style={styles.text}>Stamina: {stamina}</Text>
                             <Text style={styles.text}>
                                 Exploration: {exploration}
@@ -193,7 +213,7 @@ export default function BattleQuest ({setQuestStepNo, setPreBattle, currentStep}
                             <Text style={styles.text}>Strength: {strength}</Text>
                         </View>
                         <View style={styles.holder}>
-                            <Text style={styles.text}>Health: {enemyHealth}</Text>
+                            <Text style={[styles.text, styles.bold]}>Health: {enemyHealth}</Text>
                             <Text style={styles.text}>Stamina: {enemy.stamina}</Text>
                             <Text style={styles.text}>
                                 Exploration: {enemy.exploration}
@@ -206,6 +226,7 @@ export default function BattleQuest ({setQuestStepNo, setPreBattle, currentStep}
                             <Text style={styles.text}>Strength: {enemy.strength}</Text>
                         </View>
                     </View>
+  
                 </View>
             </ImageBackground>
         </View>
@@ -220,7 +241,8 @@ const styles = StyleSheet.create({
         width: "100%",
         justifyContent: 'flex-end',
         backgroundColor: 'none',
-        },
+    },
+
     containerRow: {
         flex:2,
         alignItems: 'center',
@@ -274,8 +296,13 @@ const styles = StyleSheet.create({
 		borderRadius: 20,
         bottom: 0
 	},
+    bold:{
+        fontWeight: 'bold',
+        color: '#01803a',
+    },
     text: {
 		color: "#d4d4d4",
+        textAlign: 'center'
 	},
     button: {
         margin: 15,
@@ -327,5 +354,31 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         textAlign: 'center'
+    },
+    overlay: {
+        flex: 1,
+        position: 'absolute',
+        top: '20%',
+        width: '80%',
+        elevation: 10,
+        zIndex: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 10,
+        paddingVertical: 40,
+		borderWidth: 3,
+		borderColor: "#d4d4d4",
+		backgroundColor: "#292936",
+		borderRadius: 20,
+    },
+    boldRed: {
+        color: '#a60202',
+        fontSize: 50,
+        fontWeight: 'bold'
+    },
+    boldGreen: {
+        color: '#01803a',
+        fontSize: 50,
+        fontWeight: 'bold'
     }
   })
