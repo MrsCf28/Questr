@@ -1,5 +1,5 @@
 import { API, graphqlOperation } from 'aws-amplify';
-import { getUserApiStats } from '../src/graphql/custom-queries';
+// import { getUserApiStats } from '../src/graphql/custom-queries';
 import {
     createUserApi,
     updateUserApi,
@@ -33,10 +33,10 @@ export function patchUser(
     });
 }
 
-export function fetchUserStats(id: string) {
-    return API.graphql(
-        graphqlOperation(getUserApiStats, { id: id })
-    ).then(res => {
-        return res.data.getUserApi.stats;
-    });
-}
+// export function fetchUserStats(id: string) {
+//     return API.graphql(
+//         graphqlOperation(getUserApiStats, { id: id })
+//     ).then(res => {
+//         return res.data.getUserApi.stats;
+//     });
+// }

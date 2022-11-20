@@ -9,6 +9,8 @@ schema {
 type Query {
 	questApi: QuestApi
 	userApi: UserApi
+	
+
 }
 
 type QuestApi @model {
