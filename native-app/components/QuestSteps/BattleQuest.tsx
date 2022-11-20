@@ -18,7 +18,7 @@ const Princess = require('../../assets/images/Princess.png')
 const Elf = require('../../assets/images/elfknight.png')
 
 
-export default function BattleQuest ({setQuestStepNo, setPreBattle}) {
+export default function BattleQuest ({setQuestStepNo, setPreBattle, currentStep}) {
 
     const {currentUser} = useContext(CurrentUser)
     const avatar = Number(currentUser.avatar_uri)
@@ -100,7 +100,7 @@ export default function BattleQuest ({setQuestStepNo, setPreBattle}) {
     if(win === 'true') {
         return (
         <View style={styles.main}>
-        <ImageBackground source={require('../../assets/images/stones.jpg')} style={styles.main} resizeMode="cover">           
+        <ImageBackground source={require('../../assets/images/battlebg.png')} style={styles.main} resizeMode="cover">           
             <View style={styles.container}>
                 <Image resizeMode="contain" source={myAvatar} style={styles.myAvatar}></Image>
                 <View style={styles.container}>
@@ -116,7 +116,7 @@ export default function BattleQuest ({setQuestStepNo, setPreBattle}) {
     } else if(win === 'false') {
         return (
         <View style={styles.main}>
-        <ImageBackground source={require('../../assets/images/stones.jpg')} style={styles.main} resizeMode="cover">           
+        <ImageBackground source={require('../../assets/images/battlebg.png')} style={styles.main} resizeMode="cover">           
             <View style={styles.container}>
                 <Image resizeMode="contain" source={enemy.image} style={styles.enemyAvatar}></Image>
                 <View style={styles.container}>

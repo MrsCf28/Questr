@@ -25,10 +25,8 @@ Amplify.configure({
 });
 
 function App() {
-
 	const isLoadingComplete = useCachedResources();
 	const colorScheme = useColorScheme();
-
     const [currentUser, setCurrentUser] = useState({
         image: 'https://picsum.photos/200/300',
     });
@@ -36,8 +34,7 @@ function App() {
     const [userId, setUserId] = useState('4');
     const [newUser, setNewUser] = useState({ id: '24', age: 22 });
     const [signedUp, setSignedUp] = useState(true);
-    const [isLoading, setIsLoading] = useState(true);
-
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
         setIsLoading(true)

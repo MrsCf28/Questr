@@ -79,14 +79,14 @@ export default function EditProfileScreen() {
 			currentUser.quest_history = [];
 			currentUser.owned_avatar_ids = [0]
 			currentUser.stats = {
-				dexterity: 0,
-				exploration: 0,
-				perception: 0,
-				stamina: 0,
-				strength: 0,
-				wisdom: 0,
-				xp: 0,
-				coins: 0,
+				dexterity: 10,
+				exploration: 10,
+				perception: 10,
+				stamina: 10,
+				strength: 10,
+				wisdom: 10,
+				xp: 10,
+				coins: 10,
 			};
 			addUser(currentUser);
 			setSignedUp(true);

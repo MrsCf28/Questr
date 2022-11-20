@@ -124,48 +124,48 @@ export const generateEnemy = () => {
         return {
             name: 'Evil Mage',
             image: EvilMage,
-            dexterity: Math.round((dexterity + 10) * 1),
-            perception: Math.round((perception + 10) * 1),
-            wisdom: Math.round((wisdom + 10) * 1.2),
-            exploration: Math.round((exploration + 10) * 1.1),
-            strength: Math.round((strength + 10) * 0.7),
-            stamina: Math.round((stamina + 10) * 0.8),
+            dexterity: Math.round((dexterity + 0) * 1),
+            perception: Math.round((perception + 1) * 1),
+            wisdom: Math.round((wisdom + 4) * 1.2),
+            exploration: Math.round((exploration + 2) * 1.1),
+            strength: Math.round((strength + 1) * 0.7),
+            stamina: Math.round((stamina + 1) * 0.8),
             health: Math.round((xp + 100) / 2)
         }
     } else if (randomNumber === 1) {
         return {
             name: 'Evil Knight',
             image: EvilKnight,
-            dexterity: Math.round((dexterity + 10) * 1.1),
-            perception: Math.round((perception + 10) * 0.9),
-            wisdom: Math.round((wisdom + 10) * 1.1),
-            exploration: Math.round((exploration + 10) * 0.9),
-            strength: Math.round((strength + 10) * 1),
-            stamina: Math.round((stamina + 10) * 1),
+            dexterity: Math.round((dexterity + 2) * 1.1),
+            perception: Math.round((perception + 1) * 0.9),
+            wisdom: Math.round((wisdom + 1) * 1.1),
+            exploration: Math.round((exploration + 1) * 0.9),
+            strength: Math.round((strength + 1) * 1),
+            stamina: Math.round((stamina + 1) * 1),
             health: Math.round((xp + 100) / 2)
         }
     } else if (randomNumber === 2) {
         return {
             name: 'Evil Bruiser',
             image: Bruiser,
-            dexterity: Math.round((dexterity + 10) * 1),
-            perception: Math.round((perception + 10) * 1.2),
-            wisdom: Math.round((wisdom + 10) * 0.7),
-            exploration: Math.round((exploration + 10) * 0.7),
-            strength: Math.round((strength + 10) * 1),
-            stamina: Math.round((stamina + 10) * 1.2),
+            dexterity: Math.round((dexterity + 1) * 1),
+            perception: Math.round((perception + 1) * 1.2),
+            wisdom: Math.round((wisdom + 1) * 0.7),
+            exploration: Math.round((exploration + 2) * 0.7),
+            strength: Math.round((strength + 1) * 1),
+            stamina: Math.round((stamina + 3) * 1.2),
             health: Math.round((xp + 100) / 2)
         }
     } else if (randomNumber === 3) {
         return {
             name: 'Evil Bandit',
             image: Bandit,
-            dexterity: Math.round((dexterity + 10) * 1.1),
-            perception: Math.round((perception + 10) * 0.9),
-            wisdom: Math.round((wisdom + 10) * 0.9),
-            exploration: Math.round((exploration + 10) * 1.1),
-            strength: Math.round((strength + 10) * 1.2),
-            stamina: Math.round((stamina + 10) * 0.8),
+            dexterity: Math.round((dexterity + 2) * 1.1),
+            perception: Math.round((perception + 1) * 0.9),
+            wisdom: Math.round((wisdom + 1) * 0.9),
+            exploration: Math.round((exploration + 1) * 1.1),
+            strength: Math.round((strength + 1) * 1.2),
+            stamina: Math.round((stamina + 2) * 0.8),
             health: Math.round((xp + 100) / 2)
         }
     }
