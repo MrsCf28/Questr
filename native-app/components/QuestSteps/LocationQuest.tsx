@@ -41,8 +41,9 @@ export default function LocationQuest ({currentStep, questStepNo, setQuestStepNo
             longitude: location.coords.longitude,
             latitudeDelta: 0.01,
             longitudeDelta: 0.01,
-          });
+          }); 
         }
+        setIsLoading(false)
       })();
     }, [location]);
 
