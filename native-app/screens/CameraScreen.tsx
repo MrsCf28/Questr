@@ -15,16 +15,16 @@ import CameraButton from "../components/CameraButton";
 
 import * as FileSystem from "expo-file-system";
 import { fetchQuestById } from "../utils/questApi";
-import { CurrentUser } from "../context/CurrentUser";
 import { useNavigation } from "@react-navigation/native";
 
 import postClarifai from "../clarifaiAPI/callAPI";
 import postUrlClarifai from "../clarifaiAPI/urlAPI";
 import { Storage } from "aws-amplify";
+import { useRegisteredUser } from "../context/Context";
 
-export default function CameraScreen({ route }) {
+export default function CameraScreen({ route }: any) {
+  const { currentUser } = useRegisteredUser();
   // Quest and user details
-  const { currentUser, setCurrentUser } = useContext(CurrentUser);
   const [currentQuest, setCurrentQuest] = useState(null);
 
   // Camera permissions and controls

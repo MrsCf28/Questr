@@ -48,6 +48,7 @@ export const userApi = /* GraphQL */ `
   query UserApi {
     userApi {
       id
+      type
       display_name
       image
       age
@@ -173,6 +174,7 @@ export const getUserApi = /* GraphQL */ `
   query GetUserApi($id: ID!) {
     getUserApi(id: $id) {
       id
+      type
       display_name
       image
       age
@@ -212,6 +214,7 @@ export const listUserApis = /* GraphQL */ `
     listUserApis(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        type
         display_name
         image
         age

@@ -10,11 +10,11 @@ import {
 	VictoryPolarAxis,
 	VictoryTheme,
 } from "victory-native";
-import { CurrentUser } from "../context/CurrentUser";
 import { formatUserStats } from "../utils/functions";
+import { useRegisteredUser } from "../context/Context";
 
 export function Graph() {
-	const { currentUser } = useContext(CurrentUser);
+	const { currentUser } = useRegisteredUser();
 
 	return (
 		<View style={styles.container}>

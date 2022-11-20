@@ -28,6 +28,7 @@ type QuestApi @model {
 
 type UserApi @model {
 	id: ID!
+	type: String
 	display_name: String
 	image: String
 	age: Int!
