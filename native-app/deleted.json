@@ -1,3 +1,27 @@
 "@aws-amplify/cli": "^10.4.1",
     "@aws-amplify/ui-react": "^4.0.0",
     "aws-amplify": "4.3.38",
+
+
+/*     const base64Img = await FileSystem.readAsStringAsync(data.uri, {
+        encoding: "base64",
+      });
+      postClarifai(base64Img, predict, setPredict)
+        .then((res) => {
+          let endpoints = currentQuest.objectives[0].endpoint;
+          // console.log("here", currentQuest.objectives[0].endpoint);
+          //console.log(predict, "predict in camerascreen");
+          //setPredict(() => setPredict(res));
+          //console.log("CameraPage", res, predict);
+          Object.values(predict).forEach((concept) => {
+            if (endpoints.includes(concept.name)) {
+              //setQuestStatus(true);
+              // console.log("Correct term detected.", concept.name);
+              setQuestStatus(true);
+            }
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+          setImageErr(true);
+        }); */

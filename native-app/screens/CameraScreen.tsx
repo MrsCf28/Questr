@@ -12,13 +12,15 @@ import {
 import { Camera, CameraType } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
 import CameraButton from "../components/CameraButton";
-import postClarifai from "../clarifaiAPI/callAPI";
+
 import * as FileSystem from "expo-file-system";
 import { fetchQuestById } from "../utils/questApi";
 import { CurrentUser } from "../context/CurrentUser";
 import { useNavigation } from "@react-navigation/native";
 
-import { firebase } from "../firebase.config";
+import postClarifai from "../clarifaiAPI/callAPI";
+import postUrlClarifai from "../clarifaiAPI/urlAPI";
+import { Storage } from "aws-amplify";
 
 export default function CameraScreen({ route }) {
   // Quest and user details
@@ -74,57 +76,36 @@ export default function CameraScreen({ route }) {
     }
   }, [questStatus]);
 
-  const uploadImage = async () => {
-    setUploading(true);
-    const response = await fetch(image.uri);
-    const blob = await response.blob();
-    const filename = image.uri.substring(image.uri.lastIndexOf("/") + 1);
-    let ref = firebase.storage().ref().child(filename).put(blob);
-
-    try {
-      await ref;
-    } catch (err) {
-      console.log(err);
-    }
-    setUploading(false);
-    alert("Photo loaded...");
-    setImage({});
-  };
-
   const takePicture = async () => {
     if (cameraRef) {
       const data = await cameraRef.current.takePictureAsync();
-
       console.log(data, data.uri);
-
       const source = { uri: data.uri };
-
-      setImage(() => setImage(source));
-
-      uploadImage();
-
-      const base64Img = await FileSystem.readAsStringAsync(data.uri, {
-        encoding: "base64",
-      });
-      postClarifai(base64Img, predict, setPredict)
-        .then((res) => {
-          let endpoints = currentQuest.objectives[0].endpoint;
-          // console.log("here", currentQuest.objectives[0].endpoint);
-          //console.log(predict, "predict in camerascreen");
-          //setPredict(() => setPredict(res));
-          //console.log("CameraPage", res, predict);
-          Object.values(predict).forEach((concept) => {
-            if (endpoints.includes(concept.name)) {
-              //setQuestStatus(true);
-              // console.log("Correct term detected.", concept.name);
-              setQuestStatus(true);
-            }
+      //setImage(() => setImage(source));
+      try {
+        const response = await fetch(data.uri);
+        const blob = await response.blob();
+        let currDate = new Date().toJSON();
+        Storage.put(currDate, blob, {
+          // contentType: 'image/jpeg' // contentType is optional
+        }).then((result) => {
+          const signedURL = Storage.get(result.key).then((res) => {
+            console.log("signedURL: ", res);
+            postUrlClarifai(res, predict, setPredict).then((res) => {
+              let endpoints = currentQuest.objectives[0].endpoint;
+              Object.values(predict).forEach((concept) => {
+                console.log(concept.name);
+                if (endpoints.includes(concept.name)) {
+                  console.log("Match --", concept.name);
+                  //setQuestStatus(true);
+                }
+              });
+            });
           });
-        })
-        .catch((err) => {
-          console.log(err);
-          setImageErr(true);
         });
+      } catch (err) {
+        console.log("Error uploading file:", err);
+      }
     }
   };
 
