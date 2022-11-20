@@ -34,7 +34,7 @@ export default function BattleQuest ({setQuestStepNo, setPreBattle, currentStep}
     const [attack, setAttack] = useState(false)
     const [win, setWin] = useState('null')
     
-    const [enemy, setEnemy] = useState(generateEnemy())
+    const [enemy, setEnemy] = useState(generateEnemy(currentUser.current_quest_id))
     const [enemyHealth, setEnemyHealth] = useState(enemy.health)
     const [myHealth, setMyHealth] = useState(Math.round((xp + 100) / 2 ))
 

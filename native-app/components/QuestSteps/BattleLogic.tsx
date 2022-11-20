@@ -5,6 +5,7 @@ const Bandit = require('../../assets/images/enemybandit.png')
 const Bruiser = require('../../assets/images/enemybruiser.png')
 const EvilKnight = require('../../assets/images/enemyknight.png')
 const EvilMage = require('../../assets/images/enemymage.png')
+const Dragon = require('../../assets/images/Dragon.png')
 
 //0 = magic 1 = quick 2 = defence
 export const magicAttackLogic = (me, enemy) => {
@@ -112,13 +113,27 @@ export const defenceLogic = (me, enemy) => {
     }
 }
 
-export const generateEnemy = () => {
+export const generateEnemy = (id) => {
     const {currentUser} = useContext(CurrentUser)
 
     const { dexterity, exploration, perception, stamina, strength, wisdom, xp } =
     currentUser.stats;
 
     const randomNumber = Math.floor(Math.random() * 4)
+
+    if(id === '9') {
+        return {
+            name: 'Dragon',
+            image: Dragon,
+            dexterity: 70,
+            perception: 100,
+            wisdom: 80,
+            exploration: 50,
+            strength: 100,
+            stamina: 80,
+            health: 500
+        }
+    }
 
     if(randomNumber === 0) {
         return {
