@@ -28,7 +28,7 @@ export default function CurrentQuestScreen() {
 
     function cancelQuest() {
         const updatedUser = {
-            ...currentUser,
+            id: currentUser.id,
             current_quest_id: '0',
         };
         //     setCurrentUser({ ...currentUser, current_quest_id: '0' });
@@ -40,8 +40,8 @@ export default function CurrentQuestScreen() {
         // };
 
         patchUser(updatedUser)
-            .then(() => {
-                setCurrentUser(updatedUser);
+            .then((user) => {
+                setCurrentUser(user);
             })
             .catch((err: any) => {
                 console.log('error in patch user', err);

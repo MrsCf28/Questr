@@ -77,20 +77,20 @@ export default function EditProfileScreen() {
     function handleSubmit() {
         if (currentUser.type === 'registered') {
             const updatedUser = {
-                ...currentUser,
+                id: currentUser.id,
                 display_name: displayName,
                 age: age,
-                preferredRegion: preferredRegion,
+                preferred_region: preferredRegion,
             };
             patchUser(updatedUser)
-                .then(() => {
-                    setCurrentUser(updatedUser);
+                .then((user) => {
+                    setCurrentUser(user);
                 })
                 .catch((err: any) => {
                     console.log('error in patch user', err);
                 });
             navigation.goBack();
-        } else {
+        } else if (currentUser.type === 'default') {
             const newUser: RegisteredUser = {
                 type: 'registered',
                 id: currentUser.id,
@@ -123,42 +123,6 @@ export default function EditProfileScreen() {
                 });
         }
     }
-
-    // function handleSubmit() {
-	// 	if (signedUp) {
-	// 		const updatedUser: User = {
-	// 			id: currentUser.id,
-	// 			display_name: currentUser.display_name,
-	// 			age: currentUser.age,
-	// 			preferred_region: currentUser.preferred_region,
-	// 			image: currentUser.image,
-	// 			current_quest_id: currentUser.current_quest_id,
-	// 			quest_history: currentUser.quest_id,
-	// 			avatar_uri: currentUser.avatar_uri,
-	// 		};
-	// 		patchUser(updatedUser).catch((err: any) => {
-	// 			console.log("error in patch user", err);
-	// 		});
-	// 		navigation.goBack()
-	// 	} else {
-	// 		currentUser.avatar_uri = "0";
-	// 		currentUser.current_quest_id = "0";
-	// 		currentUser.quest_history = [];
-	// 		currentUser.owned_avatar_ids = [0]
-	// 		currentUser.stats = {
-	// 			dexterity: 10,
-	// 			exploration: 10,
-	// 			perception: 10,
-	// 			stamina: 10,
-	// 			strength: 10,
-	// 			wisdom: 10,
-	// 			xp: 10,
-	// 			coins: 10,
-	// 		};
-	// 		addUser(currentUser);
-	// 		setSignedUp(true);
-	// 	}
-	// }
 
     // we need to handle the async aspect.
     // I can get the image to stay after sign in and out and reload,

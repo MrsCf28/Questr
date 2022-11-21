@@ -22,13 +22,13 @@ export default function AcceptQuestScreen({ route }: any) {
         const { currentUser } = useRegisteredUser();
 
         const updatedUser = {
-            ...currentUser,
+            id: currentUser.id,
             current_quest_id: quest.id,
         };
 
         patchUser(updatedUser)
-            .then(() => {
-                setCurrentUser(updatedUser);
+            .then((user) => {
+                setCurrentUser(user);
             })
             .catch((err: any) => {
                 console.log('error in patch user', err);

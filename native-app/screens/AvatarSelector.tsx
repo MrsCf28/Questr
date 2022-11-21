@@ -83,13 +83,13 @@ export function AvatarSelector() {
 
     function select() {
         const updatedUser = {
-            ...currentUser,
+            id: currentUser.id,
             avatar_uri: `${currentAvatar}`,
         };
 
         patchUser(updatedUser)
-            .then(() => {
-                setCurrentUser(updatedUser);
+            .then((user) => {
+                setCurrentUser(user);
                 console.log('avatar updated');
             })
             .catch((err: any) => {
@@ -111,14 +111,14 @@ export function AvatarSelector() {
         };
 
         const updatedUser = {
-            ...currentUser,
+            id: currentUser.id,
             stats: newStats,
             owned_avatar_ids: newBoughtAvatars,
         };
 
         patchUser(updatedUser)
-            .then(() => {
-                setCurrentUser(updatedUser);
+            .then((user) => {
+                setCurrentUser(user);
                 console.log('patched newStats & owned_avatar_ids');
             })
             .catch((err: any) => {
@@ -142,14 +142,14 @@ export function AvatarSelector() {
             };
 
             const updatedUser = {
-                ...currentUser,
+                id: currentUser.id,
                 stats: newStats,
                 owned_avatar_ids: newBoughtAvatars,
             };
 
             patchUser(updatedUser)
-                .then(() => {
-                    setCurrentUser(updatedUser);
+                .then((user) => {
+                    setCurrentUser(user);
                     console.log(
                         'patched newStats and removed sold avatar'
                     );

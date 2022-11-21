@@ -36,7 +36,7 @@ export default function CompletedQuestScreen({ route }: any) {
         });
 
         const updatedUser = {
-            ...currentUser,
+            id: currentUser.id,
             current_quest_id: '0',
             quest_history: [
                 ...currentUser.quest_history,
@@ -46,8 +46,8 @@ export default function CompletedQuestScreen({ route }: any) {
         };
 
         patchUser(updatedUser)
-            .then(() => {
-                setCurrentUser(updatedUser);
+            .then((user) => {
+                setCurrentUser(user);
                 console.log('patched completed quest');
                 navigation.navigate('TabOne', { screen: 'Home' });
             })

@@ -2,8 +2,8 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useContext, useEffect, useState } from "react";
 import { Pressable, StyleSheet, ImageBackground, TextInput } from "react-native";
 import { Text, View } from "../Themed";
-import { CurrentUser } from "../../context/CurrentUser";
 import { patchUser } from "../../utils/userApi";
+import { useCurrentUser, useRegisteredUser } from "../../context/Context";
 
 
 
@@ -11,16 +11,16 @@ export default function PreCamera({completedSteps, currentStep, questStepNo, set
 
     const navigation = useNavigation();
 
-    const { currentUser, setCurrentUser } = useContext(CurrentUser)
+    const { setCurrentUser } = useCurrentUser();
+    const { currentUser } = useRegisteredUser();
 
     const cancelQuest = () => {
-        setCurrentUser({ ...currentUser, current_quest_id: '0' });
         const updatedUser = {
           id: currentUser.id,
-          age: currentUser.age,
           current_quest_id: '0',
         };
-        patchUser(updatedUser).then(() => {  
+        patchUser(updatedUser).then((user) => {  
+          setCurrentUser(user);
         }).catch((err: any) => {     
           console.log("error in patch user", err);
         });

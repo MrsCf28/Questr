@@ -8,12 +8,14 @@ import PreCamera from "../components/QuestSteps/PreCamera";
 import TextQuest from "../components/QuestSteps/TextQuest";
 import BattleQuest from "../components/QuestSteps/BattleQuest";
 import { Text, View } from "../components/Themed";
-import { CurrentUser } from "../context/CurrentUser";
 import CameraScreen from "./CameraScreen";
+import { useCurrentUser, useRegisteredUser } from "../context/Context";
 
 
 
-export default function ActiveQuestScreen({route}) {
+export default function ActiveQuestScreen({route}: any) {
+  const { setCurrentUser } = useCurrentUser();
+    const { currentUser } = useRegisteredUser();
     const currentQuest = route.params
     const navigation = useNavigation();
     const [questStepNo, setQuestStepNo] = useState(0)
@@ -23,7 +25,6 @@ export default function ActiveQuestScreen({route}) {
     const [preCamera, setPreCamera] = useState(true)
     const [completedSteps, setCompletedSteps] = useState([])
 
-    const { currentUser, setCurrentUser } = useContext(CurrentUser)
 
     const cancelQuest = () => {
         setCurrentUser({ ...currentUser, current_quest_id: '0' });

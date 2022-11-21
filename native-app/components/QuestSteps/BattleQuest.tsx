@@ -2,9 +2,8 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useContext, useEffect, useState } from "react";
 import { Pressable, StyleSheet, ImageBackground, TextInput, Image, TouchableOpacity } from "react-native";
 import { Text, View } from "../Themed";
-import { CurrentUser } from "../../context/CurrentUser";
-import { patchUser } from "../../utils/userApi";
 import { defenceLogic, generateEnemy, magicAttackLogic, quickAttackLogic } from "./BattleLogic";
+import { useRegisteredUser } from "../../context/Context";
 
 const Knight = require('../../assets/images/knight.png')
 const DeathKnight = require('../../assets/images/deathknight.png')
@@ -20,7 +19,7 @@ const Elf = require('../../assets/images/elfknight.png')
 
 export default function BattleQuest ({setQuestStepNo, setPreBattle, currentStep}) {
 
-    const {currentUser} = useContext(CurrentUser)
+    const { currentUser } = useRegisteredUser();
     const avatar = Number(currentUser.avatar_uri)
   
     const [avatarArray, setAvatarArray] = useState([{id:0, image: Bard, cost: 100}, {id:1, image: Jester, cost: 200}, {id:2, image: BlackSmith, cost: 300}, {id:3, image: Knight, cost: 400}, {id:4, image: ManAtArms, cost: 500}, {id:5, image: Mage, cost: 600}, {id:6, image: Elf, cost: 700}, {id:7, image: Princess, cost: 800}, {id:8, image: King, cost: 900}, {id:9, image: DeathKnight, cost: 1000}])

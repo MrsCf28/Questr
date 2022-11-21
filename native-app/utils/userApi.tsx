@@ -5,7 +5,7 @@ import {
     updateUserApi,
 } from '../src/graphql/mutations';
 import { getUserApi } from '../src/graphql/queries';
-import { RegisteredUser } from '../types';
+import { RegisteredUser, UpdatedUser } from '../types';
 
 export function fetchUserById(
     id: string
@@ -24,12 +24,12 @@ export async function addUser(newUser: RegisteredUser) {
 }
 
 export function patchUser(
-    updatedUser: RegisteredUser
+    updatedUser: UpdatedUser
 ): Promise<RegisteredUser> {
     return API.graphql(
         graphqlOperation(updateUserApi, { input: updatedUser })
     ).then((userData: object) => {
-        return userData.data.getUserApi;
+        return userData.data.updateUserApi;
     });
 }
 

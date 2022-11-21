@@ -9,8 +9,6 @@ schema {
 type Query {
 	questApi: QuestApi
 	userApi: UserApi
-	
-
 }
 
 type QuestApi @model {
@@ -33,8 +31,8 @@ type UserApi @model {
 	type: String
 	display_name: String
 	image: String
-	age: Int!
-	current_quest_id: String!
+	age: Int
+	current_quest_id: String
 	avatar_uri: String
 	owned_avatar_ids: [Int]
 	quest_history: [QuestHistory]

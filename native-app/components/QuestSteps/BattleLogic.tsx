@@ -1,5 +1,5 @@
 import { useContext } from "react"
-import { CurrentUser } from "../../context/CurrentUser"
+import { useRegisteredUser } from "../../context/Context"
 
 const Bandit = require('../../assets/images/enemybandit.png')
 const Bruiser = require('../../assets/images/enemybruiser.png')
@@ -114,7 +114,7 @@ export const defenceLogic = (me, enemy) => {
 }
 
 export const generateEnemy = (id) => {
-    const {currentUser} = useContext(CurrentUser)
+    const { currentUser } = useRegisteredUser();
 
     const { dexterity, exploration, perception, stamina, strength, wisdom, xp } =
     currentUser.stats;

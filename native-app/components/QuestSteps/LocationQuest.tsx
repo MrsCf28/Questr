@@ -2,12 +2,12 @@ import React, { useState, useEffect, useContext } from "react";
 import MapView, { Callout, Marker, Polyline, } from "react-native-maps";
 import { StyleSheet, Text, View, Dimensions, TouchableOpacity, Pressable, Image } from "react-native";
 import * as Location from "expo-location"; //library used to get the location from the phone
-import { CurrentUser } from "../../context/CurrentUser";
 import { locationChecker } from "../../utils/functions";
 
 import {
   useNavigation,
 } from "@react-navigation/native";
+import { useRegisteredUser } from "../../context/Context";
 
 
 export default function LocationQuest ({currentStep, questStepNo, setQuestStepNo}) {
@@ -23,7 +23,7 @@ export default function LocationQuest ({currentStep, questStepNo, setQuestStepNo
       longitudeDelta: 0.01,
     });
 
-    const {currentUser} = useContext(CurrentUser)
+    const { currentUser } = useRegisteredUser();
   
     const image = currentUser.image
   

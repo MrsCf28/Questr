@@ -62,10 +62,33 @@ export type RegisteredUser = {
     };
 };
 
+export type UpdatedUser = {
+    type?: 'updated';
+    id: string;
+    display_name?: string;
+    age?: number;
+    preferred_region?: Array<string | null>;
+    image?: string;
+    current_quest_id?: string;
+    quest_history?: Array<object | null>;
+    owned_avatar_ids?: Array<number>;
+    avatar_uri?: string;
+    stats?: {
+        dexterity: number;
+        exploration: number;
+        perception: number;
+        stamina: number;
+        strength: number;
+        wisdom: number;
+        xp: number;
+        coins: number;
+    };
+};
+
 export type DefaultUser = {
     type: 'default';
     id: string;
     image: string;
 };
 
-export type User = RegisteredUser | DefaultUser;
+export type User = RegisteredUser | DefaultUser | UpdatedUser;
