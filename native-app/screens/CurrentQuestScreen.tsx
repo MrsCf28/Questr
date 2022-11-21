@@ -115,7 +115,7 @@ export default function CurrentQuestScreen() {
                     3
                 ) === 'true'
             ) {
-                navigation.navigate('ActiveQuest', currentQuest);
+                navigation.navigate('ActiveQuestScreen', currentQuest);
             }
         })();
     };
@@ -203,7 +203,7 @@ export default function CurrentQuestScreen() {
                                     ]}
                                     onPress={() =>
                                         navigation.navigate(
-                                            'ActiveQuest',
+                                            'ActiveQuestScreen',
                                             currentQuest
                                         )
                                     }
