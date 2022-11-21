@@ -28,7 +28,6 @@ import {
   fetchImagePredictions,
 } from "../clarifaiAPI/clarifaiAPI";
 
-
 export default function CameraScreen({ route, setQuestStepNo }: any) {
   const { currentUser } = useRegisteredUser();
 
@@ -114,12 +113,14 @@ export default function CameraScreen({ route, setQuestStepNo }: any) {
         ]);
       }
 
-
-    /*     if (cameraRef) {
+      /*     if (cameraRef) {
       const data = await cameraRef.current.takePictureAsync();
       console.log(data, data.uri);
       const source = { uri: data.uri };
       //setImage(() => setImage(source));
+
+      // S3 upload and url grab
+
       try {
         const response = await fetch(data.uri);
         const blob = await response.blob();
@@ -129,24 +130,18 @@ export default function CameraScreen({ route, setQuestStepNo }: any) {
         }).then((result) => {
           const signedURL = Storage.get(result.key).then((res) => {
             console.log("signedURL: ", res);
-            postUrlClarifai(res, predict, setPredict).then((res) => {
-              let endpoints = currentQuest.objectives[0].endpoint;
-              Object.values(predict).forEach((concept) => {
-                console.log(concept.name);
-                if (endpoints.includes(concept.name)) {
-                  console.log("Match --", concept.name);
-                  //setQuestStatus(true);
-                }
-              });
-            });
+
+            // INSERT FETCH IMAGE PREDICTION here
+
           });
         });
       } catch (err) {
         console.log("Error uploading file:", err);
       }
     } */
-    setUploading(false);
-  });
+      setUploading(false);
+    });
+  };
 
   const flipCamera = async () => {
     setType((current) =>
@@ -223,7 +218,7 @@ export default function CameraScreen({ route, setQuestStepNo }: any) {
             <Pressable
               style={[styles.button, styles.cancel]}
               onPress={() => setQuestStepNo((current) => current + 1)}
-              >
+            >
               <Text style={styles.buttonText}>CHEAT!!!! COMPLETE QUEST</Text>
             </Pressable>
           </Camera>
