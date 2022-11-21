@@ -11,7 +11,7 @@ export default function DisclaimerScreen() {
   const [press, setPress] = useState(false);
   const navigation = useNavigation();
   if (press) {
-    return <RootNavigator />;
+    return <RootNavigator/>;
   } else {
     return (
       <View style={styles.container}>

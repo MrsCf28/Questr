@@ -66,7 +66,7 @@ export default function Navigation({
  */
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-function RootNavigator() {
+export function RootNavigator() {
     const { currentUser } = useRegisteredUser();
 
     return (
