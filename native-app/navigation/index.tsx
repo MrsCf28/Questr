@@ -35,12 +35,13 @@ import { AvatarSelector } from "../screens/AvatarSelector";
 import CompletedQuestScreen from "../screens/CompletedQuest";
 import ActiveQuestScreen from "../screens/ActiveQuestScreen";
 import DisclaimerScreen from "../screens/DisclaimerScreen";
-
+import { useCurrentUser } from "../context/Context";
 export default function Navigation({
   colorScheme,
 }: {
   colorScheme: ColorSchemeName;
 }) {
+  const { currentUser } = useCurrentUser();
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
@@ -53,6 +54,7 @@ export default function Navigation({
     </NavigationContainer>
   );
 }
+
 
 /**
  * A root stack navigator is often used for displaying modals on top of all other content.
