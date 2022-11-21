@@ -111,36 +111,7 @@ export default function CameraScreen({ route }) {
           { text: "OK" },
         ]);
       }
-      setUploading(false);
-    });
 
-    /*     if (cameraRef) {
-      const data = await cameraRef.current.takePictureAsync();
-      console.log(data, data.uri);
-      const base64Img = await FileSystem.readAsStringAsync(data.uri, {
-        encoding: "base64",
-      });
-
-      postRPSClarifai(base64Img, predict, setPredict)
-        .then((res) => {
-          let endpoints = currentQuest.objectives[0].endpoint;
-          console.log("here", currentQuest.objectives[0].endpoint);
-          //console.log(predict, "predict in camerascreen");
-          //setPredict(() => setPredict(res));
-          //console.log("CameraPage", res, predict);
-          Object.values(predict).forEach((concept) => {
-            if (endpoints.includes(concept.name)) {
-              //setQuestStatus(true);
-              // console.log("Correct term detected.", concept.name);
-              setQuestStatus(true);
-            }
-          });
-        })
-        .catch((err) => {
-          console.log(err);
-          setImageErr(true);
-        });
-    } */
 
     /*     if (cameraRef) {
       const data = await cameraRef.current.takePictureAsync();
@@ -172,7 +143,8 @@ export default function CameraScreen({ route }) {
         console.log("Error uploading file:", err);
       }
     } */
-  };
+    setUploading(false);
+  });
 
   const flipCamera = async () => {
     setType((current) =>
