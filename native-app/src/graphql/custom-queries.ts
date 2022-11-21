@@ -29,3 +29,31 @@ export const getUserApiHistory = /* GraphQL */ `
 		}
 	}
 `;
+
+export const listUserStatsApi = /* GraphQL */ `
+query ListUserApis(
+    $filter: ModelUserApiFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listUserApis(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        display_name
+        image
+        avatar_uri
+        owned_avatar_ids
+        stats {
+          xp
+          coins
+          stamina
+          wisdom
+          dexterity
+          perception
+          exploration
+          strength
+        }
+      }
+      nextToken
+    }
+  }
+`;

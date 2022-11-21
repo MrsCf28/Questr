@@ -40,6 +40,7 @@ import CameraScreen from "../screens/CameraScreen";
 import { TopTabs } from "./TopTabs";
 import { AvatarSelector } from "../screens/AvatarSelector";
 import CompletedQuestScreen from "../screens/CompletedQuest";
+import { LeaderboardScreen } from "../screens/LeaderboardScreen";
 
 export default function Navigation({
   colorScheme,
@@ -85,6 +86,13 @@ function RootNavigator() {
         }}
       >
         <Stack.Screen name="AvatarSelector" component={AvatarSelector} />
+      </Stack.Group>
+      <Stack.Group
+        screenOptions={{
+          presentation: "modal",
+        }}
+      >
+        <Stack.Screen name="LeaderboardScreen" component={LeaderboardScreen} />
       </Stack.Group>
 
       <Stack.Group screenOptions={{ presentation: "modal" }}>
