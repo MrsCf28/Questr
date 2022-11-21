@@ -1,5 +1,6 @@
 import { useContext } from "react"
 import { useRegisteredUser } from "../../context/Context"
+import { Attack, Enemy, RegisteredUser } from "../../types"
 
 const Bandit = require('../../assets/images/enemybandit.png')
 const Bruiser = require('../../assets/images/enemybruiser.png')
@@ -8,7 +9,7 @@ const EvilMage = require('../../assets/images/enemymage.png')
 const Dragon = require('../../assets/images/Dragon.png')
 
 //0 = magic 1 = quick 2 = defence
-export const magicAttackLogic = (me, enemy) => {
+export function magicAttackLogic(me: RegisteredUser['stats'], enemy: Enemy): Attack {
     let randomMove = Math.floor(Math.random() * 3)
     if(randomMove === 0) {
         return {
@@ -30,7 +31,7 @@ export const magicAttackLogic = (me, enemy) => {
             enemyDamage: false,
             statement: 'The Enemy Darts In Striking You Before You Can Cast'
         }
-    } else if (randomMove === 2) {
+    } else {
         return {
             myMove: 'Magic Attack',
             enemyAttack: 'Defence',
@@ -43,7 +44,7 @@ export const magicAttackLogic = (me, enemy) => {
     }
 }
 
-export const quickAttackLogic = (me, enemy) => {
+export function quickAttackLogic(me: RegisteredUser['stats'], enemy: Enemy): Attack {
     let randomMove = Math.floor(Math.random() * 3)
     if(randomMove === 0) {
         return {
@@ -57,7 +58,7 @@ export const quickAttackLogic = (me, enemy) => {
         }
     } else if(randomMove === 1) {
         return {
-            myMove: 'Qucik Attack',
+            myMove: 'Quick Attack',
             enemyAttack: 'Quick Attack',
             myDamageAmount: 5,
             myDamage: true,
@@ -65,7 +66,7 @@ export const quickAttackLogic = (me, enemy) => {
             enemyDamage: true,
             statement: 'Your Swords Clash Causing Little Damage To Either Of You'
         }
-    } else if (randomMove === 2) {
+    } else {
         return {
             myMove: 'Quick Attack',
             enemyAttack: 'Defence',
@@ -78,7 +79,7 @@ export const quickAttackLogic = (me, enemy) => {
     }
 }
 
-export const defenceLogic = (me, enemy) => {
+export function defenceLogic(me: RegisteredUser['stats'], enemy: Enemy): Attack {
     let randomMove = Math.floor(Math.random() * 3)
     if(randomMove === 0) {
         return {
@@ -100,7 +101,7 @@ export const defenceLogic = (me, enemy) => {
             enemyDamage: true,
             statement: 'You Smash The Enemies Attack Aside Knocking Them To The Ground'
         }
-    } else if (randomMove === 2) {
+    } else {
         return {
             myMove: 'Defence',
             enemyAttack: 'Defence',
@@ -113,7 +114,7 @@ export const defenceLogic = (me, enemy) => {
     }
 }
 
-export const generateEnemy = (id) => {
+export function generateEnemy(id: RegisteredUser['current_quest_id']): Enemy {
     const { currentUser } = useRegisteredUser();
 
     const { dexterity, exploration, perception, stamina, strength, wisdom, xp } =
@@ -171,7 +172,7 @@ export const generateEnemy = (id) => {
             stamina: Math.round((stamina + 3) * 1.2),
             health: Math.round((xp + 100) / 2)
         }
-    } else if (randomNumber === 3) {
+    } else {
         return {
             name: 'Evil Bandit',
             image: Bandit,

@@ -19,8 +19,11 @@ export type RootStackParamList = {
     EditProfile: undefined;
     CameraScreen: undefined;
     AvatarSelector: undefined;
-    CompletedQuestScreen: undefined;
+    CompletedQuestScreen:
+        | NavigatorScreenParams<ActiveQuestScreenParams>
+        | undefined;
     ActiveQuestScreen: undefined;
+    TabTwo: undefined;
 };
 
 export type RootStackScreenProps<
@@ -30,6 +33,11 @@ export type RootStackScreenProps<
 export type RootTabParamList = {
     TabOne: undefined;
     TabTwo: undefined;
+};
+
+export type ActiveQuestScreenParams = {
+    currentQuest: any;
+    currentUser: RegisteredUser;
 };
 
 export type RootTabScreenProps<
@@ -92,3 +100,31 @@ export type DefaultUser = {
 };
 
 export type User = RegisteredUser | DefaultUser | UpdatedUser;
+
+export type CurrentStep = {
+    desc: string;
+    method: string;
+    endpoint: Array<String>;
+};
+
+export type Enemy = {
+    name: string;
+    image: any;
+    dexterity: number;
+    perception: number;
+    wisdom: number;
+    exploration: number;
+    strength: number;
+    stamina: number;
+    health: number;
+};
+
+export type Attack = {
+    myMove: string;
+    enemyAttack: string;
+    myDamageAmount: number;
+    myDamage: boolean;
+    enemyDamageAmount: number;
+    enemyDamage: boolean;
+    statement: string;
+};

@@ -2,7 +2,6 @@ import React from 'react';
 import { Pressable, StyleSheet, ImageBackground } from 'react-native';
 import {
     useNavigation,
-    usePreventRemoveContext,
 } from '@react-navigation/native';
 import { Text, View } from '../components/Themed';
 import { patchUser } from '../utils/userApi';
