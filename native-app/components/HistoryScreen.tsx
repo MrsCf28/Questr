@@ -12,7 +12,7 @@ export function HistoryScreen({ selectedTab }: tabProp) {
   const { currentUser } = useRegisteredUser();
  
   const {quest_history: completedQuests } = currentUser
-
+  
   return (
     <View
       style={[

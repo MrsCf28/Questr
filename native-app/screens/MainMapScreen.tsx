@@ -38,17 +38,16 @@ export default function TabTwoScreen() {
             }
             let location = await Location.getLastKnownPositionAsync(
                 {}
-            ); //gets the last known location this is quicker than requesting the current location the alternative is to use Location.getCurrentPositionAsync(options)
+            ); //gets the last known location this is quicker than  requesting the current location the alternative is to use Location.getCurrentPositionAsync(options)
             if (location !== null) {
                 setLocation(location);
                 setCurrentLocation({
                     latitude: location.coords.latitude,
                     longitude: location.coords.longitude,
-                    latitudeDelta: 0.05,
-                    longitudeDelta: 0.05,
+                    latitudeDelta: 0.02,
+                    longitudeDelta: 0.02,
                 });
             }
-
             setLoading(false);
         })();
     }, [location]);

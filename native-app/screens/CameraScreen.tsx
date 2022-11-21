@@ -22,7 +22,7 @@ import postUrlClarifai from "../clarifaiAPI/urlAPI";
 import { Storage } from "aws-amplify";
 import { useRegisteredUser } from "../context/Context";
 
-export default function CameraScreen({ route }: any) {
+export default function CameraScreen({ route, setQuestStepNo }: any) {
   const { currentUser } = useRegisteredUser();
   // Quest and user details
   const [currentQuest, setCurrentQuest] = useState(null);
@@ -165,13 +165,8 @@ export default function CameraScreen({ route }: any) {
             </View>
             <Pressable
               style={[styles.button, styles.cancel]}
-              onPress={() =>
-                navigation.navigate("CompletedQuestScreen", {
-                  currentQuest,
-                  currentUser,
-                })
-              }
-            >
+              onPress={() => setQuestStepNo((current) => current + 1)}
+              >
               <Text style={styles.buttonText}>CHEAT!!!! COMPLETE QUEST</Text>
             </Pressable>
           </Camera>

@@ -15,7 +15,6 @@ export default function CurrentQuestScreen() {
     const { setCurrentUser } = useCurrentUser();
     const { currentUser } = useRegisteredUser();
     const navigation = useNavigation();
-
     const [currentQuest, setCurrentQuest] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [location, setLocation] = useState({});
@@ -32,6 +31,13 @@ export default function CurrentQuestScreen() {
             ...currentUser,
             current_quest_id: '0',
         };
+        //     setCurrentUser({ ...currentUser, current_quest_id: '0' });
+
+        // const updatedUser = {
+        //   id: currentUser.id,
+        //   age: currentUser.age,
+        //   current_quest_id: '0',
+        // };
 
         patchUser(updatedUser)
             .then(() => {
@@ -41,7 +47,7 @@ export default function CurrentQuestScreen() {
                 console.log('error in patch user', err);
             });
         navigation.navigate('TabTwo');
-    };
+    }
 
     useEffect(() => {
         setIsLoading(true);
@@ -102,74 +108,20 @@ export default function CurrentQuestScreen() {
                 )
             );
             setIsLoading(false);
+            if (
+                locationChecker(
+                    currentQuest.location,
+                    currentLocation,
+                    3
+                ) === 'true'
+            ) {
+                navigation.navigate('ActiveQuest', currentQuest);
+            }
         })();
     };
 
     if (isLoading) {
         return <Text>Loading</Text>;
-    } else if (arrived === 'true') {
-        return (
-            <View style={styles.main}>
-                <ImageBackground
-                    source={require('../assets/images/stones.jpg')}
-                    style={styles.container}
-                    resizeMode="cover"
-                >
-                    <ImageBackground
-                        source={require('../assets/images/bigScroll.png')}
-                        resizeMode="cover"
-                        style={styles.scroll}
-                    >
-                        <View style={styles.holder}>
-                            <View style={styles.container}>
-                                <Text>You Have arrived</Text>
-                                <Text>
-                                    Now complete the tasks at hand
-                                </Text>
-                            </View>
-                            <View style={styles.container}>
-                                {currentQuest.objectives.map(
-                                    objective => {
-                                        return (
-                                            <Text
-                                                key={objective.desc}
-                                            >
-                                                {objective.desc}
-                                            </Text>
-                                        );
-                                    }
-                                )}
-                            </View>
-                            <View style={styles.buttonContainer}>
-                                <Pressable
-                                    style={styles.button}
-                                    onPress={() => {
-                                        navigation.navigate(
-                                            'CameraScreen'
-                                        );
-                                    }}
-                                >
-                                    <Text style={styles.buttonText}>
-                                        Submit Quest Update
-                                    </Text>
-                                </Pressable>
-                                <Pressable
-                                    style={[
-                                        styles.button,
-                                        styles.cancel,
-                                    ]}
-                                    onPress={cancelQuest}
-                                >
-                                    <Text style={styles.buttonText}>
-                                        Cancel Quest
-                                    </Text>
-                                </Pressable>
-                            </View>
-                        </View>
-                    </ImageBackground>
-                </ImageBackground>
-            </View>
-        );
     } else {
         return (
             <View style={styles.main}>
@@ -205,7 +157,7 @@ export default function CurrentQuestScreen() {
                                 </Text>
                             </View>
                             <View style={styles.container}>
-                                <Text>
+                                <Text style={styles.text}>
                                     {currentQuest.description}
                                 </Text>
                             </View>
@@ -249,7 +201,12 @@ export default function CurrentQuestScreen() {
                                         styles.button,
                                         styles.cancel,
                                     ]}
-                                    onPress={() => setArrived('true')}
+                                    onPress={() =>
+                                        navigation.navigate(
+                                            'ActiveQuest',
+                                            currentQuest
+                                        )
+                                    }
                                 >
                                     <Text style={styles.buttonText}>
                                         CHEAT!!! Skip Location
@@ -322,11 +279,14 @@ const styles = StyleSheet.create({
     },
     redText: {
         color: 'red',
+        textAlign: 'center',
     },
     blueText: {
         color: 'blue',
+        textAlign: 'center',
     },
     text: {
         textTransform: 'capitalize',
+        textAlign: 'center',
     },
 });

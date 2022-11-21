@@ -36,53 +36,32 @@ export default function AcceptQuestScreen({ route }: any) {
         navigation.navigate('TabTwo');
     }
 
-    return (
-        <View style={styles.main}>
-            <ImageBackground
-                source={require('../assets/images/stones.jpg')}
-                style={styles.container}
-                resizeMode="cover"
-            >
-                <ImageBackground
-                    source={require('../assets/images/bigScroll.png')}
-                    resizeMode="cover"
-                    style={styles.scroll}
-                >
-                    <View style={styles.holder}>
-                        <Text style={styles.title}>
-                            {quest.title}
-                        </Text>
-                        <View style={styles.container}>
-                            <Text style={styles.text}>
-                                Quest Type: {quest.category}
-                            </Text>
-                            <Text>
-                                Time Limit: {quest.time_limit_hours}{' '}
-                                hr
-                            </Text>
-                        </View>
-                        <View style={styles.container}>
-                            <Text>
-                                {quest.rewards.coins} Coins{' '}
-                                {quest.rewards.xp}XP
-                            </Text>
-                        </View>
-                        <View style={styles.container}>
-                            <Text>{quest.description}</Text>
-                        </View>
-                        <Pressable
-                            style={styles.button}
-                            onPress={acceptQuest}
-                        >
-                            <Text style={styles.buttonText}>
-                                Accept Quest
-                            </Text>
-                        </Pressable>
-                    </View>
-                </ImageBackground>
-            </ImageBackground>
-        </View>
-    );
+  return (
+  <View style={styles.main}>
+      <ImageBackground source={require('../assets/images/stones.jpg')} style={styles.container} resizeMode="cover">
+        <ImageBackground source={require('../assets/images/bigScroll.png')} resizeMode="cover" style={styles.scroll}>
+          <View style={styles.holder}>
+            <Text style={styles.title}>{quest.title}</Text>
+            <View style={styles.container}>
+              <Text style={styles.text}>Quest Type: {quest.category}</Text>
+              <Text>Time Limit: {quest.time_limit_hours} hr</Text>
+            </View>
+            <View style={styles.container}>
+              <Text>{quest.rewards.coins} Coins {quest.rewards.xp}XP</Text>
+            </View>
+            <View style={styles.container}>
+              <Text>{quest.description}</Text>
+            </View>
+            <Pressable
+              style={styles.button}
+              onPress={acceptQuest}>
+              <Text style={styles.buttonText}>Accept Quest</Text>
+            </Pressable>
+          </View>
+        </ImageBackground>
+      </ImageBackground>
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
@@ -139,6 +118,6 @@ const styles = StyleSheet.create({
         color: 'white',
     },
     text: {
-        textTransform: 'capitalize',
-    },
-});
+      textTransform: "capitalize",
+    }
+  });

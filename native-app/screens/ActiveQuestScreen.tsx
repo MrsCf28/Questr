@@ -1,47 +1,91 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useContext, useEffect, useState } from "react";
 import { Pressable, StyleSheet, ImageBackground } from "react-native";
+import LocationQuest from "../components/QuestSteps/LocationQuest";
+import PreLocation from "../components/QuestSteps/PreLocation";
+import PreBattle from "../components/QuestSteps/PreBattle";
+import PreCamera from "../components/QuestSteps/PreCamera";
+import TextQuest from "../components/QuestSteps/TextQuest";
+import BattleQuest from "../components/QuestSteps/BattleQuest";
 import { Text, View } from "../components/Themed";
+import { CurrentUser } from "../context/CurrentUser";
+import CameraScreen from "./CameraScreen";
 
 
 
-export default function ActiveQuestScreen() {
-
+export default function ActiveQuestScreen({route}) {
+    const currentQuest = route.params
     const navigation = useNavigation();
+    const [questStepNo, setQuestStepNo] = useState(0)
+    const [currentStep, setCurrentStep] = useState(currentQuest.objectives[questStepNo])
+    const [preLocation, setPreLocation] = useState(true)
+    const [preBattle, setPreBattle] = useState(true)
+    const [preCamera, setPreCamera] = useState(true)
+    const [completedSteps, setCompletedSteps] = useState([])
 
-    return (
-        <View style={styles.main}>
-            <ImageBackground source={require('../assets/images/stones.jpg')} style={styles.container} resizeMode="cover">
-            <ImageBackground source={require('../assets/images/bigScroll.png')} resizeMode="cover" style={styles.scroll}>
-            <View style={styles.holder}>
-            <View style={styles.container}>
-              <Text>You Have arrived</Text>
-              <Text>Now complete the tasks at hand</Text>
-            </View>
-            <View style={styles.container}>
-                {currentQuest.objectives.map((objective) => {
-                  return <Text key={objective.desc}>{objective.desc}</Text>;
-                })}
-              </View>
-            <View style={styles.buttonContainer}>
-              <Pressable
-                    style={styles.button}
-                    onPress={() => {
-                      navigation.navigate("CameraScreen");
-                    }}
-                  >
-                    <Text style={styles.buttonText}>Submit Quest Update</Text>
-              </Pressable>
-              <Pressable style={[styles.button, styles.cancel]} onPress={cancelQuest}>
-                          <Text style={styles.buttonText}>Cancel Quest</Text>
-              </Pressable>
-            </View>
-          </View>
-          </ImageBackground>
-          </ImageBackground>
-        </View>
-    )
-}
+    const { currentUser, setCurrentUser } = useContext(CurrentUser)
+
+    const cancelQuest = () => {
+        setCurrentUser({ ...currentUser, current_quest_id: '0' });
+        
+        const updatedUser = {
+          id: currentUser.id,
+          age: currentUser.age,
+          current_quest_id: '0',
+        };
+    }
+
+    useEffect(() => {
+        if(questStepNo === currentQuest.objectives.length) {
+            navigation.navigate("CompletedQuestScreen", {currentQuest, currentUser,})
+        } else {
+            setCurrentStep(currentQuest.objectives[questStepNo])
+            setCompletedSteps(currentQuest.objectives.slice(0, questStepNo))
+            setPreBattle(true)
+            setPreLocation(true)
+        }
+        
+    }, [questStepNo])
+
+    if(currentStep.method === 'text') {
+        return <TextQuest completedSteps={completedSteps} setQuestStepNo={setQuestStepNo} questStepNo={questStepNo} currentStep={currentStep}/>
+    } else if(currentStep.method === 'location') {
+        return preLocation? <PreLocation completedSteps={completedSteps} setPreLocation={setPreLocation} questStepNo={questStepNo} currentStep={currentStep}/> : <LocationQuest setQuestStepNo={setQuestStepNo} questStepNo={questStepNo} currentStep={currentStep}/>
+    } else if(currentStep.method === 'battle') {
+      return preBattle? <PreBattle completedSteps={completedSteps} setPreBattle={setPreBattle} questStepNo={questStepNo} currentStep={currentStep}/> : <BattleQuest setQuestStepNo={setQuestStepNo} setPreBattle={setPreBattle} currentStep={currentStep}/>
+    } else if(currentStep.method === 'image') {
+      return preCamera? <PreCamera completedSteps={completedSteps} setPreCamera={setPreCamera} questStepNo={questStepNo} currentStep={currentStep}/> : <CameraScreen setQuestStepNo={setQuestStepNo}/> 
+    }
+        // <View style={styles.main}>
+        //     <ImageBackground source={require('../assets/images/stones.jpg')} style={styles.container} resizeMode="cover">
+        //     <ImageBackground source={require('../assets/images/bigScroll.png')} resizeMode="cover" style={styles.scroll}>
+        //     <View style={styles.holder}>
+        //     <View style={styles.container}>
+        //       {questStepNo === 0? <Text>You Have arrived</Text> : null}
+        //       {completedSteps.map(step =><Text key={step.desc} style={styles.green}>{step.desc}</Text>)}
+        //     </View>
+        //     <View style={styles.container}>
+        //         <Text>{currentStep.desc}</Text>
+        //     </View>
+        //     <View style={styles.buttonContainer}>
+        //       <Pressable
+        //             style={styles.button}
+        //             onPress={() => {
+        //               navigation.navigate("CameraScreen");
+        //             }}
+        //           >
+        //             <Text style={styles.buttonText}>Open Camera</Text>
+        //       </Pressable>
+        //       <Pressable style={[styles.button, styles.cancel]} onPress={cancelQuest}>
+        //                   <Text style={styles.buttonText}>Cancel Quest</Text>
+        //       </Pressable>
+        //     </View>
+        //   </View>
+        //   </ImageBackground>
+        //   </ImageBackground>
+        // </View>
+        // )
+  }
 
 const styles = StyleSheet.create({
     container: {
@@ -72,10 +116,6 @@ const styles = StyleSheet.create({
       width: '100%',
       backgroundColor: 'none'
     },
-    title: {
-      fontSize: 20,
-      fontWeight: "bold",
-    },
     buttonContainer: {
       alignItems: "center",
       width: "100%",
@@ -99,13 +139,4 @@ const styles = StyleSheet.create({
     buttonText: {
       color: "white",
     },
-    redText: {
-      color: 'red'
-    },
-    blueText: {
-      color: 'blue',
-    },
-    text: {
-      textTransform: "capitalize",
-    }
-  });
+  })

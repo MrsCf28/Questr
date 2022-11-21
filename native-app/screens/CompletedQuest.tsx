@@ -79,7 +79,7 @@ export default function CompletedQuestScreen({ route }: any) {
                         </Text>
                         <View style={styles.container}>
                             <Text style={styles.title}>
-                                The lord has bestowed up thou many
+                                The lord has bestowed upon thou many
                                 gifts for your troubles.
                             </Text>
                         </View>
@@ -156,6 +156,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 20,
         fontWeight: 'bold',
+        textAlign: 'center',
     },
     buttonContainer: {
         alignItems: 'center',

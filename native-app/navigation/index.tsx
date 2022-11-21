@@ -37,6 +37,7 @@ import {
     useCurrentUser,
     useRegisteredUser,
 } from '../context/Context';
+import ActiveQuestScreen from '../screens/ActiveQuestScreen';
 
 export default function Navigation({
     colorScheme,
@@ -89,7 +90,6 @@ function RootNavigator() {
                     component={AvatarSelector}
                 />
             </Stack.Group>
-
             <Stack.Group screenOptions={{ presentation: 'modal' }}>
                 <Stack.Screen
                     name="CurrentQuest"
@@ -103,6 +103,16 @@ function RootNavigator() {
             <Stack.Group
                 screenOptions={{
                     presentation: 'modal',
+                }}
+            >
+                <Stack.Screen
+                    name="ActiveQuest"
+                    component={ActiveQuestScreen}
+                />
+            </Stack.Group>
+            <Stack.Group
+                screenOptions={{
+                    presentation: 'modal',
                     headerShown: false,
                 }}
             >
@@ -111,7 +121,6 @@ function RootNavigator() {
                     component={CameraScreen}
                 />
             </Stack.Group>
-
             <Stack.Group
                 screenOptions={{
                     presentation: 'modal',
