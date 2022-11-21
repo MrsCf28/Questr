@@ -128,7 +128,7 @@ export default function CameraScreen({ route, setQuestStepNo }: any) {
                 });
                 if (!questStatus) {
                   Alert.alert(
-                    "Thee not hath found",
+                    "Thee not hath found ",
                     "Keepeth searching/retake picture",
                     [{ text: "OK" }]
                   );
