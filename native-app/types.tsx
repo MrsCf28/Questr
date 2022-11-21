@@ -4,6 +4,7 @@ import {
     NavigatorScreenParams,
 } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { Objectives, Restrictions, Reviews, Rewards } from './src/API';
 
 declare global {
     namespace ReactNavigation {
@@ -107,6 +108,20 @@ export type CurrentStep = {
     endpoint: Array<String>;
 };
 
+export type Coordinate = {
+    latitude: number;
+    longitude: number;
+}
+
+export type ExtendedCoordinate = {
+    latitude: number;
+    longitude: number;
+    latitudeDelta: number;
+    longitudeDelta: number;
+}
+
+export type CompletedSteps = Array<CurrentStep>;
+
 export type Enemy = {
     name: string;
     image: any;
@@ -128,3 +143,35 @@ export type Attack = {
     enemyDamage: boolean;
     statement: string;
 };
+
+export type Quest = {
+    id: string;
+    category: string;
+    title: string;
+    description: string;
+    location: ExtendedCoordinate;
+    createdAt?: string;
+    updatedAt?: string;
+    rewards?: Rewards | null,
+    time_limit_hours: number,
+    restrictions?: Restrictions | null,
+    reviews?: Reviews | null,
+    objectives?:  Array<Objectives | null > | null,
+}
+
+export type QuestHistoryItem = {
+    quest_id: string,
+    quest_title: string,
+    completed_status: string,
+    start_time: string,
+    end_time?: string | null,
+    completion_image?: string | null,
+  };
+
+export type QuestProp = {
+    quest: Quest;
+  }
+
+  export type QuestHistoryProp = {
+    quest: QuestHistoryItem;
+  }

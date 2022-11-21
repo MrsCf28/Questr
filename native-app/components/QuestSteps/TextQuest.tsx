@@ -1,20 +1,38 @@
-import { useNavigation } from "@react-navigation/native";
-import React, { useContext, useEffect, useState } from "react";
-import { Pressable, StyleSheet, ImageBackground, TextInput } from "react-native";
-import { Text, View } from "../../components/Themed";
-import { useCurrentUser, useRegisteredUser } from "../../context/Context";
-import { patchUser } from "../../utils/userApi";
+import { useNavigation } from '@react-navigation/native';
+import React, { useContext, useEffect, useState } from 'react';
+import {
+    Pressable,
+    StyleSheet,
+    ImageBackground,
+    TextInput,
+} from 'react-native';
+import { Text, View } from '../../components/Themed';
+import {
+    useCurrentUser,
+    useRegisteredUser,
+} from '../../context/Context';
+import { CompletedSteps, CurrentStep } from '../../types';
+import { patchUser } from '../../utils/userApi';
 
+type TextQuestProps = {
+    completedSteps: CompletedSteps;
+    currentStep: CurrentStep;
+    questStepNo: number;
+    setQuestStepNo: React.Dispatch<React.SetStateAction<number>>;
+};
 
-
-export default function TextQuest({completedSteps, currentStep, questStepNo, setQuestStepNo}) {
-
+export default function TextQuest({
+    completedSteps,
+    currentStep,
+    questStepNo,
+    setQuestStepNo,
+}: TextQuestProps) {
     const navigation = useNavigation();
 
     const { setCurrentUser } = useCurrentUser();
     const { currentUser } = useRegisteredUser();
-    const [answer, setAnswer] = useState('')
-    const [popup, setPopup] = useState(false)
+    const [answer, setAnswer] = useState('');
+    const [popup, setPopup] = useState(false);
 
     // useEffect(() => {
     //     console.log('yeah')
@@ -23,89 +41,121 @@ export default function TextQuest({completedSteps, currentStep, questStepNo, set
 
     const cancelQuest = () => {
         const updatedUser = {
-          id: currentUser.id,
-          current_quest_id: '0',
+            id: currentUser.id,
+            current_quest_id: '0',
         };
-        patchUser(updatedUser).then((user) => {  
-          setCurrentUser(user)
-        }).catch((err: any) => {     
-          console.log("error in patch user", err);
-        });
-        navigation.navigate('TabTwo')
-    }
+        patchUser(updatedUser)
+            .then(user => {
+                setCurrentUser(user);
+            })
+            .catch((err: any) => {
+                console.log('error in patch user', err);
+            });
+        navigation.navigate('TabTwo');
+    };
 
     const handleSubmit = () => {
-        if(currentStep.endpoint.includes(answer.toLowerCase())) {
-            setAnswer('')
-            setPopup(true)
+        if (currentStep.endpoint.includes(answer.toLowerCase())) {
+            setAnswer('');
+            setPopup(true);
             setTimeout(() => {
-              setPopup(false)
-              setQuestStepNo((current) => current + 1)
-            }, 1000)
+                setPopup(false);
+                setQuestStepNo(current => current + 1);
+            }, 1000);
         }
-    }
-
+    };
 
     return (
         <View style={styles.main}>
-            <ImageBackground source={require('../../assets/images/stones.jpg')} style={styles.main} resizeMode="cover">
-            {popup?             
-            <View style={[styles.holder, styles.correct]}>
-              <Text style={styles.text}>Correct Answer!</Text>
-            </View>
-            :
-            <View style={styles.holder}>
-                <View style={styles.container}>
-                {questStepNo === 0? <Text style={styles.text}>You Have arrived</Text> : null}
-                {completedSteps.map(step =><Text key={step.desc} style={styles.green}>{step.desc}</Text>)}
-                </View>
-                <View style={styles.container}>
-                    <Text style={styles.text}>{currentStep.desc}</Text>
-                </View>
-                <View style={styles.container}>
-                    <TextInput placeholder="Answer"
-                        placeholderTextColor={'#d4d4d4'}
-                        style={styles.input}
-                        value={answer}
-                        onChangeText={(text) => {
-                            console.log(text)
-                            setAnswer(text)}}>
-                    </TextInput>
-                </View>
-                <View style={styles.buttonContainer}>
-                <Pressable style={styles.button} onPress={handleSubmit}>
-					<Text style={styles.text}>Submit</Text>
-				</Pressable>
-                <Pressable style={[styles.button, styles.cancel]} onPress={cancelQuest}>
-                            <Text style={styles.buttonText}>Cancel Quest</Text>
-                </Pressable>
-                </View>
-          </View>}
-          </ImageBackground>
+            <ImageBackground
+                source={require('../../assets/images/stones.jpg')}
+                style={styles.main}
+                resizeMode="cover"
+            >
+                {popup ? (
+                    <View style={[styles.holder, styles.correct]}>
+                        <Text style={styles.text}>
+                            Correct Answer!
+                        </Text>
+                    </View>
+                ) : (
+                    <View style={styles.holder}>
+                        <View style={styles.container}>
+                            {questStepNo === 0 ? (
+                                <Text style={styles.text}>
+                                    You Have arrived
+                                </Text>
+                            ) : null}
+                            {completedSteps.map(step => (
+                                <Text
+                                    key={step.desc}
+                                    style={styles.green}
+                                >
+                                    {step.desc}
+                                </Text>
+                            ))}
+                        </View>
+                        <View style={styles.container}>
+                            <Text style={styles.text}>
+                                {currentStep.desc}
+                            </Text>
+                        </View>
+                        <View style={styles.container}>
+                            <TextInput
+                                placeholder="Answer"
+                                placeholderTextColor={'#d4d4d4'}
+                                style={styles.input}
+                                value={answer}
+                                onChangeText={text => {
+                                    console.log(text);
+                                    setAnswer(text);
+                                }}
+                            ></TextInput>
+                        </View>
+                        <View style={styles.buttonContainer}>
+                            <Pressable
+                                style={styles.button}
+                                onPress={handleSubmit}
+                            >
+                                <Text style={styles.text}>
+                                    Submit
+                                </Text>
+                            </Pressable>
+                            <Pressable
+                                style={[styles.button, styles.cancel]}
+                                onPress={cancelQuest}
+                            >
+                                <Text style={styles.buttonText}>
+                                    Cancel Quest
+                                </Text>
+                            </Pressable>
+                        </View>
+                    </View>
+                )}
+            </ImageBackground>
         </View>
-        )
-    }
-
+    );
+}
 
 const styles = StyleSheet.create({
     container: {
-      alignItems: 'center',
-      width: "100%",
-      justifyContent: 'center',
-      backgroundColor: 'none',
-      margin: 20,
+        alignItems: 'center',
+        width: '100%',
+        justifyContent: 'center',
+        backgroundColor: 'none',
+        margin: 20,
     },
     main: {
-      flex: 1,
-      width: "100%",
-      alignItems: "center",
-      justifyContent: "center",
+        flex: 1,
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     scroll: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      width: '100%'
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%',
     },
     holder: {
         alignItems: 'center',
@@ -116,71 +166,71 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         margin: 40,
         padding: 20,
-        Width: '100%'
+        Width: '100%',
     },
     title: {
-      fontSize: 20,
-      fontWeight: "bold",
-      textAlign: 'center'
+        fontSize: 20,
+        fontWeight: 'bold',
+        textAlign: 'center',
     },
     buttonContainer: {
-      alignItems: "center",
-      width: "100%",
-      backgroundColor: 'none'
+        alignItems: 'center',
+        width: '100%',
+        backgroundColor: 'none',
     },
     button: {
-      margin: 20,
-      width: 250,
-      borderColor: '#7a7877',
-      backgroundColor: '#014c54',
-      borderWidth: 3,
-      padding: 10,
-      color: "white",
-      borderRadius: 20,
-      justifyContent: "center",
-      alignItems: "center",
+        margin: 20,
+        width: 250,
+        borderColor: '#7a7877',
+        backgroundColor: '#014c54',
+        borderWidth: 3,
+        padding: 10,
+        color: 'white',
+        borderRadius: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     cancel: {
-      backgroundColor: "#4a040c",
+        backgroundColor: '#4a040c',
     },
     buttonText: {
-      color: "white",
+        color: 'white',
     },
     redText: {
-      color: 'red',
-      textAlign: 'center'
+        color: 'red',
+        textAlign: 'center',
     },
     blueText: {
-      color: 'blue',
-      textAlign: 'center'
+        color: 'blue',
+        textAlign: 'center',
     },
     text: {
-      textTransform: "capitalize",
-      color: 'white',
-      textAlign: 'center'
+        textTransform: 'capitalize',
+        color: 'white',
+        textAlign: 'center',
     },
     green: {
-      textTransform: "capitalize",
-      color: '#01803a',
-      textAlign: 'center'
+        textTransform: 'capitalize',
+        color: '#01803a',
+        textAlign: 'center',
     },
     input: {
-		alignItems: "center",
-		justifyContent: "center",
-		borderColor: "#d4d4d4",
-		backgroundColor: "#292936",
-		borderRadius: 15,
-		width: 250,
-		height: 50,
-		borderWidth: 1,
-		padding: 10,
-		color: 'white'
-	},
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderColor: '#d4d4d4',
+        backgroundColor: '#292936',
+        borderRadius: 15,
+        width: 250,
+        height: 50,
+        borderWidth: 1,
+        padding: 10,
+        color: 'white',
+    },
     correct: {
         backgroundColor: '#0a4a20',
         height: 200,
         width: '80%',
         alignItems: 'center',
-        justifyContent: 'center'
-    }
-  })
+        justifyContent: 'center',
+    },
+});

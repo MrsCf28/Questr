@@ -1,5 +1,4 @@
 import React from "react";
-import { useContext } from "react";
 import { View, Image, StyleSheet, Text } from "react-native";
 import { useRegisteredUser } from "../context/Context";
 

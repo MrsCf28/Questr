@@ -106,7 +106,7 @@ function RootNavigator() {
                 }}
             >
                 <Stack.Screen
-                    name="ActiveQuest"
+                    name="ActiveQuestScreen"
                     component={ActiveQuestScreen}
                 />
             </Stack.Group>

@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 import LocationQuest from '../components/QuestSteps/LocationQuest';
 import PreLocation from '../components/QuestSteps/PreLocation';
 import PreBattle from '../components/QuestSteps/PreBattle';
@@ -8,9 +8,7 @@ import PreCamera from '../components/QuestSteps/PreCamera';
 import TextQuest from '../components/QuestSteps/TextQuest';
 import BattleQuest from '../components/QuestSteps/BattleQuest';
 import CameraScreen from './CameraScreen';
-import {
-    useRegisteredUser,
-} from '../context/Context';
+import { useRegisteredUser } from '../context/Context';
 
 export default function ActiveQuestScreen({ route }: any) {
     const { currentUser } = useRegisteredUser();
@@ -28,8 +26,8 @@ export default function ActiveQuestScreen({ route }: any) {
     useEffect(() => {
         if (questStepNo === currentQuest.objectives.length) {
             navigation.navigate('CompletedQuestScreen', {
-              currentUser,  
-              currentQuest,
+                currentUser,
+                currentQuest,
             });
         } else {
             setCurrentStep(currentQuest.objectives[questStepNo]);
@@ -61,7 +59,6 @@ export default function ActiveQuestScreen({ route }: any) {
         ) : (
             <LocationQuest
                 setQuestStepNo={setQuestStepNo}
-                questStepNo={questStepNo}
                 currentStep={currentStep}
             />
         );
