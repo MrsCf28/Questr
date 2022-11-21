@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { View, StyleSheet, Text, ScrollView, ImageBackground } from "react-native";
-import { CurrentUser } from "../context/CurrentUser";
+import { useRegisteredUser } from "../context/Context";
 import { HistoryCard } from "./HistoryCard";
 
 interface tabProp {
@@ -9,10 +9,10 @@ interface tabProp {
 
 export function HistoryScreen({ selectedTab }: tabProp) {
 
-  const { currentUser } = useContext(CurrentUser)
+  const { currentUser } = useRegisteredUser();
  
   const {quest_history: completedQuests } = currentUser
-
+  
   return (
     <View
       style={[

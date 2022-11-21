@@ -144,6 +144,7 @@ export const createUserApi = /* GraphQL */ `
   ) {
     createUserApi(input: $input, condition: $condition) {
       id
+      type
       display_name
       image
       age
@@ -181,6 +182,7 @@ export const updateUserApi = /* GraphQL */ `
   ) {
     updateUserApi(input: $input, condition: $condition) {
       id
+      type
       display_name
       image
       age
@@ -218,6 +220,7 @@ export const deleteUserApi = /* GraphQL */ `
   ) {
     deleteUserApi(input: $input, condition: $condition) {
       id
+      type
       display_name
       image
       age

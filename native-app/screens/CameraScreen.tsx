@@ -18,19 +18,21 @@ import CameraButton from "../components/CameraButton";
 
 import * as FileSystem from "expo-file-system";
 import { fetchQuestById } from "../utils/questApi";
-import { CurrentUser } from "../context/CurrentUser";
 import { useNavigation } from "@react-navigation/native";
 
 import { Storage } from "aws-amplify";
+import { useRegisteredUser } from "../context/Context";
 
 import {
   fetchRPSPredictions,
   fetchImagePredictions,
 } from "../clarifaiAPI/clarifaiAPI";
 
-export default function CameraScreen({ route }) {
+
+export default function CameraScreen({ route, setQuestStepNo }: any) {
+  const { currentUser } = useRegisteredUser();
+
   // Quest and user details
-  const { currentUser, setCurrentUser } = useContext(CurrentUser);
   const [currentQuest, setCurrentQuest] = useState(null);
 
   // Camera permissions and controls
@@ -220,13 +222,8 @@ export default function CameraScreen({ route }) {
             </View>
             <Pressable
               style={[styles.button, styles.cancel]}
-              onPress={() =>
-                navigation.navigate("CompletedQuestScreen", {
-                  currentQuest,
-                  currentUser,
-                })
-              }
-            >
+              onPress={() => setQuestStepNo((current) => current + 1)}
+              >
               <Text style={styles.buttonText}>CHEAT!!!! COMPLETE QUEST</Text>
             </Pressable>
           </Camera>
