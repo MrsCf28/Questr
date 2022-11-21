@@ -23,40 +23,31 @@ import TabOneScreen from '../screens/ProfilePage';
 import TabTwoScreen from '../screens/MainMapScreen';
 import EditProfileScreen from '../screens/EditProfileScreen';
 import {
-    RootStackParamList,
-    RootTabParamList,
-    RootTabScreenProps,
-} from '../types';
-import LinkingConfiguration from './LinkingConfiguration';
-import NoQuestScreen from '../screens/NoQuestScreen';
-import CameraScreen from '../screens/CameraScreen';
-import { TopTabs } from './TopTabs';
-import { AvatarSelector } from '../screens/AvatarSelector';
-import CompletedQuestScreen from '../screens/CompletedQuest';
-import {
-    useCurrentUser,
-    useRegisteredUser,
-} from '../context/Context';
-import ActiveQuestScreen from '../screens/ActiveQuestScreen';
+  RootStackParamList,
+  RootTabParamList,
+  RootTabScreenProps,
+} from "../types";
+import LinkingConfiguration from "./LinkingConfiguration";
+import NoQuestScreen from "../screens/NoQuestScreen";
+import CameraScreen from "../screens/CameraScreen";
+import { TopTabs } from "./TopTabs";
+import { AvatarSelector } from "../screens/AvatarSelector";
+import CompletedQuestScreen from "../screens/CompletedQuest";
+import ActiveQuestScreen from "../screens/ActiveQuestScreen";
 
 export default function Navigation({
     colorScheme,
 }: {
     colorScheme: ColorSchemeName;
 }) {
-    const { currentUser } = useCurrentUser();
-    return (
-        <NavigationContainer
-            linking={LinkingConfiguration}
-            theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
-        >
-            {currentUser.type === 'registered' ? (
-                <RootNavigator />
-            ) : (
-                <EditProfileScreen />
-            )}
-        </NavigationContainer>
-    );
+  return (
+    <NavigationContainer
+      linking={LinkingConfiguration}
+      theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+    >
+      {signedUp ? <RootNavigator /> : <EditProfileScreen />}
+    </NavigationContainer>
+  );
 }
 
 /**
@@ -66,7 +57,7 @@ export default function Navigation({
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
-    const { currentUser } = useRegisteredUser();
+  const { currentUser } = useContext(CurrentUser);
 
     return (
         <Stack.Navigator>
