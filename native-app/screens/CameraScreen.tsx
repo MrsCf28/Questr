@@ -158,17 +158,9 @@ export default function CameraScreen({ route, setQuestStepNo }: any) {
   if (uploading) {
     return (
       <View style={styles.loadContainer}>
-        {/*       <Video
-          ref={video}
-          
-          source={require("../assets/videos/loadingVideo.mp4")}
-          useNativeControls
-          resizeMode="contain"
-          isLooping
-        /> */}
         <Image
           style={styles.imageLoading}
-          source={require("../assets/videos/checkingImage.gif")}
+          source={require("../assets/videos/loadingIR.gif")}
         />
       </View>
     );
