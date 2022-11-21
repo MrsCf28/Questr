@@ -81,6 +81,7 @@ export default function EditProfileScreen() {
                 display_name: displayName,
                 age: age,
                 preferred_region: preferredRegion,
+                image: currentUser.image,
             };
             patchUser(updatedUser)
                 .then((user) => {

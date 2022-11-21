@@ -124,7 +124,6 @@ export function AvatarSelector() {
             .catch((err: any) => {
                 console.log('error in patch user', err);
             });
-        navigation.goBack();
     }
 
     function sell() {
@@ -179,60 +178,6 @@ export function AvatarSelector() {
                             resizeMode="contain"
                             source={avatarArray[currentAvatar].image}
                         />
-                    </View>
-
-                    <View
-                        style={{ flexDirection: 'row', width: '90%' }}
-                    >
-                        <View style={styles.plaque}>
-                            {!avatarChecker() ? (
-                                <Text style={styles.text}>
-                                    {avatarArray[currentAvatar].cost}{' '}
-                                    Gold
-                                </Text>
-                            ) : (
-                                <Text style={styles.text}>
-                                    {Number(
-                                        currentUser.avatar_uri
-                                    ) !== currentAvatar
-                                        ? 'Owned'
-                                        : 'Selected'}
-                                </Text>
-                            )}
-                        </View>
-                        {!avatarChecker() ? (
-                            <Pressable
-                                style={[
-                                    styles.button,
-                                    coins <
-                                    avatarArray[currentAvatar].cost
-                                        ? styles.disabledButton
-                                        : null,
-                                ]}
-                                onPress={buy}
-                            >
-                                <Text style={styles.text}>
-                                    {coins <
-                                    avatarArray[currentAvatar].cost
-                                        ? 'Insufficent Funds'
-                                        : 'Buy'}
-                                </Text>
-                            </Pressable>
-                        ) : (
-                            <Pressable
-                                style={[
-                                    styles.button,
-                                    avatarChecker()
-                                        ? styles.disabledButton
-                                        : null,
-                                ]}
-                                onPress={sell}
-                            >
-                                <Text style={styles.text}>
-                                    Sell: 50 Gold
-                                </Text>
-                            </Pressable>
-                        )}
                     </View>
                 </View>
                 <View style={{ flexDirection: 'row', width: '90%' }}>

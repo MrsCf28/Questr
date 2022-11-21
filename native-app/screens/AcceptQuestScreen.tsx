@@ -15,12 +15,12 @@ export default function AcceptQuestScreen({ route }: any) {
     const navigation = useNavigation();
 
     const { setCurrentUser } = useCurrentUser();
+    const { currentUser } = useRegisteredUser();
 
     const quest = route.params;
 
     function acceptQuest() {
-        const { currentUser } = useRegisteredUser();
-
+      
         const updatedUser = {
             id: currentUser.id,
             current_quest_id: quest.id,
