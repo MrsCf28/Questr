@@ -41,6 +41,7 @@ import { TopTabs } from "./TopTabs";
 import { AvatarSelector } from "../screens/AvatarSelector";
 import CompletedQuestScreen from "../screens/CompletedQuest";
 import ActiveQuestScreen from "../screens/ActiveQuestScreen";
+import DisclaimerScreen from "../screens/DisclaimerScreen";
 
 export default function Navigation({
   colorScheme,
@@ -54,7 +55,7 @@ export default function Navigation({
       linking={LinkingConfiguration}
       theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
     >
-      {signedUp ? <RootNavigator /> : <EditProfileScreen />}
+      {signedUp ? <DisclaimerScreen /> : <EditProfileScreen />}
     </NavigationContainer>
   );
 }
@@ -65,7 +66,7 @@ export default function Navigation({
  */
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-function RootNavigator() {
+export function RootNavigator() {
   const { currentUser } = useContext(CurrentUser);
 
   return (
