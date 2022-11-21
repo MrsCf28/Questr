@@ -38,6 +38,7 @@ import {
     useRegisteredUser,
 } from '../context/Context';
 import ActiveQuestScreen from '../screens/ActiveQuestScreen';
+import DisclaimerScreen from '../screens/DisclaimerScreen';
 
 export default function Navigation({
     colorScheme,
@@ -51,7 +52,7 @@ export default function Navigation({
             theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
         >
             {currentUser.type === 'registered' ? (
-                <RootNavigator />
+                <DisclaimerScreen/>
             ) : (
                 <EditProfileScreen />
             )}
