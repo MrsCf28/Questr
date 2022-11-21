@@ -12,7 +12,7 @@ export function ProfileInfo() {
 		"LilPete",
 		"AdolescentAlex",
 		"WiseWolfred",
-		"BigDaddy",
+		"Knight",
 	];
 
 	return (

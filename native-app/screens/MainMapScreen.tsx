@@ -8,6 +8,7 @@ import CurrentQuestMap from '../components/CurrentQuestMap';
 import AllQuestMap from '../components/AllQuestsMap';
 import { Float } from 'react-native/Libraries/Types/CodegenTypes';
 import { useRegisteredUser } from '../context/Context';
+import LoadingComponent from '../components/LoadingComponent';
 
 type Quest = {
     latitude: Float;
@@ -53,11 +54,7 @@ export default function TabTwoScreen() {
     }, [location]);
 
     if (loading) {
-        return (
-            <View style={styles.container}>
-                <Text>Loading...</Text>
-            </View>
-        );
+        return <LoadingComponent/>
     }
 
     if (currentUser.current_quest_id === '0') {

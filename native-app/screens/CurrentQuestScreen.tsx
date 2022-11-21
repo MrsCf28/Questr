@@ -260,7 +260,6 @@ const styles = StyleSheet.create({
   imageLoading: {
     borderColor: "black",
     flex: 1,
-    margin: 60,
-    width: "90%",
+    width: "100%",
   },
 });

@@ -12,6 +12,7 @@ import { fetchUserById } from './utils/userApi';
 import { Text } from 'react-native';
 import { RegisteredUser, User } from './types';
 import { CurrentUserProvider } from './context/Context';
+import LoadingComponent from './components/LoadingComponent';
 
 Amplify.configure({
     ...awsExports,
@@ -55,7 +56,7 @@ function App() {
     if (!isLoadingComplete) {
         return null;
     } else if (isLoading) {
-        return <Text>Loading</Text>;
+        return <LoadingComponent/>
     } else {
         return (
             <SafeAreaProvider>
