@@ -7,6 +7,8 @@ import {
   TextInput,
   useWindowDimensions,
   Pressable,
+  Alert,
+  Image,
 } from "react-native";
 
 import { Camera, CameraType } from "expo-camera";
@@ -17,13 +19,17 @@ import * as FileSystem from "expo-file-system";
 import { fetchQuestById } from "../utils/questApi";
 import { useNavigation } from "@react-navigation/native";
 
-import postClarifai from "../clarifaiAPI/callAPI";
-import postUrlClarifai from "../clarifaiAPI/urlAPI";
 import { Storage } from "aws-amplify";
 import { useRegisteredUser } from "../context/Context";
 
+import {
+  fetchRPSPredictions,
+  fetchImagePredictions,
+} from "../clarifaiAPI/clarifaiAPI";
+
 export default function CameraScreen({ route, setQuestStepNo }: any) {
   const { currentUser } = useRegisteredUser();
+
   // Quest and user details
   const [currentQuest, setCurrentQuest] = useState(null);
 
@@ -36,10 +42,11 @@ export default function CameraScreen({ route, setQuestStepNo }: any) {
 
   // Image, predictions and result
   const [image, setImage] = useState({});
-  const [predict, setPredict] = useState({});
+  const [predict, setPredict] = useState([]);
   const [imageErr, setImageErr] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [questStatus, setQuestStatus] = useState(false);
+  const video = React.useRef(null);
 
   const navigation = useNavigation();
   const { width } = useWindowDimensions();
@@ -77,36 +84,65 @@ export default function CameraScreen({ route, setQuestStepNo }: any) {
   }, [questStatus]);
 
   const takePicture = async () => {
+    console.log("taking picture");
+
+    let url =
+      "https://questr-image-bucket.s3.eu-west-2.amazonaws.com/Screenshot+2022-11-20+at+17.23.22.png";
+
+    //fetchRPSPredictions
+
     if (cameraRef) {
       const data = await cameraRef.current.takePictureAsync();
       console.log(data, data.uri);
       const source = { uri: data.uri };
       //setImage(() => setImage(source));
+
+      // S3 upload and url grab
+
       try {
         const response = await fetch(data.uri);
         const blob = await response.blob();
         let currDate = new Date().toJSON();
+        setUploading(true);
         Storage.put(currDate, blob, {
           // contentType: 'image/jpeg' // contentType is optional
         }).then((result) => {
-          const signedURL = Storage.get(result.key).then((res) => {
-            console.log("signedURL: ", res);
-            postUrlClarifai(res, predict, setPredict).then((res) => {
+          const signedURL = Storage.get(result.key).then((url) => {
+            console.log("signedURL: ", url);
+
+            // INSERT FETCH IMAGE PREDICTION here
+            fetchImagePredictions(url).then((res) => {
+              let results = res.map((obj) => obj.name);
+              setPredict(() => setPredict(results));
+              console.log("your predictions", results);
               let endpoints = currentQuest.objectives[0].endpoint;
+              console.log("quest endpoints", endpoints);
+              console.log("Predictions", predict);
               Object.values(predict).forEach((concept) => {
-                console.log(concept.name);
                 if (endpoints.includes(concept.name)) {
-                  console.log("Match --", concept.name);
-                  //setQuestStatus(true);
+                  console.log("Correct term detected.", concept.name);
+                  setQuestStatus(true);
                 }
               });
+              if (!questStatus) {
+                Alert.alert(
+                  "Thee not hath found",
+                  "Keepeth searching/retake picture",
+                  [{ text: "OK" }]
+                ).catch((err) => {
+                  console.log("Error in fetchPredictions", err);
+                  setUploading(false);
+                });
+              }
             });
           });
         });
       } catch (err) {
+        setUploading(false);
         console.log("Error uploading file:", err);
       }
     }
+    setUploading(false);
   };
 
   const flipCamera = async () => {
@@ -120,6 +156,16 @@ export default function CameraScreen({ route, setQuestStepNo }: any) {
   }
   if (imageErr) {
     return <Text>Error sending image. Please reload and try again.</Text>;
+  }
+  if (uploading) {
+    return (
+      <View style={styles.loadContainer}>
+        <Image
+          style={styles.imageLoading}
+          source={require("../assets/videos/loadingIR.gif")}
+        />
+      </View>
+    );
   }
 
   return (
@@ -166,7 +212,7 @@ export default function CameraScreen({ route, setQuestStepNo }: any) {
             <Pressable
               style={[styles.button, styles.cancel]}
               onPress={() => setQuestStepNo((current) => current + 1)}
-              >
+            >
               <Text style={styles.buttonText}>CHEAT!!!! COMPLETE QUEST</Text>
             </Pressable>
           </Camera>
@@ -211,5 +257,16 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "white",
+  },
+  loadContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  imageLoading: {
+    borderColor: "black",
+    flex: 1,
+    margin: 60,
+    width: "90%",
   },
 });
