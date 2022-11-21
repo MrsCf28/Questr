@@ -85,35 +85,14 @@ export default function CameraScreen({ route, setQuestStepNo }: any) {
   }, [questStatus]);
 
   const takePicture = async () => {
-    setUploading(true);
-
     console.log("taking picture");
 
     let url =
       "https://questr-image-bucket.s3.eu-west-2.amazonaws.com/Screenshot+2022-11-20+at+17.23.22.png";
 
     //fetchRPSPredictions
-    fetchImagePredictions(url).then((res) => {
-      let results = res.map((obj) => obj.name);
-      console.log("your predictions", results);
-      let endpoints = currentQuest.objectives[0].endpoint;
-      console.log("quest endpoints", endpoints);
-      setPredict(() => setPredict(results));
-      console.log(predict);
-      Object.values(predict).forEach((concept) => {
-        if (endpoints.includes(concept.name)) {
-          //setQuestStatus(true);
-          console.log("Correct term detected.", concept.name);
-          setQuestStatus(true);
-        }
-      });
-      if (!questStatus) {
-        Alert.alert("Thee not hath found", "Keepeth searching/retake", [
-          { text: "OK" },
-        ]);
-      }
 
-      /*     if (cameraRef) {
+    if (cameraRef) {
       const data = await cameraRef.current.takePictureAsync();
       console.log(data, data.uri);
       const source = { uri: data.uri };
@@ -125,6 +104,7 @@ export default function CameraScreen({ route, setQuestStepNo }: any) {
         const response = await fetch(data.uri);
         const blob = await response.blob();
         let currDate = new Date().toJSON();
+        setUploading(true);
         Storage.put(currDate, blob, {
           // contentType: 'image/jpeg' // contentType is optional
         }).then((result) => {
@@ -132,15 +112,36 @@ export default function CameraScreen({ route, setQuestStepNo }: any) {
             console.log("signedURL: ", res);
 
             // INSERT FETCH IMAGE PREDICTION here
-
+            fetchImagePredictions(url).then((res) => {
+              let results = res.map((obj) => obj.name);
+              console.log("your predictions", results);
+              let endpoints = currentQuest.objectives[0].endpoint;
+              console.log("quest endpoints", endpoints);
+              setPredict(() => setPredict(results));
+              console.log("Predictions", predict);
+              Object.values(predict).forEach((concept) => {
+                if (endpoints.includes(concept.name)) {
+                  console.log("Correct term detected.", concept.name);
+                  setQuestStatus(true);
+                }
+              });
+              if (!questStatus) {
+                Alert.alert("Thee not hath found", "Keepeth searching/retake", [
+                  { text: "OK" },
+                ]).catch((err) => {
+                  console.log("Error in fetchPredictions", err);
+                  setUploading(false);
+                });
+              }
+            });
           });
         });
       } catch (err) {
+        setUploading(false);
         console.log("Error uploading file:", err);
       }
-    } */
-      setUploading(false);
-    });
+    }
+    setUploading(false);
   };
 
   const flipCamera = async () => {
