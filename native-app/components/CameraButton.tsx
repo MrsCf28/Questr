@@ -16,7 +16,7 @@ export default function CameraButton({
     color,
 }: CameraButtonProps) {
     return (
-        <TouchableOpacity onPress={onPress} style={StyleSheet.button}>
+        <TouchableOpacity onPress={onPress} disabled={true} style={StyleSheet.button}>
             <Entypo
                 name={icon}
                 size={28}

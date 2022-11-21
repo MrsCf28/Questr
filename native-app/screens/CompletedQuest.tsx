@@ -1,13 +1,11 @@
-import React, { useContext } from 'react';
-import { StyleSheet, Button, TextInput } from 'react-native';
+import React from 'react';
+import { StyleSheet } from 'react-native';
 
 import { Pressable, ImageBackground } from 'react-native';
 import {
     useNavigation,
-    usePreventRemoveContext,
 } from '@react-navigation/native';
 import { Text, View } from '../components/Themed';
-import { useEffect } from 'react';
 import { patchUser } from '../utils/userApi';
 import {
     useCurrentUser,
