@@ -7,7 +7,10 @@ import {
   TextInput,
   useWindowDimensions,
   Pressable,
+  Alert,
+  Image,
 } from "react-native";
+import { Video, AVPlaybackStatus } from "expo-av";
 
 import { Camera, CameraType } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
@@ -17,13 +20,18 @@ import * as FileSystem from "expo-file-system";
 import { fetchQuestById } from "../utils/questApi";
 import { useNavigation } from "@react-navigation/native";
 
-import postClarifai from "../clarifaiAPI/callAPI";
-import postUrlClarifai from "../clarifaiAPI/urlAPI";
 import { Storage } from "aws-amplify";
 import { useRegisteredUser } from "../context/Context";
 
+import {
+  fetchRPSPredictions,
+  fetchImagePredictions,
+} from "../clarifaiAPI/clarifaiAPI";
+
+
 export default function CameraScreen({ route, setQuestStepNo }: any) {
   const { currentUser } = useRegisteredUser();
+
   // Quest and user details
   const [currentQuest, setCurrentQuest] = useState(null);
 
@@ -36,10 +44,11 @@ export default function CameraScreen({ route, setQuestStepNo }: any) {
 
   // Image, predictions and result
   const [image, setImage] = useState({});
-  const [predict, setPredict] = useState({});
+  const [predict, setPredict] = useState([]);
   const [imageErr, setImageErr] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [questStatus, setQuestStatus] = useState(false);
+  const video = React.useRef(null);
 
   const navigation = useNavigation();
   const { width } = useWindowDimensions();
@@ -77,7 +86,36 @@ export default function CameraScreen({ route, setQuestStepNo }: any) {
   }, [questStatus]);
 
   const takePicture = async () => {
-    if (cameraRef) {
+    setUploading(true);
+
+    console.log("taking picture");
+
+    let url =
+      "https://questr-image-bucket.s3.eu-west-2.amazonaws.com/Screenshot+2022-11-20+at+17.23.22.png";
+
+    //fetchRPSPredictions
+    fetchImagePredictions(url).then((res) => {
+      let results = res.map((obj) => obj.name);
+      console.log("your predictions", results);
+      let endpoints = currentQuest.objectives[0].endpoint;
+      console.log("quest endpoints", endpoints);
+      setPredict(() => setPredict(results));
+      console.log(predict);
+      Object.values(predict).forEach((concept) => {
+        if (endpoints.includes(concept.name)) {
+          //setQuestStatus(true);
+          console.log("Correct term detected.", concept.name);
+          setQuestStatus(true);
+        }
+      });
+      if (!questStatus) {
+        Alert.alert("Thee not hath found", "Keepeth searching/retake", [
+          { text: "OK" },
+        ]);
+      }
+
+
+    /*     if (cameraRef) {
       const data = await cameraRef.current.takePictureAsync();
       console.log(data, data.uri);
       const source = { uri: data.uri };
@@ -106,8 +144,9 @@ export default function CameraScreen({ route, setQuestStepNo }: any) {
       } catch (err) {
         console.log("Error uploading file:", err);
       }
-    }
-  };
+    } */
+    setUploading(false);
+  });
 
   const flipCamera = async () => {
     setType((current) =>
@@ -120,6 +159,24 @@ export default function CameraScreen({ route, setQuestStepNo }: any) {
   }
   if (imageErr) {
     return <Text>Error sending image. Please reload and try again.</Text>;
+  }
+  if (uploading) {
+    return (
+      <View style={styles.loadContainer}>
+        {/*       <Video
+          ref={video}
+          
+          source={require("../assets/videos/loadingVideo.mp4")}
+          useNativeControls
+          resizeMode="contain"
+          isLooping
+        /> */}
+        <Image
+          style={styles.imageLoading}
+          source={require("../assets/videos/checkingImage.gif")}
+        />
+      </View>
+    );
   }
 
   return (
@@ -211,5 +268,16 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "white",
+  },
+  loadContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  imageLoading: {
+    borderColor: "black",
+    flex: 1,
+    margin: 60,
+    width: "90%",
   },
 });
