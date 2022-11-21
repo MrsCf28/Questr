@@ -108,16 +108,16 @@ export default function CameraScreen({ route, setQuestStepNo }: any) {
         Storage.put(currDate, blob, {
           // contentType: 'image/jpeg' // contentType is optional
         }).then((result) => {
-          const signedURL = Storage.get(result.key).then((res) => {
-            console.log("signedURL: ", res);
+          const signedURL = Storage.get(result.key).then((url) => {
+            console.log("signedURL: ", url);
 
             // INSERT FETCH IMAGE PREDICTION here
             fetchImagePredictions(url).then((res) => {
               let results = res.map((obj) => obj.name);
+              setPredict(() => setPredict(results));
               console.log("your predictions", results);
               let endpoints = currentQuest.objectives[0].endpoint;
               console.log("quest endpoints", endpoints);
-              setPredict(() => setPredict(results));
               console.log("Predictions", predict);
               Object.values(predict).forEach((concept) => {
                 if (endpoints.includes(concept.name)) {
@@ -126,9 +126,11 @@ export default function CameraScreen({ route, setQuestStepNo }: any) {
                 }
               });
               if (!questStatus) {
-                Alert.alert("Thee not hath found", "Keepeth searching/retake", [
-                  { text: "OK" },
-                ]).catch((err) => {
+                Alert.alert(
+                  "Thee not hath found",
+                  "Keepeth searching/retake picture",
+                  [{ text: "OK" }]
+                ).catch((err) => {
                   console.log("Error in fetchPredictions", err);
                   setUploading(false);
                 });
