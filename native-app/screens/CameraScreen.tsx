@@ -10,7 +10,6 @@ import {
   Alert,
   Image,
 } from "react-native";
-import { Video, AVPlaybackStatus } from "expo-av";
 
 import { Camera, CameraType } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";

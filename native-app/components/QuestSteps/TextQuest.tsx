@@ -1,14 +1,32 @@
-import { useNavigation } from "@react-navigation/native";
-import React, { useContext, useEffect, useState } from "react";
-import { Pressable, StyleSheet, ImageBackground, TextInput } from "react-native";
-import { Text, View } from "../../components/Themed";
-import { useCurrentUser, useRegisteredUser } from "../../context/Context";
-import { patchUser } from "../../utils/userApi";
+import { useNavigation } from '@react-navigation/native';
+import React, { useContext, useEffect, useState } from 'react';
+import {
+    Pressable,
+    StyleSheet,
+    ImageBackground,
+    TextInput,
+} from 'react-native';
+import { Text, View } from '../../components/Themed';
+import {
+    useCurrentUser,
+    useRegisteredUser,
+} from '../../context/Context';
+import { CompletedSteps, CurrentStep } from '../../types';
+import { patchUser } from '../../utils/userApi';
 
+type TextQuestProps = {
+    completedSteps: CompletedSteps;
+    currentStep: CurrentStep;
+    questStepNo: number;
+    setQuestStepNo: React.Dispatch<React.SetStateAction<number>>;
+};
 
-
-export default function TextQuest({completedSteps, currentStep, questStepNo, setQuestStepNo}) {
-
+export default function TextQuest({
+    completedSteps,
+    currentStep,
+    questStepNo,
+    setQuestStepNo,
+}: TextQuestProps) {
     const navigation = useNavigation();
 
     const { setCurrentUser } = useCurrentUser();
@@ -17,6 +35,7 @@ export default function TextQuest({completedSteps, currentStep, questStepNo, set
     const [popup, setPopup] = useState(false)
     const [correct, setCorrect] = useState(false)
 
+
     // useEffect(() => {
     //     console.log('yeah')
     // }, [questStepNo])
@@ -24,16 +43,18 @@ export default function TextQuest({completedSteps, currentStep, questStepNo, set
 
     const cancelQuest = () => {
         const updatedUser = {
-          id: currentUser.id,
-          current_quest_id: '0',
+            id: currentUser.id,
+            current_quest_id: '0',
         };
-        patchUser(updatedUser).then((user) => {  
-          setCurrentUser(user)
-        }).catch((err: any) => {     
-          console.log("error in patch user", err);
-        });
-        navigation.navigate('TabTwo')
-    }
+        patchUser(updatedUser)
+            .then(user => {
+                setCurrentUser(user);
+            })
+            .catch((err: any) => {
+                console.log('error in patch user', err);
+            });
+        navigation.navigate('TabTwo');
+    };
 
     const handleSubmit = () => {
         if(currentStep.endpoint.includes(answer.toLowerCase())) {
@@ -52,9 +73,9 @@ export default function TextQuest({completedSteps, currentStep, questStepNo, set
           setTimeout(() => {
             setPopup(false)
           }, 1000)
-        }
-    }
 
+        }
+    };
 
     return (
         <View style={styles.main}>
@@ -95,30 +116,30 @@ export default function TextQuest({completedSteps, currentStep, questStepNo, set
                 </View>
           </View>}
           </ImageBackground>
-        </View>
-        )
-    }
 
+        </View>
+    );
+}
 
 const styles = StyleSheet.create({
     container: {
-      alignItems: 'center',
-      width: "100%",
-      justifyContent: 'center',
-      backgroundColor: 'none',
-      margin: 20,
+        alignItems: 'center',
+        width: '100%',
+        justifyContent: 'center',
+        backgroundColor: 'none',
+        margin: 20,
     },
     main: {
-      flex: 1,
-      width: "100%",
-      alignItems: "center",
-      justifyContent: "center",
+        flex: 1,
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     scroll: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      width: '100%'
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%',
     },
     holder: {
         alignItems: 'center',
@@ -129,66 +150,66 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         margin: 40,
         padding: 20,
-        Width: '100%'
+        Width: '100%',
     },
     title: {
-      fontSize: 20,
-      fontWeight: "bold",
-      textAlign: 'center'
+        fontSize: 20,
+        fontWeight: 'bold',
+        textAlign: 'center',
     },
     buttonContainer: {
-      alignItems: "center",
-      width: "100%",
-      backgroundColor: 'none'
+        alignItems: 'center',
+        width: '100%',
+        backgroundColor: 'none',
     },
     button: {
-      margin: 20,
-      width: 250,
-      borderColor: '#7a7877',
-      backgroundColor: '#014c54',
-      borderWidth: 3,
-      padding: 10,
-      color: "white",
-      borderRadius: 20,
-      justifyContent: "center",
-      alignItems: "center",
+        margin: 20,
+        width: 250,
+        borderColor: '#7a7877',
+        backgroundColor: '#014c54',
+        borderWidth: 3,
+        padding: 10,
+        color: 'white',
+        borderRadius: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     cancel: {
-      backgroundColor: "#4a040c",
+        backgroundColor: '#4a040c',
     },
     buttonText: {
-      color: "white",
+        color: 'white',
     },
     redText: {
-      color: 'red',
-      textAlign: 'center'
+        color: 'red',
+        textAlign: 'center',
     },
     blueText: {
-      color: 'blue',
-      textAlign: 'center'
+        color: 'blue',
+        textAlign: 'center',
     },
     text: {
-      textTransform: "capitalize",
-      color: 'white',
-      textAlign: 'center'
+        textTransform: 'capitalize',
+        color: 'white',
+        textAlign: 'center',
     },
     green: {
-      textTransform: "capitalize",
-      color: '#01803a',
-      textAlign: 'center'
+        textTransform: 'capitalize',
+        color: '#01803a',
+        textAlign: 'center',
     },
     input: {
-		alignItems: "center",
-		justifyContent: "center",
-		borderColor: "#d4d4d4",
-		backgroundColor: "#292936",
-		borderRadius: 15,
-		width: 250,
-		height: 50,
-		borderWidth: 1,
-		padding: 10,
-		color: 'white'
-	},
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderColor: '#d4d4d4',
+        backgroundColor: '#292936',
+        borderRadius: 15,
+        width: 250,
+        height: 50,
+        borderWidth: 1,
+        padding: 10,
+        color: 'white',
+    },
     correct: {
         backgroundColor: '#0a4a20',
         height: 200,
@@ -200,3 +221,4 @@ const styles = StyleSheet.create({
       backgroundColor: '#4a040c',
     }
   })
+
