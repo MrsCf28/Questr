@@ -71,7 +71,7 @@ export default function EditProfileScreen() {
                 id: currentUser.id,
                 display_name: displayName,
                 age: Number(age),
-                preferred_region: [...currentUser.preferred_region, preferredRegion],
+                preferred_region: [preferredRegion],
                 image: currentUser.image,
             };
             patchUser(updatedUser)
@@ -157,9 +157,9 @@ export default function EditProfileScreen() {
                         <Text style={styles.text}>Pick Image</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        style={styles.button}
+                        style={[styles.button, formCheck([age, preferredRegion, displayName])? null : styles.disabled]}
                         onPress={handleSubmit}
-                        disabled={!formCheck}
+                        disabled={!formCheck([age, preferredRegion, displayName])}
                     >
                         <Text style={styles.text}>Submit</Text>
                     </TouchableOpacity>
@@ -252,5 +252,8 @@ const styles = StyleSheet.create({
   },
   invalid: {
     borderColor: "red",
+  },
+  disabled: {
+    backgroundColor: "#4a040c",
   }
 });
