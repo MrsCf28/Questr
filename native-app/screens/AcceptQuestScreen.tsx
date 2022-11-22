@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pressable, StyleSheet, ImageBackground } from 'react-native';
+import { TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
 import {
     useNavigation,
 } from '@react-navigation/native';
@@ -51,11 +51,11 @@ export default function AcceptQuestScreen({ route }: any) {
             <View style={styles.container}>
               <Text>{quest.description}</Text>
             </View>
-            <Pressable
+            <TouchableOpacity
               style={styles.button}
               onPress={acceptQuest}>
               <Text style={styles.buttonText}>Accept Quest</Text>
-            </Pressable>
+            </TouchableOpacity>
           </View>
         </ImageBackground>
       </ImageBackground>

@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Pressable, StyleSheet, Text, Image } from 'react-native';
-import MapView, { Callout, Marker } from "react-native-maps";
+import { View,  StyleSheet, Text, Image } from 'react-native';
+import  {  Marker } from "react-native-maps";
 import { useNavigation } from "@react-navigation/native";
 import { QuestProp } from '../types';
 

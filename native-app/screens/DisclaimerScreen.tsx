@@ -1,5 +1,5 @@
 import React from "react";
-import { Pressable, StyleSheet, ImageBackground } from "react-native";
+import { TouchableOpacity, StyleSheet, ImageBackground } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Text, View } from "../components/Themed";
 
@@ -23,13 +23,13 @@ export default function DisclaimerScreen({ setPress }: any) {
             this app is as safe as posible we cannot be held resposible for any
             actions taken when using this app.{" "}
           </Text>
-          <Pressable style={styles.button}>
+          <TouchableOpacity style={styles.button}>
             <Text
               style={styles.buttonText}
               onPress={() => setPress(true)}>
               Accept Terms
             </Text>
-          </Pressable>
+          </TouchableOpacity>
         </ImageBackground>
       </ImageBackground>
     </View>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
-import { Pressable, ImageBackground } from 'react-native';
+import { TouchableOpacity, ImageBackground } from 'react-native';
 import {
     useNavigation,
 } from '@react-navigation/native';
@@ -107,14 +107,14 @@ export default function CompletedQuestScreen({ route }: any) {
                                 wisdom + {quest.rewards.wisdom}
                             </Text>
                         </View>
-                        <Pressable
+                        <TouchableOpacity
                             style={[styles.button]}
                             onPress={() => updateUserStats()}
                         >
                             <Text style={styles.buttonText}>
                                 Claim Rewards
                             </Text>
-                        </Pressable>
+                        </TouchableOpacity>
                         <Votes currentQuest={currentQuest}/>
                     </View>
                 </ImageBackground>

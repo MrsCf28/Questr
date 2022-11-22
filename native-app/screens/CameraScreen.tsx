@@ -3,12 +3,9 @@ import {
   StyleSheet,
   Text,
   View,
-  Button,
-  TextInput,
   useWindowDimensions,
-  Pressable,
+  TouchableOpacity,
   Alert,
-  Image,
 } from "react-native";
 
 import { Camera, CameraType } from "expo-camera";
@@ -196,12 +193,12 @@ export default function CameraScreen({ route, setQuestStepNo }: any) {
                 </View>
               )}
             </View>
-            <Pressable
+            <TouchableOpacity
               style={[styles.button, styles.cancel]}
               onPress={() => setQuestStepNo((current) => current + 1)}
             >
               <Text style={styles.buttonText}>CHEAT!!!! COMPLETE QUEST</Text>
-            </Pressable>
+            </TouchableOpacity>
           </Camera>
         </View>
       ) : (
