@@ -14,8 +14,11 @@ export default function DisclaimerScreen({ setPress }: any) {
         resizeMode="cover">
         <ImageBackground
           source={require("../assets/images/bigScroll.png")}
-          resizeMode="cover"
+          resizeMode="stretch"
           style={styles.scroll}>
+          <View style={styles.holder}>
+
+          
           <Text style={styles.title}>Warning</Text>
           <Text style={styles.text}>
             Please use this app at your own risk, be aware of your own safety
@@ -30,6 +33,7 @@ export default function DisclaimerScreen({ setPress }: any) {
               Accept Terms
             </Text>
           </TouchableOpacity>
+          </View>
         </ImageBackground>
       </ImageBackground>
     </View>
@@ -79,4 +83,12 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: "center",
   },
+  holder: {
+    width: '80%',
+    backgroundColor: 'none',
+    textAlign: 'center',
+    flex: 0.5,
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
 });

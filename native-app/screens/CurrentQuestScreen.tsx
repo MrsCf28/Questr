@@ -255,13 +255,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#4a040c",
   },
   sos: {
-    backgroundColor: "red",
+    backgroundColor: "#c20202",
   },
   buttonText: {
     color: "white",
   },
   redText: {
-    color: "red",
+    color: "#c20202",
     textAlign: "center",
   },
   blueText: {
