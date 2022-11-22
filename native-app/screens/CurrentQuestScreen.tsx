@@ -137,7 +137,6 @@ export default function CurrentQuestScreen() {
             source={require("../assets/images/bigScroll.png")}
             resizeMode="cover"
             style={styles.scroll}
-            resizeMode="cover"
           >
             <View style={styles.holder}>
               <Text style={styles.title}>{currentQuest.title}</Text>
