@@ -26,6 +26,7 @@ import {
   fetchRPSPredictions,
   fetchImagePredictions,
 } from "../clarifaiAPI/clarifaiAPI";
+import uploadImage from "../components/ImageSelector";
 
 export default function CameraScreen({ route, setQuestStepNo }: any) {
   const { currentUser } = useRegisteredUser();
@@ -99,49 +100,49 @@ export default function CameraScreen({ route, setQuestStepNo }: any) {
 
       // S3 upload and url grab
 
-      try {
-        const response = await fetch(data.uri);
-        const blob = await response.blob();
-        let currDate = new Date().toJSON();
-        setUploading(true);
-        Storage.put(currDate, blob, {
-          // contentType: 'image/jpeg' // contentType is optional
-        }).then((result) => {
-          const signedURL = Storage.get(result.key).then((url) => {
-            console.log("signedURL: ", url);
+      const image64 = await FileSystem.readAsStringAsync(data.uri, {
+        encoding: "base64",
+      });
 
-            // INSERT FETCH IMAGE PREDICTION here
-            fetchImagePredictions(url)
-              .then((res) => {
-                let results = res.map((obj) => obj.name);
-                setPredict(() => setPredict(results));
-                console.log("your predictions", results);
-                let endpoints = currentQuest.objectives[0].endpoint;
-                console.log("quest endpoints", endpoints);
-                console.log("Predictions", predict);
-                Object.values(predict).forEach((concept) => {
-                  if (endpoints.includes(concept.name)) {
-                    console.log("Correct term detected.", concept.name);
-                    setQuestStatus(true);
-                  }
-                });
-                if (!questStatus) {
-                  Alert.alert(
-                    "Thee not hath found",
-                    "Keepeth searching/retake picture",
-                    [{ text: "OK" }]
-                  );
+      if (typeof image64 === "string") {
+        uploadImage(image64).then((url) => {
+          console.log(url);
+          fetchImagePredictions(url)
+            .then((res) => {
+              let results = res.map((obj) => obj.name);
+
+              setPredict(() => setPredict(results));
+
+              console.log("your predictions", results);
+              let endpoints = currentQuest.objectives[0].endpoint;
+              console.log("quest endpoints", endpoints);
+              console.log("Predictions", predict);
+              Object.values(predict).forEach((concept) => {
+                if (endpoints.includes(concept.name)) {
+                  console.log("Correct term detected.", concept.name);
+                  setQuestStatus(true);
+
                 }
               })
               .catch((err) => {
                 console.log("Error in fetchPredictions", err);
                 setUploading(false);
               });
-          });
+
+              if (!questStatus) {
+                Alert.alert(
+                  "Thee not hath found",
+                  "Keepeth searching/retake picture",
+                  [{ text: "OK" }]
+                );
+              }
+            })
+            .catch((err) => {
+              console.log("Error in fetchPredictions", err);
+              setUploading(false);
+            });
+
         });
-      } catch (err) {
-        setUploading(false);
-        console.log("Error uploading file:", err);
       }
     }
     setUploading(false);
