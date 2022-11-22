@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   ImageBackground,
-  Image
+  Image,
 } from "react-native";
 import { Text, View } from "../components/Themed";
 import * as Location from "expo-location";
@@ -54,8 +54,8 @@ export default function CurrentQuestScreen() {
   }
 
   function openPhone() {
-    Linking.openURL(`tel:EmergancyServices`)
-}
+    Linking.openURL(`tel:EmergancyServices`);
+  }
   useEffect(() => {
     setIsLoading(true);
     fetchQuestById(currentUser.current_quest_id)
@@ -137,8 +137,8 @@ export default function CurrentQuestScreen() {
             source={require("../assets/images/bigScroll.png")}
             resizeMode="cover"
             style={styles.scroll}
+            resizeMode="cover"
           >
-          resizeMode="cover">
             <View style={styles.holder}>
               <Text style={styles.title}>{currentQuest.title}</Text>
               <View style={styles.container}>
@@ -169,22 +169,28 @@ export default function CurrentQuestScreen() {
 
                 <TouchableOpacity
                   onPress={updateLocation}
-                  style={styles.button}>
+                  style={styles.button}
+                >
                   <Text style={styles.buttonText}>Check Location</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={[styles.button, styles.cancel]}
-                  onPress={cancelQuest}>
+                  onPress={cancelQuest}
+                >
                   <Text style={styles.buttonText}>Cancel Quest</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={[styles.button, styles.sos]} onPress={() => openPhone()}>
+                <TouchableOpacity
+                  style={[styles.button, styles.sos]}
+                  onPress={() => openPhone()}
+                >
                   <Text style={styles.buttonText}>SOS</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={[styles.button, styles.cancel]}
                   onPress={() =>
                     navigation.navigate("ActiveQuestScreen", currentQuest)
-                  }>
+                  }
+                >
                   <Text style={styles.buttonText}>CHEAT!!! Skip Location</Text>
                 </TouchableOpacity>
               </View>
@@ -250,7 +256,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#4a040c",
   },
   sos: {
-    backgroundColor:"red"
+    backgroundColor: "red",
   },
   buttonText: {
     color: "white",
