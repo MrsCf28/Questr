@@ -19,7 +19,7 @@ export function HistoryScreen({ selectedTab }: tabProp) {
         styles.container,
       ]}>
       <ImageBackground source={require('../assets/images/stones.jpg')} style={styles.container} resizeMode="cover">
-      <View style={styles.separator}/>
+     
       <ScrollView style={styles.scrollableArea}>
         {completedQuests.map((quest) => {
           return <HistoryCard key={quest.start_time} quest={quest} />;
