@@ -1,12 +1,19 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useContext, useEffect, useState } from "react";
-import { Pressable, StyleSheet, ImageBackground, Image } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  Linking,
+  TouchableOpacity,
+  StyleSheet,
+  ImageBackground,
+  Image
+} from "react-native";
 import { Text, View } from "../components/Themed";
 import * as Location from "expo-location";
 import { locationChecker } from "../utils/functions";
 import { fetchQuestById } from "../utils/questApi";
 import { patchUser } from "../utils/userApi";
 import { useCurrentUser, useRegisteredUser } from "../context/Context";
+import linking from "../navigation/LinkingConfiguration";
 
 export default function CurrentQuestScreen() {
   const { setCurrentUser } = useCurrentUser();
@@ -46,6 +53,9 @@ export default function CurrentQuestScreen() {
     navigation.navigate("TabTwo");
   }
 
+  function openPhone() {
+    Linking.openURL(`tel:EmergancyServices`)
+}
   useEffect(() => {
     setIsLoading(true);
     fetchQuestById(currentUser.current_quest_id)
@@ -128,6 +138,7 @@ export default function CurrentQuestScreen() {
             resizeMode="cover"
             style={styles.scroll}
           >
+          resizeMode="cover">
             <View style={styles.holder}>
               <Text style={styles.title}>{currentQuest.title}</Text>
               <View style={styles.container}>
@@ -155,26 +166,27 @@ export default function CurrentQuestScreen() {
                     Adventurer press the button when you have arrived
                   </Text>
                 )}
-                <Pressable
+
+                <TouchableOpacity
                   onPress={updateLocation}
-                  style={[styles.button, styles.sos]}
-                >
+                  style={styles.button}>
                   <Text style={styles.buttonText}>Check Location</Text>
-                </Pressable>
-                <Pressable
+                </TouchableOpacity>
+                <TouchableOpacity
                   style={[styles.button, styles.cancel]}
-                  onPress={cancelQuest}
-                >
+                  onPress={cancelQuest}>
                   <Text style={styles.buttonText}>Cancel Quest</Text>
-                </Pressable>
-                <Pressable
+                </TouchableOpacity>
+                <TouchableOpacity style={[styles.button, styles.sos]} onPress={() => openPhone()}>
+                  <Text style={styles.buttonText}>SOS</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
                   style={[styles.button, styles.cancel]}
                   onPress={() =>
                     navigation.navigate("ActiveQuestScreen", currentQuest)
-                  }
-                >
+                  }>
                   <Text style={styles.buttonText}>CHEAT!!! Skip Location</Text>
-                </Pressable>
+                </TouchableOpacity>
               </View>
             </View>
           </ImageBackground>
@@ -223,7 +235,7 @@ const styles = StyleSheet.create({
     backgroundColor: "none",
   },
   button: {
-    margin: 20,
+    margin: 10,
     width: "80%",
     borderColor: "#7a7877",
     backgroundColor: "#014c54",
@@ -236,6 +248,9 @@ const styles = StyleSheet.create({
   },
   cancel: {
     backgroundColor: "#4a040c",
+  },
+  sos: {
+    backgroundColor:"red"
   },
   buttonText: {
     color: "white",

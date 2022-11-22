@@ -93,6 +93,25 @@ export type UpdatedUser = {
         coins: number;
     };
 };
+export type UpdatedQuest = {
+  type?: "updated";
+  id: string;
+  category?: string | null;
+  title?: string | null;
+  description?: string | null;
+  location?: Object | null;
+  createdAt?: string | null;
+  updatedAt?: string | null;
+  rewards?: Object | null;
+  time_limit_hours?: number | null;
+  restrictions?: Object | null;
+  reviews?: {
+    current_rating: number;
+    times_abandoned: number;
+    times_completed: number;
+  };
+  objectives?: Array<Object | null> | null;
+};
 
 export type DefaultUser = {
     type: 'default';
