@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 
 import { Text, View } from "../components/Themed";
@@ -16,6 +16,12 @@ import { formatUserStats } from "../utils/functions";
 export function Graph() {
 	const { currentUser } = useContext(CurrentUser);
 
+	function formattedUserStats() {
+		let { formattedStats} = formatUserStats(
+			currentUser.stats
+		);
+		return formattedStats;
+	}
 	return (
 		<View style={styles.container}>
 			<VictoryChart
@@ -23,6 +29,10 @@ export function Graph() {
 				theme={VictoryTheme.material}
 				domain={{ y: [0, 1] }}
 				padding={80}
+				animate={{
+					duration: 2000,
+					onLoad: { duration: 1000 },
+				}}
 			>
 				<VictoryPolarAxis
 					dependentAxis
@@ -58,13 +68,13 @@ export function Graph() {
 					style={{
 						data: {
 							fill: "brown",
-							fillOpacity: 0.3,
+							fillOpacity: 0.5,
 							stroke: "brown",
 							strokeWidth: 4,
 							strokeOpacity: 1,
 						},
 					}}
-					data={formatUserStats(currentUser.stats)}
+					data={formattedUserStats()}
 				/>
 			</VictoryChart>
 		</View>

@@ -23,3 +23,11 @@ export async function fetchQuestById(id: string) {
         });
     
 }
+
+export function patchUser(updatedUser: object) {
+	return API.graphql(
+		graphqlOperation(updateUserApi, { input: updatedUser })
+	).then((userData) => {
+		return userData.data.getUserApi;
+	});
+}

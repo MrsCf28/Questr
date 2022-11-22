@@ -49,10 +49,10 @@ export function fetchUserStats(id: string) {
 	);
 }
 
-export function getAllUserStats(sortBy: string) {
+export function getAllUserStats(sortBy: string, reverse: boolean = true) {
 	return API.graphql(graphqlOperation(listUserStatsApi)).then((res) => {
-        console.log('res: ', res.data.listUserApis.items);
         const stats = res.data.listUserApis.items
+		
         function compare(a, b) {
             // Use toUpperCase() to ignore character casing
             const statA = a.stats[sortBy];
@@ -67,6 +67,7 @@ export function getAllUserStats(sortBy: string) {
             return comparison;
           }
           
-		return stats.sort(compare);
+
+		return (sortBy ? reverse ? stats.sort(compare).reverse(): stats.sort(compare): stats);
 	});
 }
