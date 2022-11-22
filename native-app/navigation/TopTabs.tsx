@@ -5,8 +5,8 @@ import { StatusBar } from "expo-status-bar";
 import TabOneScreen from '../screens/ProfilePage';
 import CurrentQuestScreen from '../screens/CurrentQuestScreen';
 import NoQuestScreen from '../screens/NoQuestScreen';
-import { CurrentUser } from '../context/CurrentUser';
 import { HistoryScreen } from '../components/HistoryScreen';
+import { useRegisteredUser } from '../context/Context';
 
 const TopTab = createMaterialTopTabNavigator();
 
@@ -14,7 +14,7 @@ const TopTab = createMaterialTopTabNavigator();
 
 export function TopTabs() {
 
-    const {currentUser} = useContext(CurrentUser)
+  const { currentUser } = useRegisteredUser();
 
     return (
     <SafeAreaView style={{flex:1, backgroundColor: 'white'}}>

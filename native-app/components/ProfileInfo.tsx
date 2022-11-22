@@ -1,10 +1,9 @@
 import React from "react";
-import { useContext } from "react";
 import { View, Image, StyleSheet, Text } from "react-native";
-import { CurrentUser } from "../context/CurrentUser";
+import { useRegisteredUser } from "../context/Context";
 
 export function ProfileInfo() {
-	const { currentUser } = useContext(CurrentUser);
+	const { currentUser } = useRegisteredUser();
 	const { display_name, image, stats } = currentUser;
 
 	const ranks: string[] = [
@@ -12,7 +11,7 @@ export function ProfileInfo() {
 		"LilPete",
 		"AdolescentAlex",
 		"WiseWolfred",
-		"BigDaddy",
+		"Knight",
 	];
 
 	return (

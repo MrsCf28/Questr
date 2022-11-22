@@ -1,40 +1,39 @@
-import React, {useContext} from "react";
-import { Pressable, StyleSheet, ImageBackground } from "react-native";
-import { useNavigation, usePreventRemoveContext } from "@react-navigation/native";
-import { Text, View } from "../components/Themed";
-import { CurrentUser } from "../context/CurrentUser";
-import { patchUser } from "../utils/userApi";
+import React from 'react';
+import { Pressable, StyleSheet, ImageBackground } from 'react-native';
+import {
+    useNavigation,
+} from '@react-navigation/native';
+import { Text, View } from '../components/Themed';
+import { patchUser } from '../utils/userApi';
+import {
+    useCurrentUser,
+    useRegisteredUser,
+} from '../context/Context';
 
-export default function AcceptQuestScreen({route}) {
-  const navigation = useNavigation();
+export default function AcceptQuestScreen({ route }: any) {
+    const navigation = useNavigation();
 
-  const {currentUser, setCurrentUser} = useContext(CurrentUser)
+    const { setCurrentUser } = useCurrentUser();
+    const { currentUser } = useRegisteredUser();
 
-  const quest = route.params
+    const quest = route.params;
 
-  function acceptQuest() {
-    setCurrentUser({...currentUser, current_quest_id: quest.id})
-    
-    const updatedUser = {
-      id: currentUser.id,
-      display_name: currentUser.display_name,
-      age: currentUser.age,
-      preferred_region: currentUser.preferred_region,
-      image: currentUser.image,
-      current_quest_id: quest.id,
-      quest_history: currentUser.quest_history,
-      avatar_uri: currentUser.avatar_uri,
-      stats: currentUser.stats
-    };
-
-    patchUser(updatedUser).then(() => {
-    }).catch((err: any) => {
+    function acceptQuest() {
       
-      console.log("error in patch user", err);
-    });
-    navigation.navigate('TabTwo')
-    
-  }
+        const updatedUser = {
+            id: currentUser.id,
+            current_quest_id: quest.id,
+        };
+
+        patchUser(updatedUser)
+            .then((user) => {
+                setCurrentUser(user);
+            })
+            .catch((err: any) => {
+                console.log('error in patch user', err);
+            });
+        navigation.navigate('TabTwo');
+    }
 
   return (
   <View style={styles.main}>
@@ -64,61 +63,60 @@ export default function AcceptQuestScreen({route}) {
   )
 }
 
-  const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      alignItems: 'center',
-      width: "100%",
-      justifyContent: 'center',
-      backgroundColor: 'none'
+        flex: 1,
+        alignItems: 'center',
+        width: '100%',
+        justifyContent: 'center',
+        backgroundColor: 'none',
     },
     main: {
-      flex: 1,
-      width: "100%",
-      alignItems: "center",
-      justifyContent: "center",
+        flex: 1,
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     scroll: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      width: '100%'
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%',
     },
     holder: {
-      flex: 1,
-      paddingHorizontal: 40,
-      paddingVertical: 120,
-      justifyContent: 'center',
-      alignItems: 'center',
-      width: '100%',
-      backgroundColor: 'none'
+        flex: 1,
+        paddingHorizontal: 40,
+        paddingVertical: 120,
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%',
+        backgroundColor: 'none',
     },
     title: {
-      fontSize: 20,
-      fontWeight: "bold",
+        fontSize: 20,
+        fontWeight: 'bold',
     },
     buttonContainer: {
-      alignItems: "center",
-      width: "100%",
-      backgroundColor: 'none'
+        alignItems: 'center',
+        width: '100%',
+        backgroundColor: 'none',
     },
     button: {
-      margin: 20,
-      width: "80%",
-      borderColor: '#7a7877',
-      backgroundColor: '#014c54',
-      padding: 10,
-      color: "white",
-      borderRadius: 20,
-      justifyContent: "center",
-      alignItems: "center",
-      borderWidth: 3
+        margin: 20,
+        width: '80%',
+        borderColor: '#7a7877',
+        backgroundColor: '#014c54',
+        padding: 10,
+        color: 'white',
+        borderRadius: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 3,
     },
     buttonText: {
-      color: "white",
+        color: 'white',
     },
     text: {
       textTransform: "capitalize",
     }
   });
-

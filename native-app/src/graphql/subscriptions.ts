@@ -132,6 +132,7 @@ export const onCreateUserApi = /* GraphQL */ `
   subscription OnCreateUserApi($filter: ModelSubscriptionUserApiFilterInput) {
     onCreateUserApi(filter: $filter) {
       id
+      type
       display_name
       image
       age
@@ -166,6 +167,7 @@ export const onUpdateUserApi = /* GraphQL */ `
   subscription OnUpdateUserApi($filter: ModelSubscriptionUserApiFilterInput) {
     onUpdateUserApi(filter: $filter) {
       id
+      type
       display_name
       image
       age
@@ -200,6 +202,7 @@ export const onDeleteUserApi = /* GraphQL */ `
   subscription OnDeleteUserApi($filter: ModelSubscriptionUserApiFilterInput) {
     onDeleteUserApi(filter: $filter) {
       id
+      type
       display_name
       image
       age

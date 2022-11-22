@@ -1,8 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 
-import { Text, View } from "../components/Themed";
-import { RootTabScreenProps } from "../types";
+import { View } from "../components/Themed";
 
 import {
 	VictoryArea,
@@ -10,11 +9,12 @@ import {
 	VictoryPolarAxis,
 	VictoryTheme,
 } from "victory-native";
-import { CurrentUser } from "../context/CurrentUser";
 import { formatUserStats } from "../utils/functions";
+import { useRegisteredUser } from "../context/Context";
+
 
 export function Graph() {
-	const { currentUser } = useContext(CurrentUser);
+	const { currentUser } = useRegisteredUser();
 
 	function formattedUserStats() {
 		let { formattedStats} = formatUserStats(

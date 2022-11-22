@@ -1,11 +1,6 @@
 import React, { useState } from "react";
-import { View, Pressable, StyleSheet, Text, ImageBackground } from "react-native";
-import { StatsScreen } from "./StatsScreen";
-import { HistoryScreen } from "./HistoryScreen";
-import { TabHolder } from "./TabHolder";
-import { ItemsScreen } from "./ItemsScreen";
+import { View, StyleSheet, ImageBackground } from "react-native";
 import { useEffect } from "react";
-import { AvatarScreen } from "../screens/AvatarScreen";
 import { ProfileInfo } from "./ProfileInfo";
 import { ProfileController } from "./ProfileController";
 

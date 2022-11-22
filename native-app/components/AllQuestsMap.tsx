@@ -2,11 +2,33 @@ import React, { useEffect, useState} from "react";
 import MapView, { Callout, Marker, Polyline } from "react-native-maps";
 import { StyleSheet, Text, View, Dimensions, Pressable, Image } from "react-native";
 import { fetchAllQuests } from "../utils/questApi";
-import { QuestMarker } from "./QuestMarker";
+import { QuestMarker } from "./QuestMarker"
+import { ExtendedCoordinate } from "../types";
 
-export default function AllQuestMap ({currentLocation, image}) {
+type AllQuestMapProps = {
+  currentLocation: ExtendedCoordinate;
+  image: string;
+}
 
-  const [allQuests, setAllQuests] = useState([]);
+export default function AllQuestMap ({currentLocation, image}: AllQuestMapProps) {
+
+  const initialQuest = {
+    id: '',
+    category: '',
+    title: '',
+    description: '',
+    location: {
+        latitude: 0,
+        longitude: 0,
+        latitudeDelta: 0,
+        longitudeDelta: 0,
+    },
+    createdAt: '',
+    updatedAt: '',
+    time_limit_hours: 0,
+};
+const initalAllQuests = [initialQuest]
+  const [allQuests, setAllQuests] = useState(initalAllQuests);
   const [isLoading, setIsLoading] = useState(true)
   
   useEffect(() => {

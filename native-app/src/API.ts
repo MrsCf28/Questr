@@ -191,10 +191,11 @@ export type DeleteQuestApiInput = {
 
 export type CreateUserApiInput = {
   id?: string | null,
+  type?: string | null,
   display_name?: string | null,
   image?: string | null,
-  age: number,
-  current_quest_id: string,
+  age?: number | null,
+  current_quest_id?: string | null,
   avatar_uri?: string | null,
   owned_avatar_ids?: Array< number | null > | null,
   quest_history?: Array< QuestHistoryInput | null > | null,
@@ -212,6 +213,7 @@ export type QuestHistoryInput = {
 };
 
 export type ModelUserApiConditionInput = {
+  type?: ModelStringInput | null,
   display_name?: ModelStringInput | null,
   image?: ModelStringInput | null,
   age?: ModelIntInput | null,
@@ -227,10 +229,11 @@ export type ModelUserApiConditionInput = {
 export type UserApi = {
   __typename: "UserApi",
   id: string,
+  type?: string | null,
   display_name?: string | null,
   image?: string | null,
-  age: number,
-  current_quest_id: string,
+  age?: number | null,
+  current_quest_id?: string | null,
   avatar_uri?: string | null,
   owned_avatar_ids?: Array< number | null > | null,
   quest_history?:  Array<QuestHistory | null > | null,
@@ -252,6 +255,7 @@ export type QuestHistory = {
 
 export type UpdateUserApiInput = {
   id: string,
+  type?: string | null,
   display_name?: string | null,
   image?: string | null,
   age?: number | null,
@@ -304,6 +308,7 @@ export type ModelQuestApiConnection = {
 
 export type ModelUserApiFilterInput = {
   id?: ModelIDInput | null,
+  type?: ModelStringInput | null,
   display_name?: ModelStringInput | null,
   image?: ModelStringInput | null,
   age?: ModelIntInput | null,
@@ -378,6 +383,7 @@ export type ModelSubscriptionIntInput = {
 
 export type ModelSubscriptionUserApiFilterInput = {
   id?: ModelSubscriptionIDInput | null,
+  type?: ModelSubscriptionStringInput | null,
   display_name?: ModelSubscriptionStringInput | null,
   image?: ModelSubscriptionStringInput | null,
   age?: ModelSubscriptionIntInput | null,
@@ -554,10 +560,11 @@ export type CreateUserApiMutation = {
   createUserApi?:  {
     __typename: "UserApi",
     id: string,
+    type?: string | null,
     display_name?: string | null,
     image?: string | null,
-    age: number,
-    current_quest_id: string,
+    age?: number | null,
+    current_quest_id?: string | null,
     avatar_uri?: string | null,
     owned_avatar_ids?: Array< number | null > | null,
     quest_history?:  Array< {
@@ -595,10 +602,11 @@ export type UpdateUserApiMutation = {
   updateUserApi?:  {
     __typename: "UserApi",
     id: string,
+    type?: string | null,
     display_name?: string | null,
     image?: string | null,
-    age: number,
-    current_quest_id: string,
+    age?: number | null,
+    current_quest_id?: string | null,
     avatar_uri?: string | null,
     owned_avatar_ids?: Array< number | null > | null,
     quest_history?:  Array< {
@@ -636,10 +644,11 @@ export type DeleteUserApiMutation = {
   deleteUserApi?:  {
     __typename: "UserApi",
     id: string,
+    type?: string | null,
     display_name?: string | null,
     image?: string | null,
-    age: number,
-    current_quest_id: string,
+    age?: number | null,
+    current_quest_id?: string | null,
     avatar_uri?: string | null,
     owned_avatar_ids?: Array< number | null > | null,
     quest_history?:  Array< {
@@ -719,10 +728,11 @@ export type UserApiQuery = {
   userApi?:  {
     __typename: "UserApi",
     id: string,
+    type?: string | null,
     display_name?: string | null,
     image?: string | null,
-    age: number,
-    current_quest_id: string,
+    age?: number | null,
+    current_quest_id?: string | null,
     avatar_uri?: string | null,
     owned_avatar_ids?: Array< number | null > | null,
     quest_history?:  Array< {
@@ -867,10 +877,11 @@ export type GetUserApiQuery = {
   getUserApi?:  {
     __typename: "UserApi",
     id: string,
+    type?: string | null,
     display_name?: string | null,
     image?: string | null,
-    age: number,
-    current_quest_id: string,
+    age?: number | null,
+    current_quest_id?: string | null,
     avatar_uri?: string | null,
     owned_avatar_ids?: Array< number | null > | null,
     quest_history?:  Array< {
@@ -911,10 +922,11 @@ export type ListUserApisQuery = {
     items:  Array< {
       __typename: "UserApi",
       id: string,
+      type?: string | null,
       display_name?: string | null,
       image?: string | null,
-      age: number,
-      current_quest_id: string,
+      age?: number | null,
+      current_quest_id?: string | null,
       avatar_uri?: string | null,
       owned_avatar_ids?: Array< number | null > | null,
       quest_history?:  Array< {
@@ -1106,10 +1118,11 @@ export type OnCreateUserApiSubscription = {
   onCreateUserApi?:  {
     __typename: "UserApi",
     id: string,
+    type?: string | null,
     display_name?: string | null,
     image?: string | null,
-    age: number,
-    current_quest_id: string,
+    age?: number | null,
+    current_quest_id?: string | null,
     avatar_uri?: string | null,
     owned_avatar_ids?: Array< number | null > | null,
     quest_history?:  Array< {
@@ -1146,10 +1159,11 @@ export type OnUpdateUserApiSubscription = {
   onUpdateUserApi?:  {
     __typename: "UserApi",
     id: string,
+    type?: string | null,
     display_name?: string | null,
     image?: string | null,
-    age: number,
-    current_quest_id: string,
+    age?: number | null,
+    current_quest_id?: string | null,
     avatar_uri?: string | null,
     owned_avatar_ids?: Array< number | null > | null,
     quest_history?:  Array< {
@@ -1186,10 +1200,11 @@ export type OnDeleteUserApiSubscription = {
   onDeleteUserApi?:  {
     __typename: "UserApi",
     id: string,
+    type?: string | null,
     display_name?: string | null,
     image?: string | null,
-    age: number,
-    current_quest_id: string,
+    age?: number | null,
+    current_quest_id?: string | null,
     avatar_uri?: string | null,
     owned_avatar_ids?: Array< number | null > | null,
     quest_history?:  Array< {

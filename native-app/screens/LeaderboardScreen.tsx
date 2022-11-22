@@ -20,6 +20,7 @@ import {
 import { formatUserStats } from "../utils/functions";
 import { getAllUserStats } from "../utils/userApi";
 import { CurrentUser } from "../context/CurrentUser";
+import { useRegisteredUser } from "../context/Context";
 interface tabProp {
 	selectedTab: string;
 }
@@ -28,8 +29,8 @@ export function LeaderboardScreen({ selectedTab }: tabProp) {
 	const [isLoading, setIsLoading] = useState(true);
 	const [isLoadingGraph, setIsLoadingGraph] = useState(true);
 
-	const { currentUser } = useContext(CurrentUser);
-	const [allUserStats, setAllUserStats] = useState([]);
+	const { currentUser } = useRegisteredUser();
+		const [allUserStats, setAllUserStats] = useState([]);
 
 	const [compareStat, setCompareStat] = useState("xp");
 	const [compareUser, setCompareUser] = useState("");

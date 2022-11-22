@@ -1,17 +1,17 @@
 import { useFocusEffect } from "@react-navigation/native";
-import React, { useContext } from "react";
+import React from "react";
 import { View, StyleSheet, Text, ImageBackground, Image } from "react-native";
 import { ChangeAvatar } from "../components/ChangeAvatar";
 import { CompareStats } from "../components/CompareStats";
 
 import { ProfileController } from "../components/ProfileController";
-import { CurrentUser } from "../context/CurrentUser";
+import { useRegisteredUser } from "../context/Context";
 interface tabProp {
 	myAvatar: string;
 }
 
 export function AvatarScreen({ myAvatar }: tabProp) {
-	const { currentUser } = useContext(CurrentUser);
+	const { currentUser } = useRegisteredUser();
 
 	const { dexterity, exploration, perception, stamina, strength, wisdom } =
 		currentUser.stats;
