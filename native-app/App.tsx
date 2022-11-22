@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Amplify, Auth } from 'aws-amplify';
-import { withAuthenticator } from 'aws-amplify-react-native';
+import { withAuthenticator, AmplifyTheme } from 'aws-amplify-react-native';
 import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation';
@@ -65,4 +65,52 @@ function App() {
     }
 }
 
-export default withAuthenticator(App);
+const customTheme = {...AmplifyTheme, 
+    button: {
+        margin: 20,
+        borderColor: '#7a7877',
+        backgroundColor: '#014c54',
+        borderWidth: 3,
+        padding: 12,
+        color: 'white',
+        borderRadius: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    sectionFooterLink: {
+        margin: 10,
+        borderColor: '#7a7877',
+        backgroundColor: '#014c54',
+        borderWidth: 3,
+        padding: 10,
+        color: 'white',
+        borderRadius: 20,
+        paddingTop: 14,
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center'
+	},
+    buttonDisabled: {
+        margin: 20,
+        borderColor: '#7a7877',
+        backgroundColor: '#4a040c',
+        borderWidth: 3,
+        padding: 10,
+        color: 'white',
+        borderRadius: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+	},
+    input: {...AmplifyTheme.input,
+        borderRadius: 20
+    },
+    phoneInput: {...AmplifyTheme.phoneInput,
+        borderRadius: 20
+    },
+    inputLabel: {
+		marginBottom: 8,
+        marginHorizontal: 15
+	},
+};
+
+export default withAuthenticator(App, {theme: customTheme});
