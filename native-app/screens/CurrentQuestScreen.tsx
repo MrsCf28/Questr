@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   ImageBackground,
-  Image
+  Image,
 } from "react-native";
 import { Text, View } from "../components/Themed";
 import * as Location from "expo-location";
@@ -52,9 +52,10 @@ export default function CurrentQuestScreen() {
       });
     navigation.navigate("TabTwo");
   }
+
   function openPhone() {
-    Linking.openURL(`tel:EmergancyServices`)
-}
+    Linking.openURL(`tel:EmergancyServices`);
+  }
   useEffect(() => {
     setIsLoading(true);
     fetchQuestById(currentUser.current_quest_id)
@@ -120,7 +121,7 @@ export default function CurrentQuestScreen() {
       <View style={styles.loadContainer}>
         <Image
           style={styles.imageLoading}
-          source={require("../assets/videos/checkingImage.gif")}
+          source={require("../assets/videos/loadingScroll.gif")}
         />
       </View>
     );
@@ -162,6 +163,7 @@ export default function CurrentQuestScreen() {
                     Adventurer press the button when you have arrived
                   </Text>
                 )}
+
                 <TouchableOpacity
                   onPress={updateLocation}
                   style={styles.button}>
@@ -172,7 +174,9 @@ export default function CurrentQuestScreen() {
                   onPress={cancelQuest}>
                   <Text style={styles.buttonText}>Cancel Quest</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={[styles.button, styles.sos]} onPress={() => openPhone()}>
+                <TouchableOpacity
+                  style={[styles.button, styles.sos]}
+                  onPress={() => openPhone()}>
                   <Text style={styles.buttonText}>SOS</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -245,7 +249,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#4a040c",
   },
   sos: {
-    backgroundColor:"red"
+    backgroundColor: "red",
   },
   buttonText: {
     color: "white",
