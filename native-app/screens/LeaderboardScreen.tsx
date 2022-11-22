@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
 	View,
 	StyleSheet,
@@ -8,29 +8,29 @@ import {
 } from "react-native";
 import { DataTable } from "react-native-paper";
 import ModalDropdown from "react-native-modal-dropdown";
-
-import {
+import { AntDesign } from '@expo/vector-icons';import {
 	VictoryArea,
 	VictoryChart,
-	VictoryLabel,
 	VictoryLegend,
 	VictoryPolarAxis,
 	VictoryTheme,
 } from "victory-native";
 import { formatUserStats } from "../utils/functions";
 import { getAllUserStats } from "../utils/userApi";
-import { CurrentUser } from "../context/CurrentUser";
 import { useRegisteredUser } from "../context/Context";
+import LoadingComponent from "../components/LoadingComponent";
+import ErrorComponent from "../components/ErrorComponent";
 interface tabProp {
 	selectedTab: string;
 }
 
 export function LeaderboardScreen({ selectedTab }: tabProp) {
 	const [isLoading, setIsLoading] = useState(true);
+	const [isError, setIsError] = useState(true);
 	const [isLoadingGraph, setIsLoadingGraph] = useState(true);
 
 	const { currentUser } = useRegisteredUser();
-		const [allUserStats, setAllUserStats] = useState([]);
+	const [allUserStats, setAllUserStats] = useState([]);
 
 	const [compareStat, setCompareStat] = useState("xp");
 	const [compareUser, setCompareUser] = useState("");
@@ -40,6 +40,7 @@ export function LeaderboardScreen({ selectedTab }: tabProp) {
 
 	useEffect(() => {
 		setIsLoading(true);
+		setIsError(false)
 		setIsLoadingGraph(true);
 		getAllUserStats(compareStat)
 			.then((res) => {
@@ -49,6 +50,10 @@ export function LeaderboardScreen({ selectedTab }: tabProp) {
 			})
 			.then((res) => {
 				Averager(res);
+				
+			}).catch((err)=>{
+                setIsLoading(false);
+                setIsError(true);
 			});
 	}, [compareStat]);
 
@@ -121,17 +126,18 @@ export function LeaderboardScreen({ selectedTab }: tabProp) {
 			comparisonCoefficient
 		);
 		if (comparisonCoefficient !== maxStatOnRadarChart) {
-		setComparisonCoefficient(maxStatOnRadarChart);}
+			setComparisonCoefficient(maxStatOnRadarChart);
+		}
 		return formattedStats;
-}
+	}
 
-function formattedComparisonStats(stats) {
-	let { formattedStats } = formatUserStats(
-		stats, comparisonCoefficient
-	);
-	return formattedStats;
-}
+	function formattedComparisonStats(stats) {
+		let { formattedStats } = formatUserStats(stats, comparisonCoefficient);
+		return formattedStats;
+	}
 
+	if (isLoading) return <LoadingComponent />;
+	if (isError) return <ErrorComponent error={"potato error"} />;
 	return (
 		<View style={[styles.container]}>
 			<ImageBackground
@@ -152,18 +158,20 @@ function formattedComparisonStats(stats) {
 										textStyle={{
 											color: "brown",
 											fontWeight: "bold",
-											textAlign:"right"
+											textAlign: "right",
 										}}
 									>
 										NAME
 									</DataTable.Title>
-									<DataTable.Title numeric textStyle={{
+									<DataTable.Title
+										numeric
+										textStyle={{
 											color: "brown",
 											fontWeight: "bold",
 											// textAlign: "right",
-												textAlignVertical:"top"
-										}}>
-								
+											textAlignVertical: "top",
+										}}
+									>
 										<ModalDropdown
 											textStyle={{
 												color: "brown",
@@ -179,8 +187,7 @@ function formattedComparisonStats(stats) {
 											isFullWidth
 											showsVerticalScrollIndicator
 											dropdownStyle={{
-												backgroundColor:
-													"lightlavender",
+												backgroundColor: "brown",
 											}}
 											defaultValue={compareStat}
 											options={statOptions}
@@ -190,8 +197,8 @@ function formattedComparisonStats(stats) {
 												);
 											}}
 											renderRightComponent={() => (
-												<Text>🔻</Text>
-											  )}
+												<AntDesign name="caretdown" color="brown" />
+											)}
 										/>
 									</DataTable.Title>
 								</DataTable.Header>
@@ -309,8 +316,12 @@ function formattedComparisonStats(stats) {
 										}}
 										data={
 											compareUser === ""
-												? formattedComparisonStats(averageStats)
-												: formattedComparisonStats(compareUser.stats)
+												? formattedComparisonStats(
+														averageStats
+												  )
+												: formattedComparisonStats(
+														compareUser.stats
+												  )
 										}
 									/>
 									<VictoryArea
@@ -351,9 +362,8 @@ function formattedComparisonStats(stats) {
 								})}
 								onSelect={(e: String) => {
 									return setCompareUser(allUserStats[e]);
-								}}											renderRightComponent={() => (
-									<Text>🔻</Text>
-								  )}
+								}}
+								renderRightComponent={() => <AntDesign name="caretdown" color="brown" />}
 							/>
 						</View>
 					)}
