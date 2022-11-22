@@ -25,13 +25,6 @@ export default function ImageUploadingButton({
 }
 
 const styles = StyleSheet.create({
-  button: {
-    height: 20,
-    width: 40,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-  },
   image: {
     margin: -200,
     height: 400,
