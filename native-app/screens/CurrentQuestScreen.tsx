@@ -131,11 +131,13 @@ export default function CurrentQuestScreen() {
         <ImageBackground
           source={require("../assets/images/stones.jpg")}
           style={styles.container}
-          resizeMode="cover">
+          resizeMode="cover"
+        >
           <ImageBackground
             source={require("../assets/images/bigScroll.png")}
             resizeMode="cover"
-            style={styles.scroll}>
+            style={styles.scroll}
+          >
             <View style={styles.holder}>
               <Text style={styles.title}>{currentQuest.title}</Text>
               <View style={styles.container}>
@@ -166,24 +168,28 @@ export default function CurrentQuestScreen() {
 
                 <TouchableOpacity
                   onPress={updateLocation}
-                  style={styles.button}>
+                  style={styles.button}
+                >
                   <Text style={styles.buttonText}>Check Location</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={[styles.button, styles.cancel]}
-                  onPress={cancelQuest}>
+                  onPress={cancelQuest}
+                >
                   <Text style={styles.buttonText}>Cancel Quest</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={[styles.button, styles.sos]}
-                  onPress={() => openPhone()}>
+                  onPress={() => openPhone()}
+                >
                   <Text style={styles.buttonText}>SOS</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={[styles.button, styles.cancel]}
                   onPress={() =>
                     navigation.navigate("ActiveQuestScreen", currentQuest)
-                  }>
+                  }
+                >
                   <Text style={styles.buttonText}>CHEAT!!! Skip Location</Text>
                 </TouchableOpacity>
               </View>

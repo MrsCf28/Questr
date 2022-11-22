@@ -2,6 +2,8 @@ import { useFocusEffect } from "@react-navigation/native";
 import React from "react";
 import { View, StyleSheet, Text, ImageBackground, Image } from "react-native";
 import { ChangeAvatar } from "../components/ChangeAvatar";
+import { CompareStats } from "../components/CompareStats";
+
 import { ProfileController } from "../components/ProfileController";
 import { useRegisteredUser } from "../context/Context";
 interface tabProp {
@@ -43,6 +45,7 @@ export function AvatarScreen({ myAvatar }: tabProp) {
 					</View>
 				</View>
 				<ChangeAvatar />
+				<CompareStats />
 			</ImageBackground>
 		</View>
 	);

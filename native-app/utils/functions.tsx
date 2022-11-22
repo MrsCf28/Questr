@@ -33,22 +33,26 @@ export const formCheck = (inputArray:Array<string>) : boolean => {
 	return inputArray.every(input => validCheck(input))
 }
 
-export function formatUserStats({
-	dexterity,
-	exploration,
-	perception,
-	stamina,
-	strength,
-	wisdom,
-}: {
-	dexterity: number;
-	exploration: number;
-	perception: number;
-	stamina: number;
-	strength: number;
-	wisdom: number;
-}) {
+export function formatUserStats(
+	{
+		dexterity,
+		exploration,
+		perception,
+		stamina,
+		strength,
+		wisdom,
+	}: {
+		dexterity: number;
+		exploration: number;
+		perception: number;
+		stamina: number;
+		strength: number;
+		wisdom: number;
+	},
+	comparisonCoefficient?: number
+) {
 	const maxStatOnRadarChart =
+		comparisonCoefficient ? comparisonCoefficient:
 		Math.max.apply(
 			Math,
 			Object.values({
@@ -70,7 +74,7 @@ export function formatUserStats({
 		strength / maxStatOnRadarChart,
 	];
 
-	return formattedStats;
+	return { formattedStats, maxStatOnRadarChart };
 }
 
 export function missingWordGame(

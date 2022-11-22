@@ -5,15 +5,15 @@ import {
 } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
-  NavigationContainer,
-  DefaultTheme,
-  DarkTheme,
+	NavigationContainer,
+	DefaultTheme,
+	DarkTheme,
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
 import {
-  ColorSchemeName,
-  StyleSheet,
+	ColorSchemeName,
+	StyleSheet,
 } from "react-native";
 
 import Colors from "../constants/Colors";
@@ -25,9 +25,9 @@ import TabOneScreen from "../screens/ProfilePage";
 import TabTwoScreen from "../screens/MainMapScreen";
 import EditProfileScreen from "../screens/EditProfileScreen";
 import {
-  RootStackParamList,
-  RootTabParamList,
-  RootTabScreenProps,
+	RootStackParamList,
+	RootTabParamList,
+	RootTabScreenProps,
 } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
 import NoQuestScreen from "../screens/NoQuestScreen";
@@ -35,32 +35,35 @@ import CameraScreen from "../screens/CameraScreen";
 import { TopTabs } from "./TopTabs";
 import { AvatarSelector } from "../screens/AvatarSelector";
 import CompletedQuestScreen from "../screens/CompletedQuest";
+import { LeaderboardScreen } from "../screens/LeaderboardScreen";
+
 import { useCurrentUser, useRegisteredUser } from "../context/Context";
 import ActiveQuestScreen from "../screens/ActiveQuestScreen";
 import DisclaimerScreen from "../screens/DisclaimerScreen";
 import { useState } from "react";
 export default function Navigation({
-  colorScheme,
+	colorScheme,
 }: {
-  colorScheme: ColorSchemeName;
+	colorScheme: ColorSchemeName;
 }) {
-  const [press, setPress] = useState(false);
-  const { currentUser } = useCurrentUser();
-  return (
-    <NavigationContainer
-      linking={LinkingConfiguration}
-      theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      {currentUser.type === "registered" ? (
-        press ? (
-          <RootNavigator />
-        ) : (
-          <DisclaimerScreen setPress={setPress} />
-        )
-      ) : (
-        <EditProfileScreen />
-      )}
-    </NavigationContainer>
-  );
+	const [press, setPress] = useState(false);
+	const { currentUser } = useCurrentUser();
+	return (
+		<NavigationContainer
+			linking={LinkingConfiguration}
+			theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+		>
+			{currentUser.type === "registered" ? (
+				press ? (
+					<RootNavigator />
+				) : (
+					<DisclaimerScreen setPress={setPress} />
+				)
+			) : (
+				<EditProfileScreen />
+			)}
+		</NavigationContainer>
+	);
 }
 
 /**
@@ -70,83 +73,96 @@ export default function Navigation({
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export function RootNavigator() {
-  const { currentUser } = useRegisteredUser();
+	const { currentUser } = useRegisteredUser();
 
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="Root"
-        component={BottomTabNavigator}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="NotFound"
-        component={NotFoundScreen}
-        options={{ title: "Oops!" }}
-      />
-      <Stack.Group
-        screenOptions={{
-          presentation: "modal",
-        }}>
-        <Stack.Screen
-          name="AvatarSelector"
-          component={AvatarSelector}
-        />
-      </Stack.Group>
-      <Stack.Group screenOptions={{ presentation: "modal" }}>
-        <Stack.Screen
-          name="CurrentQuest"
-          component={
-            currentUser.current_quest_id !== "0"
-              ? CurrentQuestScreen
-              : NoQuestScreen
-          }
-        />
-      </Stack.Group>
-      <Stack.Group
-        screenOptions={{
-          presentation: "modal",
-          headerShown: false,
-        }}>
-        <Stack.Screen
-          name="ActiveQuestScreen"
-          component={ActiveQuestScreen}
-        />
-      </Stack.Group>
-      <Stack.Group
-        screenOptions={{
-          presentation: "modal",
-          headerShown: false,
-        }}>
-        <Stack.Screen
-          name="CameraScreen"
-          component={CameraScreen}
-        />
-      </Stack.Group>
-      <Stack.Group
-        screenOptions={{
-          presentation: "modal",
-        }}>
-        <Stack.Screen
-          name="CompletedQuestScreen"
-          component={CompletedQuestScreen}
-        />
-      </Stack.Group>
+	return (
+		<Stack.Navigator>
+			<Stack.Screen
+				name="Root"
+				component={BottomTabNavigator}
+				options={{ headerShown: false }}
+			/>
+			<Stack.Screen
+				name="NotFound"
+				component={NotFoundScreen}
+				options={{ title: "Oops!" }}
+			/>
+			<Stack.Group
+				screenOptions={{
+					presentation: "modal",
+				}}
+			>
+				<Stack.Screen
+					name="AvatarSelector"
+					component={AvatarSelector}
+				/>
+			</Stack.Group>
 
-      <Stack.Group screenOptions={{ presentation: "modal" }}>
-        <Stack.Screen
-          name="AcceptQuest"
-          component={AcceptQuestScreen}
-        />
-      </Stack.Group>
-      <Stack.Group screenOptions={{ presentation: "modal" }}>
-        <Stack.Screen
-          name="EditProfile"
-          component={EditProfileScreen}
-        />
-      </Stack.Group>
-    </Stack.Navigator>
-  );
+			<Stack.Group screenOptions={{ presentation: "modal" }}>
+				<Stack.Screen
+					name="CurrentQuest"
+					component={
+						currentUser.current_quest_id !== "0"
+							? CurrentQuestScreen
+							: NoQuestScreen
+					}
+				/>
+			</Stack.Group>
+
+			<Stack.Group
+				screenOptions={{
+					presentation: "modal",
+					headerShown: false,
+				}}
+			>
+				<Stack.Screen
+					name="ActiveQuestScreen"
+					component={ActiveQuestScreen}
+				/>
+			</Stack.Group>
+			<Stack.Group
+				screenOptions={{
+					presentation: "modal",
+					headerShown: false,
+				}}
+			>
+				<Stack.Screen name="CameraScreen" component={CameraScreen} />
+			</Stack.Group>
+			<Stack.Group
+				screenOptions={{
+					presentation: "modal",
+				}}
+			>
+				<Stack.Screen
+					name="CompletedQuestScreen"
+					component={CompletedQuestScreen}
+				/>
+			</Stack.Group>
+
+			<Stack.Group screenOptions={{ presentation: "modal" }}>
+				<Stack.Screen
+					name="AcceptQuest"
+					component={AcceptQuestScreen}
+				/>
+			</Stack.Group>
+			<Stack.Group screenOptions={{ presentation: "modal" }}>
+				<Stack.Screen
+					name="EditProfile"
+					component={EditProfileScreen}
+				/>
+			</Stack.Group>
+			<Stack.Group
+				screenOptions={{
+					presentation: "modal",
+				}}
+			>
+				<Stack.Screen
+					name="LeaderboardScreen"
+					component={LeaderboardScreen}
+				/>
+			</Stack.Group>
+		</Stack.Navigator>
+	);
 }
 
 /**
@@ -156,7 +172,7 @@ export function RootNavigator() {
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
-  const colorScheme = useColorScheme();
+	const colorScheme = useColorScheme();
 
   return (
     <BottomTab.Navigator

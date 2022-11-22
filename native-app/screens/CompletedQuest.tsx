@@ -1,62 +1,54 @@
-import React from 'react';
-import { StyleSheet } from 'react-native';
+import React from "react";
+import { StyleSheet } from "react-native";
 
-import { TouchableOpacity, ImageBackground } from 'react-native';
-import {
-    useNavigation,
-} from '@react-navigation/native';
-import { Text, View } from '../components/Themed';
-import { patchUser } from '../utils/userApi';
-import {
-    useCurrentUser,
-    useRegisteredUser,
-} from '../context/Context';
-import Votes from '../components/Votes';
+import { TouchableOpacity ,ImageBackground } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { Text, View } from "../components/Themed";
+import { patchUser } from "../utils/userApi";
+import { useCurrentUser, useRegisteredUser } from "../context/Context";
+import Votes from "../components/Votes";
 export default function CompletedQuestScreen({ route }: any) {
-    const { setCurrentUser } = useCurrentUser();
-    const { currentUser } = useRegisteredUser();
-    const navigation = useNavigation();
+  const { setCurrentUser } = useCurrentUser();
+  const { currentUser } = useRegisteredUser();
+  const navigation = useNavigation();
 
-    let { currentQuest } = route.params;
+  let { currentQuest } = route.params;
 
-    const quest = currentQuest;
-    function updateUserStats() {
-        let currentStats = { ...currentUser.stats };
-        let updatedHistory = {
-            quest_id: String(quest.id),
-            quest_title: quest.title,
-            completed_status: 'complete',
-            start_time: String(Date.now()),
-        };
+  const quest = currentQuest;
+  function updateUserStats() {
+    let currentStats = { ...currentUser.stats };
+    let updatedHistory = {
+      quest_id: String(quest.id),
+      quest_title: quest.title,
+      completed_status: "complete",
+      start_time: String(Date.now()),
+    };
 
-        Object.keys(currentStats).forEach(stat => {
-            currentStats[stat] += quest.rewards[stat];
-        });
+    Object.keys(currentStats).forEach((stat) => {
+      currentStats[stat] += quest.rewards[stat];
+    });
 
-        const updatedUser = {
-            id: currentUser.id,
-            current_quest_id: '0',
-            quest_history: [
-                ...currentUser.quest_history,
-                updatedHistory,
-            ],
-            stats: currentStats,
-        };
+    const updatedUser = {
+      id: currentUser.id,
+      current_quest_id: "0",
+      quest_history: [...currentUser.quest_history, updatedHistory],
+      stats: currentStats,
+    };
 
-        patchUser(updatedUser)
-            .then((user) => {
-                setCurrentUser(user);
-                console.log('patched completed quest');
-                navigation.navigate('TabOne', { screen: 'Home' });
-            })
-            .catch((err: any) => {
-                console.log('error in patch user', err);
-            });
-    }
+    patchUser(updatedUser)
+      .then((user) => {
+        setCurrentUser(user);
+        console.log("patched completed quest");
+        navigation.navigate("TabOne", { screen: "Home" });
+      })
+      .catch((err: any) => {
+        console.log("error in patch user", err);
+      });
+  }
 
-    // useEffect(() => {
-    //   updateUserStats();
-    // }, []);
+  // useEffect(() => {
+  //   updateUserStats();
+  // }, []);
 
     return (
         <View style={styles.main}>
@@ -124,57 +116,57 @@ export default function CompletedQuestScreen({ route }: any) {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        width: '100%',
-        justifyContent: 'center',
-        backgroundColor: 'none',
-    },
-    main: {
-        flex: 1,
-        width: '100%',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    scroll: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100%',
-    },
-    holder: {
-        flex: 1,
-        paddingHorizontal: 40,
-        paddingVertical: 120,
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100%',
-        backgroundColor: 'none',
-    },
-    title: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        textAlign: 'center',
-    },
-    buttonContainer: {
-        alignItems: 'center',
-        width: '100%',
-        backgroundColor: 'none',
-    },
-    button: {
-        margin: 20,
-        width: '80%',
-        borderColor: '#7a7877',
-        backgroundColor: '#014c54',
-        padding: 10,
-        color: 'white',
-        borderRadius: 20,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderWidth: 3,
-    },
-    buttonText: {
-        color: 'white',
-    },
+  container: {
+    flex: 1,
+    alignItems: "center",
+    width: "100%",
+    justifyContent: "center",
+    backgroundColor: "none",
+  },
+  main: {
+    flex: 1,
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  scroll: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+  },
+  holder: {
+    flex: 1,
+    paddingHorizontal: 40,
+    paddingVertical: 120,
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    backgroundColor: "none",
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  buttonContainer: {
+    alignItems: "center",
+    width: "100%",
+    backgroundColor: "none",
+  },
+  button: {
+    margin: 10,
+    width: "100%",
+    borderColor: "#7a7877",
+    backgroundColor: "#014c54",
+    borderWidth: 3,
+    padding: 10,
+    color: "white",
+    borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  buttonText: {
+    color: "white",
+  },
 });
