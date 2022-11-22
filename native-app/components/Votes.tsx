@@ -32,20 +32,23 @@ export default function Votes({ currentQuest }: any) {
   if (liked || disliked) {
     return (
       <View style={styles.container}>
-        <Text>{votes.toString()} Likes</Text>
-        <View style={styles.buttonContainer}></View>
+        <View style={styles.buttonContainer}>
+          <Text style={styles.buttonLiked}>{votes.toString()} Likes</Text>
+        </View>
       </View>
     );
   }
   return (
     <View style={styles.container}>
-      <Text>{votes.toString()} Likes</Text>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           onPress={() => like(1)}
           style={styles.likeButton}>
           <Text style={styles.buttonText}>Like</Text>
         </TouchableOpacity>
+        <View style={styles.button}>
+          <Text>{votes.toString()} Likes</Text>
+        </View>
         <TouchableOpacity
           onPress={() => dislike(-1)}
           style={styles.dislikeButton}>
@@ -57,17 +60,18 @@ export default function Votes({ currentQuest }: any) {
 }
 const styles = StyleSheet.create({
   container: {
+    display: "flex",
     alignItems: "center",
+    justifyContent: "center",
   },
   buttonContainer: {
     flexDirection: "row",
     display: "flex",
     width: "100%",
     backgroundColor: "none",
-    height: 80,
   },
   likeButton: {
-    margin: 20,
+    margin: 10,
     width: "30%",
     borderColor: "#7a7877",
     backgroundColor: "green",
@@ -79,7 +83,7 @@ const styles = StyleSheet.create({
     borderWidth: 3,
   },
   dislikeButton: {
-    margin: 20,
+    margin: 10,
     width: "30%",
     borderColor: "#7a7877",
     backgroundColor: "red",
@@ -88,6 +92,26 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     justifyContent: "center",
     alignItems: "center",
+    borderWidth: 3,
+  },
+  button: {
+    margin: 10,
+    borderColor: "#7a7877",
+    padding: 10,
+    borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 3,
+  },
+  buttonLiked: {
+    width: "100%",
+    margin: 10,
+    borderColor: "#7a7877",
+    padding: 10,
+    borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    textAlign:"center",
     borderWidth: 3,
   },
   buttonText: {

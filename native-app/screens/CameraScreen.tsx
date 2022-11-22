@@ -9,6 +9,7 @@ import {
   Pressable,
   Alert,
   Image,
+  TouchableOpacity,
 } from "react-native";
 
 import { Camera, CameraType } from "expo-camera";
@@ -156,8 +157,7 @@ export default function CameraScreen({ route, setQuestStepNo }: any) {
             style={{ width: "100%", height: height }}
             type={type}
             flashMode={flash}
-            ref={cameraRef}
-          >
+            ref={cameraRef}>
             <View style={styles.flexrow}>
               {uploading ? (
                 <View style={styles.loadContainer}>
@@ -167,22 +167,22 @@ export default function CameraScreen({ route, setQuestStepNo }: any) {
                 <View style={styles.flexrow}>
                   <CameraButton
                     title={"take picture"}
-                    color={"red"}
+                    color={"white"}
                     icon="camera"
                     onPress={takePicture}
                   />
                   <CameraButton
                     title={"flip camera"}
-                    color={"blue"}
+                    color={"white"}
                     icon="retweet"
                     onPress={flipCamera}
                   />
-                  <CameraButton
+                    <CameraButton
                     title={"flash"}
                     color={
                       flash === Camera.Constants.FlashMode.off
-                        ? "yellow"
-                        : "#f1f1f1"
+                        ? "white"
+                        : "yellow"
                     }
                     icon="flash"
                     onPress={() => {
@@ -196,12 +196,11 @@ export default function CameraScreen({ route, setQuestStepNo }: any) {
                 </View>
               )}
             </View>
-            <Pressable
-              style={[styles.button, styles.cancel]}
-              onPress={() => setQuestStepNo((current) => current + 1)}
-            >
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => setQuestStepNo((current) => current + 1)}>
               <Text style={styles.buttonText}>CHEAT!!!! COMPLETE QUEST</Text>
-            </Pressable>
+            </TouchableOpacity>
           </Camera>
         </View>
       ) : (
@@ -225,14 +224,12 @@ const styles = StyleSheet.create({
   },
   flexrow: {
     flex: 1,
-    // backgroundColor:"black",
     flexDirection: "row",
     alignItems: "flex-end",
     justifyContent: "center",
   },
   button: {
     margin: 20,
-    width: "80%",
     borderColor: "#7a7877",
     backgroundColor: "#014c54",
     borderWidth: 3,

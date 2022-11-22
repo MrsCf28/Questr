@@ -16,24 +16,19 @@ export default function ImageUploadingButton({
   color,
 }: ImageUploadingButtonProps) {
   return (
-    <TouchableOpacity onPress={onPress} disabled={true} style={styles.button}>
-      <Image
-        source={require("../assets/videos/checkingImag.gif")}
-        style={styles.image}
-      />
-    </TouchableOpacity>
+    <Image
+      source={require("../assets/videos/checkingImag.gif")}
+      style={styles.image}
+      //source={{ uri: "../assets/videos/checkingImag.gif" }}
+    />
   );
 }
 
 const styles = StyleSheet.create({
-  button: {
-    height: 20,
-    width: 40,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-  },
   image: {
+    margin: -200,
+    height: 400,
+    flexDirection: "column",
     width: 350,
     borderRadius: 30,
     justifyContent: "center",
