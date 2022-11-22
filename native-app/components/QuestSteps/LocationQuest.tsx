@@ -7,6 +7,7 @@ import {
     Dimensions,
     TouchableOpacity,
     Image,
+    TouchableHighlight,
 } from 'react-native';
 import * as Location from 'expo-location'; //library used to get the location from the phone
 import { locationChecker } from '../../utils/functions';
@@ -35,6 +36,10 @@ export default function LocationQuest({
         latitudeDelta: 0.01,
         longitudeDelta: 0.01,
     });
+
+    const [popup, setPopup] = useState(false)
+    const [correct, setCorrect] = useState(false)
+    const [checking, setChecking] = useState(false)
 
     const { currentUser } = useRegisteredUser();
 
@@ -65,12 +70,14 @@ export default function LocationQuest({
 
     const updateLocation = () => {
         (async () => {
-            setIsLoading(true);
+           
             let { status } =
                 await Location.requestForegroundPermissionsAsync(); //asks the phone for permission to use location
             if (status !== 'granted') {
                 return;
             }
+            setPopup(true)
+            setChecking(true)
             let location = await Location.getCurrentPositionAsync({}); //gets the last known location this is quicker than  requesting the current location the alternative is to use Location.getCurrentPositionAsync(options)
             if (location !== null) {
                 setLocation(location);
@@ -81,7 +88,6 @@ export default function LocationQuest({
                     longitudeDelta: 0.01,
                 });
             }
-            setIsLoading(false);
             if (
                 locationChecker(
                     questCoordinate,
@@ -89,7 +95,21 @@ export default function LocationQuest({
                     4
                 ) === 'true'
             ) {
-                setQuestStepNo(current => current + 1);
+                setChecking(false)
+                setPopup(true)
+                setCorrect(true)
+                setTimeout(() => {
+                  setPopup(false)
+                  setQuestStepNo((current) => current + 1)
+                  setCorrect(false)
+                }, 1000)
+            } else {
+                setChecking(false)
+                setPopup(true)
+                setCorrect(false)
+                setTimeout(() => {
+                  setPopup(false)
+                }, 1000)
             }
         })();
     };
@@ -145,14 +165,15 @@ export default function LocationQuest({
                     lineDashPattern={[1]}
                 />
             </MapView>
-            <TouchableOpacity
+            <TouchableHighlight
                 onPress={updateLocation}
-                style={styles.overlay}
+                style={[styles.overlay, popup? styles.disabled : null]}
+                disabled={popup}
             >
                 <Text style={styles.text}>Check Location</Text>
-            </TouchableOpacity>
+            </TouchableHighlight>
             <TouchableOpacity
-                style={styles.overlayCheat}
+                style={styles.overlayCheat}  
                 onPress={() => setQuestStepNo(current => current + 1)}
             >
                 <Text style={styles.text}>
@@ -162,6 +183,21 @@ export default function LocationQuest({
             <View style={styles.overlayTop}>
                 <Text style={styles.text}>{currentStep.desc}</Text>
             </View>
+            {popup? 
+                checking?                 
+                    <View style={[styles.holder, styles.correct, styles.checking]}>
+                        <Text style={styles.text}>Checking Location</Text>
+                    </View> 
+                    :
+                    correct?             
+                        <View style={[styles.holder, styles.correct]}>
+                            <Text style={styles.text}>You Have Arrived!</Text>
+                        </View>
+                        : 
+                        <View style={[styles.holder, styles.correct, styles.incorrect]}>
+                            <Text style={styles.text}>You Are Not There Yet!</Text>
+                        </View>
+                : null}
         </View>
     );
 }
@@ -220,7 +256,7 @@ const styles = StyleSheet.create({
     },
     overlayTop: {
         position: 'absolute',
-        top: 10,
+        top: 50,
         margin: 10,
         padding: 10,
         color: 'white',
@@ -248,4 +284,33 @@ const styles = StyleSheet.create({
         borderColor: '#7a7877',
         backgroundColor: '#014c54',
     },
+    correct: {
+        backgroundColor: '#0a4a20',
+        height: 100,
+        width: '80%',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    incorrect: {
+      backgroundColor: '#4a040c',
+    },
+    holder: {
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        position: 'absolute',
+        top: '50%',
+        borderWidth: 3,
+        borderColor: '#d4d4d4',
+        backgroundColor: '#292936',
+        borderRadius: 20,
+        margin: 40,
+        padding: 20,
+        Width: '100%',
+    },
+    disabled: {
+        backgroundColor: "#4a040c",
+    },
+    checking: {
+        backgroundColor: '#014c54'
+    }
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Pressable, StyleSheet, Text } from 'react-native';
+import { View StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 export function ChangeAvatar() {
@@ -7,12 +7,12 @@ export function ChangeAvatar() {
 
     return (
         <View style={styles.container}>
-            <Pressable
+            <TouchableOpacity
                 style={styles.button}
                 onPress={() => navigation.navigate('AvatarSelector')}
             >
                 <Text style={styles.text}>Change Avatar</Text>
-            </Pressable>
+            </TouchableOpacity>
         </View>
     );
 }

@@ -43,8 +43,4 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     padding: 10,
   },
-  separator: {
-    marginVertical: 30,
-    width: '80%',
-  },
 });
