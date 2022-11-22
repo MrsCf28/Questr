@@ -1,9 +1,10 @@
 import React from "react";
 import { Text, View, StyleSheet } from "react-native";
+import { QuestHistoryProp } from "../types";
 
 //will need to format date to some thing actually readable
 
-export function HistoryCard({ quest }) {
+export function HistoryCard({ quest }: QuestHistoryProp) {
   return (
     <View style={styles.container}>
       <Text style={styles.text} >{quest.quest_title}</Text>

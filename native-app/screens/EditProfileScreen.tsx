@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Pressable,
     StyleSheet,
@@ -34,10 +34,6 @@ export default function EditProfileScreen() {
     const [preferredRegion, setPreferredRegion] =
         useState(defaultRegion);
     const navigation = useNavigation();
-
-    // const [image, setImage] = useState(
-    //     'https://picsum.photos/200/300'
-    // );
     const [imagePicked, setImagePicked] = useState(1);
 
     let displayImage = (

@@ -1,8 +1,7 @@
-import React, { useContext } from "react";
+import React from "react";
 import { StyleSheet } from "react-native";
 
-import { Text, View } from "../components/Themed";
-import { RootTabScreenProps } from "../types";
+import { View } from "../components/Themed";
 
 import {
 	VictoryArea,
@@ -12,6 +11,7 @@ import {
 } from "victory-native";
 import { formatUserStats } from "../utils/functions";
 import { useRegisteredUser } from "../context/Context";
+
 
 export function Graph() {
 	const { currentUser } = useRegisteredUser();

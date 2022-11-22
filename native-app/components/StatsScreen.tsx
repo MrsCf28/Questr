@@ -1,5 +1,5 @@
 import React from "react";
-import { View, ImageBackground, StyleSheet, Text } from "react-native";
+import { View, ImageBackground, StyleSheet } from "react-native";
 import { Graph } from "./Graph";
 
 

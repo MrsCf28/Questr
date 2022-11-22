@@ -19,12 +19,6 @@ Amplify.configure({
     Analytics: {
         disabled: true,
     },
-    Storage: {
-        AWSS3: {
-            bucket: 'questr-image-bucket', //REQUIRED -  Amazon S3 bucket name
-            region: 'eu-west-2', //OPTIONAL -  Amazon service region
-        },
-    },
 });
 
 function App() {

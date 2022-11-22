@@ -1,4 +1,3 @@
-
 import { Auth } from 'aws-amplify';
 import React from 'react'
 import {View, Pressable, StyleSheet, Text} from 'react-native'
