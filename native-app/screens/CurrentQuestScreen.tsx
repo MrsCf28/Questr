@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   ImageBackground,
-  Image
+  Image,
 } from "react-native";
 import { Text, View } from "../components/Themed";
 import * as Location from "expo-location";
@@ -54,8 +54,8 @@ export default function CurrentQuestScreen() {
   }
 
   function openPhone() {
-    Linking.openURL(`tel:EmergancyServices`)
-}
+    Linking.openURL(`tel:EmergancyServices`);
+  }
   useEffect(() => {
     setIsLoading(true);
     fetchQuestById(currentUser.current_quest_id)
@@ -131,14 +131,11 @@ export default function CurrentQuestScreen() {
         <ImageBackground
           source={require("../assets/images/stones.jpg")}
           style={styles.container}
-          resizeMode="cover"
-        >
+          resizeMode="cover">
           <ImageBackground
             source={require("../assets/images/bigScroll.png")}
             resizeMode="cover"
-            style={styles.scroll}
-          >
-          resizeMode="cover">
+            style={styles.scroll}>
             <View style={styles.holder}>
               <Text style={styles.title}>{currentQuest.title}</Text>
               <View style={styles.container}>
@@ -177,7 +174,9 @@ export default function CurrentQuestScreen() {
                   onPress={cancelQuest}>
                   <Text style={styles.buttonText}>Cancel Quest</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={[styles.button, styles.sos]} onPress={() => openPhone()}>
+                <TouchableOpacity
+                  style={[styles.button, styles.sos]}
+                  onPress={() => openPhone()}>
                   <Text style={styles.buttonText}>SOS</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -250,7 +249,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#4a040c",
   },
   sos: {
-    backgroundColor:"red"
+    backgroundColor: "red",
   },
   buttonText: {
     color: "white",

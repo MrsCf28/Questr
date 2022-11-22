@@ -1,4 +1,8 @@
-import { FontAwesome } from "@expo/vector-icons";
+import {
+  FontAwesome,
+  MaterialCommunityIcons,
+  FontAwesome5,
+} from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
   NavigationContainer,
@@ -166,38 +170,26 @@ function BottomTabNavigator() {
       <BottomTab.Screen
         name="TabOne"
         component={TopTabs}
-        options={({ navigation }: RootTabScreenProps<"TabOne">) => ({
+        options={{
           title: "Profile",
           tabBarIcon: ({ color }) => (
-            <TabBarIcon
-              name="code"
+            <FontAwesome5
+              name="chess-king"
+              size={30}
               color={color}
             />
           ),
-          headerRight: () => (
-            <Pressable
-              onPress={() => navigation.navigate("CurrentQuest")}
-              style={({ pressed }) => ({
-                opacity: pressed ? 0.5 : 1,
-              })}>
-              <FontAwesome
-                name="info-circle"
-                size={25}
-                color={Colors[colorScheme].text}
-                style={{ marginRight: 15 }}
-              />
-            </Pressable>
-          ),
-        })}
+        }}
       />
       <BottomTab.Screen
         name="TabTwo"
         component={TabTwoScreen}
         options={{
-          title: "Map",
+          title: "Quest Map",
           tabBarIcon: ({ color }) => (
-            <TabBarIcon
-              name="code"
+            <MaterialCommunityIcons
+              name="map-outline"
+              size={30}
               color={color}
             />
           ),
@@ -210,23 +202,14 @@ function BottomTabNavigator() {
 /**
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
  */
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>["name"];
-  color: string;
-}) {
-  return (
-    <FontAwesome
-      size={30}
-      style={{ marginBottom: -3 }}
-      {...props}
-    />
-  );
-}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-  },
+    
+  }, tab: {
+    backgroundColor:"blue"
+  }
 });
