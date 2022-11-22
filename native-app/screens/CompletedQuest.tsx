@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 
-import { Pressable, ImageBackground } from "react-native";
+import { Pressable, ImageBackground, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Text, View } from "../components/Themed";
 import { patchUser } from "../utils/userApi";
@@ -55,37 +55,116 @@ export default function CompletedQuestScreen({ route }: any) {
       <ImageBackground
         source={require("../assets/images/stones.jpg")}
         style={styles.container}
-        resizeMode="cover">
+        resizeMode="cover"
+      >
         <ImageBackground
           source={require("../assets/images/bigScroll.png")}
           resizeMode="cover"
-          style={styles.scroll}>
+          style={styles.scroll}
+        >
           <View style={styles.holder}>
             <Text style={styles.title}>
               Congratulations you completed {quest.title}
             </Text>
+
+            <Text style={styles.title}>
+              The lord has bestowed upon thou many gifts for your troubles.
+            </Text>
+
             <View style={styles.container}>
-              <Text style={styles.title}>
-                The lord has bestowed upon thou many gifts for your troubles.
-              </Text>
+              <View style={styles.statContainer}>
+                <View style={styles.iconContainer}>
+                  <Text style={styles.stat}>coins</Text>
+                  <Image
+                    source={require("../assets/videos/coins.gif")}
+                    style={styles.icon}
+                  />
+                  <Text style={styles.stat}>
+                    {currentUser.stats.coins} (+{quest.rewards.coins})
+                  </Text>
+                </View>
+
+                <View style={styles.iconContainer}>
+                  <Text style={styles.stat}>XP</Text>
+                  <Image
+                    source={require("../assets/videos/xp.gif")}
+                    style={styles.icon}
+                  />
+                  <Text style={styles.stat}>
+                    {currentUser.stats.xp} (+{quest.rewards.xp})
+                  </Text>
+                </View>
+                <View style={styles.iconContainer}>
+                  <Text style={styles.stat}>dexterity</Text>
+                  <Image
+                    source={require("../assets/images/1_dex.png")}
+                    style={styles.icon}
+                  />
+                  <Text style={styles.stat}>
+                    {currentUser.stats.dexterity} (+{quest.rewards.dexterity})
+                  </Text>
+                </View>
+                <View style={styles.iconContainer}>
+                  <Text style={styles.stat}>exploration</Text>
+                  <Image
+                    source={require("../assets/images/1_exp.png")}
+                    style={styles.icon}
+                  />
+                  <Text style={styles.stat}>
+                    {currentUser.stats.exploration} (+
+                    {quest.rewards.exploration})
+                  </Text>
+                </View>
+                <View style={styles.iconContainer}>
+                  <Text style={styles.stat}>perception</Text>
+                  <Image
+                    source={require("../assets/images/1_per.png")}
+                    style={styles.icon}
+                  />
+                  <Text style={styles.stat}>
+                    {currentUser.stats.perception} (+{quest.rewards.exploration}
+                    )
+                  </Text>
+                </View>
+                <View style={styles.iconContainer}>
+                  <Text style={styles.stat}>stamina</Text>
+                  <Image
+                    source={require("../assets/images/1_sta.png")}
+                    style={styles.icon}
+                  />
+                  <Text style={styles.stat}>
+                    {currentUser.stats.stamina} (+{quest.rewards.stamina})
+                  </Text>
+                </View>
+                <View style={styles.iconContainer}>
+                  <Text style={styles.stat}>strength</Text>
+                  <Image
+                    source={require("../assets/images/1_str.png")}
+                    style={styles.icon}
+                  />
+                  <Text style={styles.stat}>
+                    {currentUser.stats.strength} (+{quest.rewards.strength})
+                  </Text>
+                </View>
+                <View style={styles.iconContainer}>
+                  <Text style={styles.stat}>wisdom</Text>
+                  <Image
+                    source={require("../assets/images/1_wis.png")}
+                    style={styles.icon}
+                  />
+                  <Text style={styles.stat}>
+                    {currentUser.stats.wisdom} (+{quest.rewards.wisdom})
+                  </Text>
+                </View>
+              </View>
+              <Pressable
+                style={[styles.button]}
+                onPress={() => updateUserStats()}
+              >
+                <Text style={styles.buttonText}>Claim Rewards</Text>
+              </Pressable>
+              <Votes currentQuest={currentQuest} />
             </View>
-            <View style={styles.container}>
-              <Text>
-                {quest.rewards.coins} coins {quest.rewards.xp}XP
-              </Text>
-              <Text>dexterity + {quest.rewards.dexterity}</Text>
-              <Text>exploration + {quest.rewards.exploration}</Text>
-              <Text>perception + {quest.rewards.exploration}</Text>
-              <Text>stamina + {quest.rewards.stamina}</Text>
-              <Text>strength + {quest.rewards.strength}</Text>
-              <Text>wisdom + {quest.rewards.wisdom}</Text>
-            </View>
-            <Pressable
-              style={[styles.button]}
-              onPress={() => updateUserStats()}>
-              <Text style={styles.buttonText}>Claim Rewards</Text>
-            </Pressable>
-            <Votes currentQuest={currentQuest} />
           </View>
         </ImageBackground>
       </ImageBackground>
@@ -97,9 +176,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    width: "100%",
+    width: "105%",
     justifyContent: "center",
     backgroundColor: "none",
+    // borderColor: "black",
+    //borderWidth: 1,
+    padding: 0,
   },
   main: {
     flex: 1,
@@ -116,16 +198,17 @@ const styles = StyleSheet.create({
   holder: {
     flex: 1,
     paddingHorizontal: 40,
-    paddingVertical: 120,
+    paddingVertical: 140,
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
     backgroundColor: "none",
   },
   title: {
-    fontSize: 20,
+    fontSize: 15,
     fontWeight: "bold",
     textAlign: "center",
+    margin: 0,
   },
   buttonContainer: {
     alignItems: "center",
@@ -146,5 +229,56 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "white",
+  },
+  iconContainer: {
+    flex: 1,
+    flexDirection: "row",
+    backgroundColor: "transparent",
+    //borderColor: "purple",
+    //borderWidth: 1,
+    flexBasis: "40%",
+    padding: 0,
+    margin: 0,
+  },
+  stat: {
+    marginTop: 20,
+    marginBottom: 20,
+    marginLeft: 5,
+    marginRight: 5,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    color: "#014c54",
+    fontStyle: "celandine",
+  },
+  icon: {
+    backgroundColor: "transparent",
+    resizeMode: "contain",
+    height: 35,
+    width: 35,
+    borderColor: "yellow",
+    borderWidth: 1,
+    marginTop: 10,
+    marginBottom: 10,
+    margin: 5,
+    flexDirection: "column",
+    justifyContent: "center",
+  },
+  xpGoldContainer: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    width: "100%",
+    justifyContent: "center",
+    backgroundColor: "none",
+  },
+  statContainer: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    width: "100%",
+    justifyContent: "center",
+    backgroundColor: "none",
+    flexWrap: "wrap",
   },
 });

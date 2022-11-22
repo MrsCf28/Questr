@@ -95,7 +95,7 @@ export default function CameraScreen({ route, setQuestStepNo }: any) {
 
       if (typeof image64 === "string") {
         uploadImage(image64).then((url) => {
-          setUploading(() => setUploading(false));
+          setUploading(false);
           fetchImagePredictions(url)
             .then((res) => {
               let results = res.map((obj) => obj.name);
