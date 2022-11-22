@@ -49,7 +49,7 @@ export default function AcceptQuestScreen({ route }: any) {
               <Text>{quest.rewards.coins} Coins {quest.rewards.xp}XP</Text>
             </View>
             <View style={styles.container}>
-              <Text>{quest.description}</Text>
+              <Text style={styles.text}>{quest.description}</Text>
             </View>
             <TouchableOpacity
               style={styles.button}
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     holder: {
         flex: 1,
         paddingHorizontal: 40,
-        paddingVertical: 120,
+        paddingVertical: 170,
         justifyContent: 'center',
         alignItems: 'center',
         width: '100%',
@@ -118,5 +118,6 @@ const styles = StyleSheet.create({
     },
     text: {
       textTransform: "capitalize",
+      textAlign: 'center'
     }
   });
