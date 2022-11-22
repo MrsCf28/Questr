@@ -121,8 +121,14 @@ export default function CameraScreen({ route, setQuestStepNo }: any) {
                 if (endpoints.includes(concept.name)) {
                   console.log("Correct term detected.", concept.name);
                   setQuestStatus(true);
+
                 }
+              })
+              .catch((err) => {
+                console.log("Error in fetchPredictions", err);
+                setUploading(false);
               });
+
               if (!questStatus) {
                 Alert.alert(
                   "Thee not hath found",
@@ -135,6 +141,7 @@ export default function CameraScreen({ route, setQuestStepNo }: any) {
               console.log("Error in fetchPredictions", err);
               setUploading(false);
             });
+
         });
       }
     }
