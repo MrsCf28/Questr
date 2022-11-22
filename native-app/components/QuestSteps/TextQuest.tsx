@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useContext, useEffect, useState } from 'react';
 import {
-    Pressable,
+    TouchableOpacity,
     StyleSheet,
     ImageBackground,
     TextInput,
@@ -107,12 +107,12 @@ export default function TextQuest({
                     </TextInput>
                 </View>
                 <View style={styles.buttonContainer}>
-                <Pressable style={styles.button} onPress={handleSubmit}>
-					<Text style={styles.text}>Submit</Text>
-				</Pressable>
-                <Pressable style={[styles.button, styles.cancel]} onPress={cancelQuest}>
-                            <Text style={styles.buttonText}>Cancel Quest</Text>
-                </Pressable>
+                <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+					        <Text style={styles.text}>Submit</Text>
+				        </TouchableOpacity>
+                <TouchableOpacity style={[styles.button, styles.cancel]} onPress={cancelQuest}>
+                  <Text style={styles.buttonText}>Cancel Quest</Text>
+                </TouchableOpacity>
                 </View>
           </View>}
           </ImageBackground>

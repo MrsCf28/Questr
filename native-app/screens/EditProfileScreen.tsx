@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-    Pressable,
+    TouchableOpacity,
     StyleSheet,
     TextInput,
     Image,
@@ -18,13 +18,13 @@ export default function EditProfileScreen() {
     const { currentUser, setCurrentUser } = useCurrentUser();
 
     let defaultName = 'name';
-    let defaultAge = 12;
-    let defaultRegion: Array<string | null> = [];
+    let defaultAge: string = '12';
+    let defaultRegion: string = 'Leeds';
 
     if (currentUser.type === 'registered') {
         defaultName = currentUser.display_name;
-        defaultAge = currentUser.age;
-        defaultRegion = currentUser.preferred_region;
+        defaultAge = String(currentUser.age);
+        defaultRegion = currentUser.preferred_region[currentUser.preferred_region.length - 1]
     }
 
     const { image } = currentUser;
@@ -75,8 +75,8 @@ export default function EditProfileScreen() {
             const updatedUser = {
                 id: currentUser.id,
                 display_name: displayName,
-                age: age,
-                preferred_region: preferredRegion,
+                age: Number(age),
+                preferred_region: [...currentUser.preferred_region, preferredRegion],
                 image: currentUser.image,
             };
             patchUser(updatedUser)
@@ -92,8 +92,8 @@ export default function EditProfileScreen() {
                 type: 'registered',
                 id: currentUser.id,
                 display_name: displayName,
-                age: age,
-                preferred_region: preferredRegion,
+                age: Number(age),
+                preferred_region: [preferredRegion],
                 image: currentUser.image,
                 current_quest_id: '0',
                 quest_history: [],
@@ -135,41 +135,38 @@ export default function EditProfileScreen() {
                 <View style={styles.holder}>
                     {displayImage}
                     <TextInput
+                        value={displayName}
                         placeholder="Name"
                         placeholderTextColor={'#d4d4d4'}
                         style={styles.input}
                         onChangeText={text => setDisplayName(text)}
                     ></TextInput>
                     <TextInput
+                        value={age}
                         placeholder="Age"
                         placeholderTextColor={'#d4d4d4'}
                         style={styles.input}
-                        onChangeText={text => setAge(parseInt(text))}
+                        onChangeText={text => setAge(text)}
                     ></TextInput>
                     <TextInput
                         placeholder="Region"
+                        value={preferredRegion}
                         placeholderTextColor={'#d4d4d4'}
                         style={styles.input}
-                        onChangeText={text =>
-                            setPreferredRegion(currentRegion => {
-                                const newRegion = [...currentRegion];
-                                currentRegion.push(text);
-                                return newRegion;
-                            })
-                        }
+                        onChangeText={text => setPreferredRegion(text)}
                     ></TextInput>
-                    <Pressable
+                    <TouchableOpacity
                         style={styles.button}
                         onPress={() => pickImage()}
                     >
                         <Text style={styles.text}>Pick Image</Text>
-                    </Pressable>
-                    <Pressable
+                    </TouchableOpacity>
+                    <TouchableOpacity
                         style={styles.button}
                         onPress={handleSubmit}
                     >
                         <Text style={styles.text}>Submit</Text>
-                    </Pressable>
+                    </TouchableOpacity>
                 </View>
             </ImageBackground>
         </View>
