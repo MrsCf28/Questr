@@ -13,6 +13,7 @@ import { useCurrentUser } from '../context/Context';
 
 import { useNavigation } from '@react-navigation/native';
 import { RegisteredUser } from '../types';
+import uploadImage from '../components/ImageSelector';
 
 export default function EditProfileScreen() {
     const { currentUser, setCurrentUser } = useCurrentUser();
@@ -67,6 +68,13 @@ export default function EditProfileScreen() {
                 ...currentUser,
                 image: result.assets[0].uri,
             });
+            let image64 = result.assets[0].base64;
+            if (typeof image64 === 'string') {
+                uploadImage(image64).then(data => {
+                    console.log(data)
+                })
+            }
+            
         }
     }
 
