@@ -23,99 +23,87 @@ export default function CurrentQuestScreen() {
   });
   const [arrived, setArrived] = useState("null");
 
-    function cancelQuest() {
-        const updatedUser = {
-            id: currentUser.id,
-            current_quest_id: '0',
-        };
-        //     setCurrentUser({ ...currentUser, current_quest_id: '0' });
+  function cancelQuest() {
+    const updatedUser = {
+      id: currentUser.id,
+      current_quest_id: "0",
+    };
+    //     setCurrentUser({ ...currentUser, current_quest_id: '0' });
 
-        // const updatedUser = {
-        //   id: currentUser.id,
-        //   age: currentUser.age,
-        //   current_quest_id: '0',
-        // };
+    // const updatedUser = {
+    //   id: currentUser.id,
+    //   age: currentUser.age,
+    //   current_quest_id: '0',
+    // };
 
-        patchUser(updatedUser)
-            .then((user) => {
-                setCurrentUser(user);
-            })
-            .catch((err: any) => {
-                console.log('error in patch user', err);
-            });
-        navigation.navigate('TabTwo');
-    }
+    patchUser(updatedUser)
+      .then((user) => {
+        setCurrentUser(user);
+      })
+      .catch((err: any) => {
+        console.log("error in patch user", err);
+      });
+    navigation.navigate("TabTwo");
+  }
 
-    useEffect(() => {
-        setIsLoading(true);
-        fetchQuestById(currentUser.current_quest_id)
-            .then(quest => {
-                setCurrentQuest(quest);
-                setIsLoading(false);
-            })
-            .catch(err => {
-                console.log(err, 'error');
-            });
-    }, []);
+  useEffect(() => {
+    setIsLoading(true);
+    fetchQuestById(currentUser.current_quest_id)
+      .then((quest) => {
+        setCurrentQuest(quest);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err, "error");
+      });
+  }, []);
 
-    // useEffect(() => {
-    //   (async () => {
-    //     setIsLoading(true)
-    //     let { status } = await Location.requestForegroundPermissionsAsync(); //asks the phone for permission to use location
-    //     if (status !== "granted") {
-    //       return;
-    //     }
-    //     let location = await Location.getCurrentPositionAsync({}); //gets the last known location this is quicker than  requesting the current location the alternative is to use Location.getCurrentPositionAsync(options)
-    //     if (location !== null) {
-    //       setLocation(location);
-    //       setCurrentLocation({
-    //         latitude: location.coords.latitude,
-    //         longitude: location.coords.longitude,
-    //         latitudeDelta: 0.01,
-    //         longitudeDelta: 0.01,
-    //       });
-    //     }
-    //     setIsLoading(false);
-    //   })();
-    // }, [])
+  // useEffect(() => {
+  //   (async () => {
+  //     setIsLoading(true)
+  //     let { status } = await Location.requestForegroundPermissionsAsync(); //asks the phone for permission to use location
+  //     if (status !== "granted") {
+  //       return;
+  //     }
+  //     let location = await Location.getCurrentPositionAsync({}); //gets the last known location this is quicker than  requesting the current location the alternative is to use Location.getCurrentPositionAsync(options)
+  //     if (location !== null) {
+  //       setLocation(location);
+  //       setCurrentLocation({
+  //         latitude: location.coords.latitude,
+  //         longitude: location.coords.longitude,
+  //         latitudeDelta: 0.01,
+  //         longitudeDelta: 0.01,
+  //       });
+  //     }
+  //     setIsLoading(false);
+  //   })();
+  // }, [])
 
-    const updateLocation = () => {
-        (async () => {
-            setIsLoading(true);
-            let { status } =
-                await Location.requestForegroundPermissionsAsync(); //asks the phone for permission to use location
-            if (status !== 'granted') {
-                return;
-            }
-            let location = await Location.getCurrentPositionAsync({}); //gets the last known location this is quicker than  requesting the current location the alternative is to use Location.getCurrentPositionAsync(options)
-            if (location !== null) {
-                setLocation(location);
-                setCurrentLocation({
-                    latitude: location.coords.latitude,
-                    longitude: location.coords.longitude,
-                    latitudeDelta: 0.01,
-                    longitudeDelta: 0.01,
-                });
-            }
-            setArrived(
-                locationChecker(
-                    currentQuest.location,
-                    currentLocation,
-                    3
-                )
-            );
-            setIsLoading(false);
-            if (
-                locationChecker(
-                    currentQuest.location,
-                    currentLocation,
-                    3
-                ) === 'true'
-            ) {
-                
-                navigation.navigate('ActiveQuestScreen', currentQuest);
-            }
-        })();
+  const updateLocation = () => {
+    (async () => {
+      setIsLoading(true);
+      let { status } = await Location.requestForegroundPermissionsAsync(); //asks the phone for permission to use location
+      if (status !== "granted") {
+        return;
+      }
+      let location = await Location.getCurrentPositionAsync({}); //gets the last known location this is quicker than  requesting the current location the alternative is to use Location.getCurrentPositionAsync(options)
+      if (location !== null) {
+        setLocation(location);
+        setCurrentLocation({
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+          latitudeDelta: 0.01,
+          longitudeDelta: 0.01,
+        });
+      }
+      setArrived(locationChecker(currentQuest.location, currentLocation, 3));
+      setIsLoading(false);
+      if (
+        locationChecker(currentQuest.location, currentLocation, 3) === "true"
+      ) {
+        navigation.navigate("ActiveQuestScreen", currentQuest);
+      }
+    })();
   };
 
   if (isLoading) {
@@ -123,89 +111,74 @@ export default function CurrentQuestScreen() {
       <View style={styles.loadContainer}>
         <Image
           style={styles.imageLoading}
-          source={require("../assets/videos/checkingImage.gif")}
+          source={require("../assets/videos/loadingScroll.gif")}
         />
       </View>
     );
   } else {
     return (
-        <View style={styles.main}>
-            <ImageBackground
-            source={require("../assets/images/stones.jpg")}
-            style={styles.container}
+      <View style={styles.main}>
+        <ImageBackground
+          source={require("../assets/images/stones.jpg")}
+          style={styles.container}
+          resizeMode="cover"
+        >
+          <ImageBackground
+            source={require("../assets/images/bigScroll.png")}
             resizeMode="cover"
-            >
-                <ImageBackground
-                    source={require("../assets/images/bigScroll.png")}
-                    resizeMode="cover"
-                    style={styles.scroll}
+            style={styles.scroll}
+          >
+            <View style={styles.holder}>
+              <Text style={styles.title}>{currentQuest.title}</Text>
+              <View style={styles.container}>
+                <Text style={styles.text}>
+                  Quest Type: {currentQuest.category}
+                </Text>
+                <Text>Time Limit: {currentQuest.time_limit_hours} hrs</Text>
+              </View>
+              <View style={styles.container}>
+                <Text>
+                  {currentQuest.rewards.coins} Coins {currentQuest.rewards.xp}{" "}
+                  XP
+                </Text>
+              </View>
+              <View style={styles.container}>
+                <Text style={styles.text}>{currentQuest.description}</Text>
+              </View>
+              <View style={styles.buttonContainer}>
+                {arrived === "false" ? (
+                  <Text style={styles.redText}>
+                    I don't think we are there yet, move around and check again
+                  </Text>
+                ) : (
+                  <Text style={styles.blueText}>
+                    Adventurer press the button when you have arrived
+                  </Text>
+                )}
+                <Pressable
+                  onPress={updateLocation}
+                  style={[styles.button, styles.sos]}
                 >
-                    <View style={styles.holder}>
-                        <Text style={styles.title}>{currentQuest.title}</Text>
-                        <View style={styles.container}>
-                            <Text style={styles.text}>
-                            Quest Type: {currentQuest.category}
-                            </Text>
-                            <Text>Time Limit: {currentQuest.time_limit_hours} hrs</Text>
-                        </View>
-                        <View style={styles.container}>
-                            <Text>
-                            {currentQuest.rewards.coins} Coins {currentQuest.rewards.xp}{" "}
-                            XP
-                            </Text>
-                        </View>
-                        <View style={styles.container}>
-                            <Text style={styles.text}>{currentQuest.description}</Text>
-                        </View>
-                        <View style={styles.buttonContainer}>
-                            {arrived === "false" ? (
-                            <Text style={styles.redText}>
-                                I don't think we are there yet, move around and check again
-                            </Text>
-                            ) : (
-                            <Text style={styles.blueText}>
-                                Adventurer press the button when you have arrived
-                            </Text>
-                            )}
-                            <Pressable
-                            onPress={updateLocation}
-                            style={[styles.button, styles.sos]}
-                            >
-                                <Text style={styles.buttonText}>
-                                                        Check Location
-                                </Text>
-                            </Pressable>
-                            <Pressable
-                                style={[
-                                    styles.button,
-                                    styles.cancel,
-                                ]}
-                                onPress={cancelQuest}
-                            >
-                                <Text style={styles.buttonText}>
-                                    Cancel Quest
-                                </Text>
-                            </Pressable>
-                            <Pressable
-                                style={[
-                                    styles.button,
-                                    styles.cancel,
-                                ]}
-                                onPress={() =>
-                                    navigation.navigate(
-                                        'ActiveQuestScreen',
-                                        currentQuest
-                                    )
-                                }
-                            >
-                                <Text style={styles.buttonText}>
-                                    CHEAT!!! Skip Location
-                                </Text>
-                            </Pressable>
-                        </View>
-                    </View>
-                </ImageBackground>
-            </ImageBackground>
+                  <Text style={styles.buttonText}>Check Location</Text>
+                </Pressable>
+                <Pressable
+                  style={[styles.button, styles.cancel]}
+                  onPress={cancelQuest}
+                >
+                  <Text style={styles.buttonText}>Cancel Quest</Text>
+                </Pressable>
+                <Pressable
+                  style={[styles.button, styles.cancel]}
+                  onPress={() =>
+                    navigation.navigate("ActiveQuestScreen", currentQuest)
+                  }
+                >
+                  <Text style={styles.buttonText}>CHEAT!!! Skip Location</Text>
+                </Pressable>
+              </View>
+            </View>
+          </ImageBackground>
+        </ImageBackground>
       </View>
     );
   }
