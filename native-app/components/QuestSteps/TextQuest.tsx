@@ -15,6 +15,7 @@ export default function TextQuest({completedSteps, currentStep, questStepNo, set
     const { currentUser } = useRegisteredUser();
     const [answer, setAnswer] = useState('')
     const [popup, setPopup] = useState(false)
+    const [correct, setCorrect] = useState(false)
 
     // useEffect(() => {
     //     console.log('yeah')
@@ -38,10 +39,19 @@ export default function TextQuest({completedSteps, currentStep, questStepNo, set
         if(currentStep.endpoint.includes(answer.toLowerCase())) {
             setAnswer('')
             setPopup(true)
+            setCorrect(true)
             setTimeout(() => {
               setPopup(false)
               setQuestStepNo((current) => current + 1)
+              setCorrect(false)
             }, 1000)
+        } else {
+          setAnswer('')
+          setPopup(true)
+          setCorrect(false)
+          setTimeout(() => {
+            setPopup(false)
+          }, 1000)
         }
     }
 
@@ -49,11 +59,15 @@ export default function TextQuest({completedSteps, currentStep, questStepNo, set
     return (
         <View style={styles.main}>
             <ImageBackground source={require('../../assets/images/stones.jpg')} style={styles.main} resizeMode="cover">
-            {popup?             
-            <View style={[styles.holder, styles.correct]}>
-              <Text style={styles.text}>Correct Answer!</Text>
-            </View>
-            :
+            {popup? 
+                correct?             
+                <View style={[styles.holder, styles.correct]}>
+                  <Text style={styles.text}>Correct Answer!</Text>
+                </View>: 
+                <View style={[styles.holder, styles.correct, styles.incorrect]}>
+                  <Text style={styles.text}>Incorrect Answer!</Text>
+                </View>
+              :
             <View style={styles.holder}>
                 <View style={styles.container}>
                 {questStepNo === 0? <Text style={styles.text}>You Have arrived</Text> : null}
@@ -68,7 +82,6 @@ export default function TextQuest({completedSteps, currentStep, questStepNo, set
                         style={styles.input}
                         value={answer}
                         onChangeText={(text) => {
-                            console.log(text)
                             setAnswer(text)}}>
                     </TextInput>
                 </View>
@@ -182,5 +195,8 @@ const styles = StyleSheet.create({
         width: '80%',
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    incorrect: {
+      backgroundColor: '#4a040c',
     }
   })

@@ -1,7 +1,7 @@
 
 import { Auth } from 'aws-amplify';
 import React from 'react'
-import {View, Pressable, StyleSheet, Text} from 'react-native'
+import {View, TouchableOpacity, StyleSheet, Text} from 'react-native'
 import {
   useNavigation,
 } from "@react-navigation/native";
@@ -11,15 +11,14 @@ export function ProfileController() {
 const navigation = useNavigation();
     return (
         <View style={styles.container}>
-            <Pressable style={styles.button} onPress={() => Auth.signOut()}>
+            <TouchableOpacity style={styles.button} onPress={() => Auth.signOut()}>
                 <Text style={styles.text}> Sign out</Text>
-            </Pressable>
-            <Pressable style={styles.button}  onPress={() => navigation.navigate("EditProfile")}>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button}  onPress={() => navigation.navigate("EditProfile")}>
                 <Text style={styles.text}>Edit Profile</Text>
-            </Pressable>
+            </TouchableOpacity>
         </View>
     )
-
 }
 
 const styles = StyleSheet.create({
