@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useContext, useEffect, useState } from 'react';
 import {
-    Pressable,
+    TouchableOpacity,
     StyleSheet,
     ImageBackground,
     TextInput,
@@ -31,8 +31,10 @@ export default function TextQuest({
 
     const { setCurrentUser } = useCurrentUser();
     const { currentUser } = useRegisteredUser();
-    const [answer, setAnswer] = useState('');
-    const [popup, setPopup] = useState(false);
+    const [answer, setAnswer] = useState('')
+    const [popup, setPopup] = useState(false)
+    const [correct, setCorrect] = useState(false)
+
 
     // useEffect(() => {
     //     console.log('yeah')
@@ -55,84 +57,66 @@ export default function TextQuest({
     };
 
     const handleSubmit = () => {
-        if (currentStep.endpoint.includes(answer.toLowerCase())) {
-            setAnswer('');
-            setPopup(true);
+        if(currentStep.endpoint.includes(answer.toLowerCase())) {
+            setAnswer('')
+            setPopup(true)
+            setCorrect(true)
             setTimeout(() => {
-                setPopup(false);
-                setQuestStepNo(current => current + 1);
-            }, 1000);
+              setPopup(false)
+              setQuestStepNo((current) => current + 1)
+              setCorrect(false)
+            }, 1000)
+        } else {
+          setAnswer('')
+          setPopup(true)
+          setCorrect(false)
+          setTimeout(() => {
+            setPopup(false)
+          }, 1000)
+
         }
     };
 
     return (
         <View style={styles.main}>
-            <ImageBackground
-                source={require('../../assets/images/stones.jpg')}
-                style={styles.main}
-                resizeMode="cover"
-            >
-                {popup ? (
-                    <View style={[styles.holder, styles.correct]}>
-                        <Text style={styles.text}>
-                            Correct Answer!
-                        </Text>
-                    </View>
-                ) : (
-                    <View style={styles.holder}>
-                        <View style={styles.container}>
-                            {questStepNo === 0 ? (
-                                <Text style={styles.text}>
-                                    You Have arrived
-                                </Text>
-                            ) : null}
-                            {completedSteps.map(step => (
-                                <Text
-                                    key={step.desc}
-                                    style={styles.green}
-                                >
-                                    {step.desc}
-                                </Text>
-                            ))}
-                        </View>
-                        <View style={styles.container}>
-                            <Text style={styles.text}>
-                                {currentStep.desc}
-                            </Text>
-                        </View>
-                        <View style={styles.container}>
-                            <TextInput
-                                placeholder="Answer"
-                                placeholderTextColor={'#d4d4d4'}
-                                style={styles.input}
-                                value={answer}
-                                onChangeText={text => {
-                                    console.log(text);
-                                    setAnswer(text);
-                                }}
-                            ></TextInput>
-                        </View>
-                        <View style={styles.buttonContainer}>
-                            <Pressable
-                                style={styles.button}
-                                onPress={handleSubmit}
-                            >
-                                <Text style={styles.text}>
-                                    Submit
-                                </Text>
-                            </Pressable>
-                            <Pressable
-                                style={[styles.button, styles.cancel]}
-                                onPress={cancelQuest}
-                            >
-                                <Text style={styles.buttonText}>
-                                    Cancel Quest
-                                </Text>
-                            </Pressable>
-                        </View>
-                    </View>
-                )}
-            </ImageBackground>
+            <ImageBackground source={require('../../assets/images/stones.jpg')} style={styles.main} resizeMode="cover">
+            {popup? 
+                correct?             
+                <View style={[styles.holder, styles.correct]}>
+                  <Text style={styles.text}>Correct Answer!</Text>
+                </View>: 
+                <View style={[styles.holder, styles.correct, styles.incorrect]}>
+                  <Text style={styles.text}>Incorrect Answer!</Text>
+                </View>
+              :
+            <View style={styles.holder}>
+                <View style={styles.container}>
+                {questStepNo === 0? <Text style={styles.text}>You Have arrived</Text> : null}
+                {completedSteps.map(step =><Text key={step.desc} style={styles.green}>{step.desc}</Text>)}
+                </View>
+                <View style={styles.container}>
+                    <Text style={styles.text}>{currentStep.desc}</Text>
+                </View>
+                <View style={styles.container}>
+                    <TextInput placeholder="Answer"
+                        placeholderTextColor={'#d4d4d4'}
+                        style={styles.input}
+                        value={answer}
+                        onChangeText={(text) => {
+                            setAnswer(text)}}>
+                    </TextInput>
+                </View>
+                <View style={styles.buttonContainer}>
+                <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+					        <Text style={styles.text}>Submit</Text>
+				        </TouchableOpacity>
+                <TouchableOpacity style={[styles.button, styles.cancel]} onPress={cancelQuest}>
+                  <Text style={styles.buttonText}>Cancel Quest</Text>
+                </TouchableOpacity>
+                </View>
+          </View>}
+          </ImageBackground>
+
         </View>
     );
 }
@@ -231,6 +215,10 @@ const styles = StyleSheet.create({
         height: 200,
         width: '80%',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'center'
     },
-});
+    incorrect: {
+      backgroundColor: '#4a040c',
+    }
+  })
+

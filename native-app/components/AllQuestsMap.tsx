@@ -1,6 +1,6 @@
 import React, { useEffect, useState} from "react";
 import MapView, { Callout, Marker, Polyline } from "react-native-maps";
-import { StyleSheet, Text, View, Dimensions, Pressable, Image } from "react-native";
+import { StyleSheet, Text, View, Dimensions, Image } from "react-native";
 import { fetchAllQuests } from "../utils/questApi";
 import { QuestMarker } from "./QuestMarker"
 import { ExtendedCoordinate } from "../types";

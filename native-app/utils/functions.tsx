@@ -21,6 +21,18 @@ export const locationChecker = (
 	}
 };
 
+export const validCheck = (input:string) : boolean => {
+	if(input.length > 0) {
+		return true
+	} else {
+		return false
+	}
+} 
+
+export const formCheck = (inputArray:Array<string>) : boolean => {
+	return inputArray.every(input => validCheck(input))
+}
+
 export function formatUserStats(
 	{
 		dexterity,

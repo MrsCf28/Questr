@@ -1,5 +1,5 @@
 import React from "react";
-import { Pressable, StyleSheet, ImageBackground } from "react-native";
+import { TouchableOpacity, StyleSheet, ImageBackground } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Text, View } from "../components/Themed";
 
@@ -14,8 +14,11 @@ export default function DisclaimerScreen({ setPress }: any) {
         resizeMode="cover">
         <ImageBackground
           source={require("../assets/images/bigScroll.png")}
-          resizeMode="cover"
+          resizeMode="stretch"
           style={styles.scroll}>
+          <View style={styles.holder}>
+
+          
           <Text style={styles.title}>Warning</Text>
           <Text style={styles.text}>
             Please use this app at your own risk, be aware of your own safety
@@ -23,13 +26,14 @@ export default function DisclaimerScreen({ setPress }: any) {
             this app is as safe as posible we cannot be held resposible for any
             actions taken when using this app.{" "}
           </Text>
-          <Pressable style={styles.button}>
+          <TouchableOpacity style={styles.button}>
             <Text
               style={styles.buttonText}
               onPress={() => setPress(true)}>
               Accept Terms
             </Text>
-          </Pressable>
+          </TouchableOpacity>
+          </View>
         </ImageBackground>
       </ImageBackground>
     </View>
@@ -79,4 +83,12 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: "center",
   },
+  holder: {
+    width: '80%',
+    backgroundColor: 'none',
+    textAlign: 'center',
+    flex: 0.5,
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
 });

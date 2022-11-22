@@ -13,8 +13,6 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
 import {
 	ColorSchemeName,
-	Pressable,
-	ImageBackground,
 	StyleSheet,
 } from "react-native";
 

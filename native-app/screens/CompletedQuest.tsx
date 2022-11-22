@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 
-import { Pressable, ImageBackground } from "react-native";
+import { TouchableOpacity ,ImageBackground } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Text, View } from "../components/Themed";
 import { patchUser } from "../utils/userApi";
@@ -50,47 +50,69 @@ export default function CompletedQuestScreen({ route }: any) {
   //   updateUserStats();
   // }, []);
 
-  return (
-    <View style={styles.main}>
-      <ImageBackground
-        source={require("../assets/images/stones.jpg")}
-        style={styles.container}
-        resizeMode="cover">
-        <ImageBackground
-          source={require("../assets/images/bigScroll.png")}
-          resizeMode="cover"
-          style={styles.scroll}>
-          <View style={styles.holder}>
-            <Text style={styles.title}>
-              Congratulations you completed {quest.title}
-            </Text>
-            <View style={styles.container}>
-              <Text style={styles.title}>
-                The lord has bestowed upon thou many gifts for your troubles.
-              </Text>
-            </View>
-            <View style={styles.container}>
-              <Text>
-                {quest.rewards.coins} coins {quest.rewards.xp}XP
-              </Text>
-              <Text>dexterity + {quest.rewards.dexterity}</Text>
-              <Text>exploration + {quest.rewards.exploration}</Text>
-              <Text>perception + {quest.rewards.exploration}</Text>
-              <Text>stamina + {quest.rewards.stamina}</Text>
-              <Text>strength + {quest.rewards.strength}</Text>
-              <Text>wisdom + {quest.rewards.wisdom}</Text>
-            </View>
-            <Pressable
-              style={[styles.button]}
-              onPress={() => updateUserStats()}>
-              <Text style={styles.buttonText}>Claim Rewards</Text>
-            </Pressable>
-            <Votes currentQuest={currentQuest} />
-          </View>
-        </ImageBackground>
-      </ImageBackground>
-    </View>
-  );
+    return (
+        <View style={styles.main}>
+            <ImageBackground
+                source={require('../assets/images/stones.jpg')}
+                style={styles.container}
+                resizeMode="cover"
+            >
+                <ImageBackground
+                    source={require('../assets/images/bigScroll.png')}
+                    resizeMode="cover"
+                    style={styles.scroll}
+                >
+                    <View style={styles.holder}>
+                        <Text style={styles.title}>
+                            Congratulations you completed{' '}
+                            {quest.title}
+                        </Text>
+                        <View style={styles.container}>
+                            <Text style={styles.title}>
+                                The lord has bestowed upon thou many
+                                gifts for your troubles.
+                            </Text>
+                        </View>
+                        <View style={styles.container}>
+                            <Text>
+                                {quest.rewards.coins} coins{' '}
+                                {quest.rewards.xp}XP
+                            </Text>
+                            <Text>
+                                dexterity + {quest.rewards.dexterity}
+                            </Text>
+                            <Text>
+                                exploration +{' '}
+                                {quest.rewards.exploration}
+                            </Text>
+                            <Text>
+                                perception +{' '}
+                                {quest.rewards.exploration}
+                            </Text>
+                            <Text>
+                                stamina + {quest.rewards.stamina}
+                            </Text>
+                            <Text>
+                                strength + {quest.rewards.strength}
+                            </Text>
+                            <Text>
+                                wisdom + {quest.rewards.wisdom}
+                            </Text>
+                        </View>
+                        <TouchableOpacity
+                            style={[styles.button]}
+                            onPress={() => updateUserStats()}
+                        >
+                            <Text style={styles.buttonText}>
+                                Claim Rewards
+                            </Text>
+                        </TouchableOpacity>
+                        <Votes currentQuest={currentQuest}/>
+                    </View>
+                </ImageBackground>
+            </ImageBackground>
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({

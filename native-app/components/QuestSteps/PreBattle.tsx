@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useContext, useEffect, useState } from "react";
-import { Pressable, StyleSheet, ImageBackground, TextInput } from "react-native";
+import React from "react";
+import { TouchableOpacity, StyleSheet, ImageBackground } from "react-native";
 import { Text, View } from "../Themed";
 import { patchUser } from "../../utils/userApi";
 import { useCurrentUser, useRegisteredUser } from "../../context/Context";
@@ -52,12 +52,12 @@ export default function PreBattle({completedSteps, currentStep, questStepNo, set
                 <View style={styles.container}>
                 </View>
                 <View style={styles.buttonContainer}>
-                <Pressable style={styles.button} onPress={goToMap}>
+                <TouchableOpacity style={styles.button} onPress={goToMap}>
 					        <Text style={styles.text}>To Battle</Text>
-				        </Pressable>
-                <Pressable style={[styles.button, styles.cancel]} onPress={cancelQuest}>
+				        </TouchableOpacity>
+                <TouchableOpacity style={[styles.button, styles.cancel]} onPress={cancelQuest}>
                             <Text style={styles.buttonText}>Cancel Quest</Text>
-                </Pressable>
+                </TouchableOpacity>
                 </View>
           </View>
           </ImageBackground>

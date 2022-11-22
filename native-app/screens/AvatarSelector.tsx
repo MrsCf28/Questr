@@ -5,7 +5,7 @@ import {
     Text,
     ImageBackground,
     Image,
-    Pressable,
+    TouchableOpacity,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { patchUser } from '../utils/userApi';
@@ -196,7 +196,7 @@ export function AvatarSelector() {
                         )}
                     </View>
                     {!avatarChecker() ? (
-                        <Pressable
+                        <TouchableOpacity
                             disabled={
                                 coins <
                                 avatarArray[currentAvatar].cost
@@ -216,9 +216,9 @@ export function AvatarSelector() {
                                     ? 'Insufficent Funds'
                                     : 'Buy'}
                             </Text>
-                        </Pressable>
+                        </TouchableOpacity>
                     ) : (
-                        <Pressable
+                        <TouchableOpacity
                             style={[
                                 styles.button,
                                 avatarChecker()
@@ -230,7 +230,7 @@ export function AvatarSelector() {
                             <Text style={styles.text}>
                                 Sell: 50 Gold
                             </Text>
-                        </Pressable>
+                        </TouchableOpacity>
                     )}
                 </View>
 
@@ -240,21 +240,21 @@ export function AvatarSelector() {
                         { flex: 1, flexDirection: 'row' },
                     ]}
                 >
-                    <Pressable
+                    <TouchableOpacity
                         style={styles.button}
                         onPress={previous}
                     >
                         <Text style={styles.text}>Previous</Text>
-                    </Pressable>
-                    <Pressable style={styles.button} onPress={next}>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.button} onPress={next}>
                         <Text style={styles.text}>Next</Text>
-                    </Pressable>
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.selectButton}>
                     {avatarChecker() &&
                     Number(currentUser.avatar_uri) !==
                         currentAvatar ? (
-                        <Pressable
+                        <TouchableOpacity
                             disabled={!avatarChecker()}
                             style={[
                                 styles.button,
@@ -266,7 +266,7 @@ export function AvatarSelector() {
                             onPress={select}
                         >
                             <Text style={styles.text}>Select</Text>
-                        </Pressable>
+                        </TouchableOpacity>
                     ) : null}
                 </View>
                 {popup ? (

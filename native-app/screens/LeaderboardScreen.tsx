@@ -391,7 +391,7 @@ const styles = StyleSheet.create({
   scrollableArea: {
     flex: 1,
     flexDirection: "column",
-    padding: 5,
+    padding: 0,
     width: "100%",
   },
   safeArea: {
@@ -401,8 +401,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     // borderWidth: 10,
+    backgroundColor: 'none'
   },
-  border: { borderTopWidth: 5 },
+  // border: { borderTopWidth: 5 },
   text: {
     color: "white",
   },
@@ -410,11 +411,11 @@ const styles = StyleSheet.create({
   chart: { width: 30, height: 30 },
   table: {
     flex: 1,
-    paddingTop: 5,
-    paddingHorizontal: 5,
+    paddingTop: 0,
+    paddingHorizontal: 0,
     width: "100%",
   },
-  head: { height: 50, borderBottomWidth: 5, borderBottomColor: "white" },
+  // head: { height: 50, borderBottomWidth: 5, borderBottomColor: "white" },
   row: { height: 40 },
   cell: { color: "white" },
   blue: {

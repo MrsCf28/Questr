@@ -1,10 +1,9 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useContext, useEffect, useState } from 'react';
+import React from 'react';
 import {
-    Pressable,
+    TouchableOpacity,
     StyleSheet,
     ImageBackground,
-    TextInput,
 } from 'react-native';
 import { Text, View } from '../Themed';
 import { patchUser } from '../../utils/userApi';
@@ -81,20 +80,20 @@ export default function PreLocation({
                     </View>
                     <View style={styles.container}></View>
                     <View style={styles.buttonContainer}>
-                        <Pressable
+                        <TouchableOpacity
                             style={styles.button}
                             onPress={goToMap}
                         >
                             <Text style={styles.text}>Check Map</Text>
-                        </Pressable>
-                        <Pressable
+                        </TouchableOpacity>
+                        <TouchableOpacity
                             style={[styles.button, styles.cancel]}
                             onPress={cancelQuest}
                         >
                             <Text style={styles.buttonText}>
                                 Cancel Quest
                             </Text>
-                        </Pressable>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </ImageBackground>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pressable, StyleSheet, ImageBackground } from 'react-native';
+import { TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
 import {
     useNavigation,
 } from '@react-navigation/native';
@@ -49,13 +49,13 @@ export default function AcceptQuestScreen({ route }: any) {
               <Text>{quest.rewards.coins} Coins {quest.rewards.xp}XP</Text>
             </View>
             <View style={styles.container}>
-              <Text>{quest.description}</Text>
+              <Text style={styles.text}>{quest.description}</Text>
             </View>
-            <Pressable
+            <TouchableOpacity
               style={styles.button}
               onPress={acceptQuest}>
               <Text style={styles.buttonText}>Accept Quest</Text>
-            </Pressable>
+            </TouchableOpacity>
           </View>
         </ImageBackground>
       </ImageBackground>
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     holder: {
         flex: 1,
         paddingHorizontal: 40,
-        paddingVertical: 120,
+        paddingVertical: 170,
         justifyContent: 'center',
         alignItems: 'center',
         width: '100%',
@@ -118,5 +118,6 @@ const styles = StyleSheet.create({
     },
     text: {
       textTransform: "capitalize",
+      textAlign: 'center'
     }
   });
