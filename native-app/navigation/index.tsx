@@ -1,7 +1,7 @@
 import {
-  FontAwesome,
-  MaterialCommunityIcons,
-  FontAwesome5,
+	FontAwesome,
+	MaterialCommunityIcons,
+	FontAwesome5,
 } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
@@ -176,43 +176,45 @@ const BottomTab = createBottomTabNavigator<RootTabParamList>();
 function BottomTabNavigator() {
 	const colorScheme = useColorScheme();
 
-  return (
-    <BottomTab.Navigator
-      initialRouteName="TabOne"
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme].tint,
-        headerShown: false,
-      }}>
-      <BottomTab.Screen
-        name="TabOne"
-        component={TopTabs}
-        options={{
-          title: "Profile",
-          tabBarIcon: ({ color }) => (
-            <FontAwesome5
-              name="chess-king"
-              size={30}
-              color={color}
-            />
-          ),
-        }}
-      />
-      <BottomTab.Screen
-        name="TabTwo"
-        component={TabTwoScreen}
-        options={{
-          title: "Quest Map",
-          tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons
-              name="map-outline"
-              size={30}
-              color={color}
-            />
-          ),
-        }}
-      />
-    </BottomTab.Navigator>
-  );
+	return (
+		<BottomTab.Navigator
+			initialRouteName="TabOne"
+			screenOptions={{
+				tabBarActiveTintColor: Colors[colorScheme].tint,
+				headerShown: false,
+				tabBarStyle: { height: 80 , paddingBottom:10, paddingTop:10},
+			}}
+		>
+			<BottomTab.Screen
+				name="TabOne"
+				component={TopTabs}
+				options={{
+					title: "Profile",
+					tabBarIcon: ({ color }) => (
+						<FontAwesome5
+							name="chess-king"
+							size={30}
+							color={color}
+						/>
+					),
+				}}
+			/>
+			<BottomTab.Screen
+				name="TabTwo"
+				component={TabTwoScreen}
+				options={{
+					title: "Quest Map",
+					tabBarIcon: ({ color }) => (
+						<MaterialCommunityIcons
+							name="map-outline"
+							size={30}
+							color={color}
+						/>
+					),
+				}}
+			/>
+		</BottomTab.Navigator>
+	);
 }
 
 /**
@@ -220,12 +222,12 @@ function BottomTabNavigator() {
  */
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    
-  }, tab: {
-    backgroundColor:"blue"
-  }
+	container: {
+		flex: 1,
+		alignItems: "center",
+		justifyContent: "center",
+	},
+	tab: {
+		backgroundColor: "blue",
+	},
 });

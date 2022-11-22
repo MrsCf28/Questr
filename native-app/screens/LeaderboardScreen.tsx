@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   StyleSheet,
@@ -8,29 +8,32 @@ import {
 } from "react-native";
 import { DataTable } from "react-native-paper";
 import ModalDropdown from "react-native-modal-dropdown";
-
+import { AntDesign } from '@expo/vector-icons';
 import {
-  VictoryArea,
-  VictoryChart,
-  VictoryLabel,
-  VictoryLegend,
-  VictoryPolarAxis,
-  VictoryTheme,
+	VictoryArea,
+	VictoryChart,
+	VictoryLegend,
+	VictoryPolarAxis,
+	VictoryTheme,
 } from "victory-native";
 import { formatUserStats } from "../utils/functions";
 import { getAllUserStats } from "../utils/userApi";
-import { CurrentUser } from "../context/CurrentUser";
 import { useRegisteredUser } from "../context/Context";
+import LoadingComponent from "../components/LoadingComponent";
+import ErrorComponent from "../components/ErrorComponent";
 interface tabProp {
   selectedTab: string;
 }
 
 export function LeaderboardScreen({ selectedTab }: tabProp) {
-  const [isLoading, setIsLoading] = useState(true);
-  const [isLoadingGraph, setIsLoadingGraph] = useState(true);
 
-  const { currentUser } = useRegisteredUser();
-  const [allUserStats, setAllUserStats] = useState([]);
+	const [isLoading, setIsLoading] = useState(true);
+	const [isError, setIsError] = useState(true);
+	const [isLoadingGraph, setIsLoadingGraph] = useState(true);
+
+	const { currentUser } = useRegisteredUser();
+	const [allUserStats, setAllUserStats] = useState([]);
+
 
   const [compareStat, setCompareStat] = useState("xp");
   const [compareUser, setCompareUser] = useState("");
@@ -38,19 +41,25 @@ export function LeaderboardScreen({ selectedTab }: tabProp) {
 
   const [averageStats, setAverageStats] = useState();
 
-  useEffect(() => {
-    setIsLoading(true);
-    setIsLoadingGraph(true);
-    getAllUserStats(compareStat)
-      .then((res) => {
-        setAllUserStats(res);
-        setIsLoading(false);
-        return res;
-      })
-      .then((res) => {
-        Averager(res);
-      });
-  }, [compareStat]);
+	useEffect(() => {
+		setIsLoading(true);
+		setIsError(false)
+		setIsLoadingGraph(true);
+		getAllUserStats(compareStat)
+			.then((res) => {
+				setAllUserStats(res);
+				setIsLoading(false);
+				return res;
+			})
+			.then((res) => {
+				Averager(res);
+				
+			}).catch((err)=>{
+                setIsLoading(false);
+                setIsError(true);
+			});
+	}, [compareStat]);
+
 
   const statOptions = [
     "xp",
@@ -110,243 +119,258 @@ export function LeaderboardScreen({ selectedTab }: tabProp) {
     setIsLoadingGraph(false);
   }
 
-  function formattedUserStats() {
-    let { formattedStats, maxStatOnRadarChart } = formatUserStats(
-      currentUser.stats,
-      comparisonCoefficient
-    );
-    if (comparisonCoefficient !== maxStatOnRadarChart) {
-      setComparisonCoefficient(maxStatOnRadarChart);
-    }
-    return formattedStats;
-  }
 
-  function formattedComparisonStats(stats) {
-    let { formattedStats } = formatUserStats(stats, comparisonCoefficient);
-    return formattedStats;
-  }
+	function formattedUserStats() {
+		let { formattedStats, maxStatOnRadarChart } = formatUserStats(
+			currentUser.stats,
+			comparisonCoefficient
+		);
+		if (comparisonCoefficient !== maxStatOnRadarChart) {
+			setComparisonCoefficient(maxStatOnRadarChart);
+		}
+		return formattedStats;
+	}
 
-  return (
-    <View style={[styles.container]}>
-      <ImageBackground
-        source={require("../assets/images/stones.jpg")}
-        style={styles.container}
-        resizeMode="cover"
-      >
-        <ImageBackground
-          source={require("../assets/images/bigScroll.png")}
-          resizeMode="stretch"
-          style={styles.scroll}
-        >
-          <View style={styles.safeArea}>
-            <ScrollView style={styles.scrollableArea}>
-              <DataTable style={styles.table}>
-                <DataTable.Header style={styles.head}>
-                  <DataTable.Title
-                    textStyle={{
-                      color: "brown",
-                      fontWeight: "bold",
-                      textAlign: "right",
-                    }}
-                  >
-                    NAME
-                  </DataTable.Title>
-                  <DataTable.Title
-                    numeric
-                    textStyle={{
-                      color: "brown",
-                      fontWeight: "bold",
-                      // textAlign: "right",
-                      textAlignVertical: "top",
-                    }}
-                  >
-                    <ModalDropdown
-                      textStyle={{
-                        color: "brown",
-                        fontWeight: "bold",
-                        textTransform: "uppercase",
-                      }}
-                      dropdownTextStyle={{
-                        color: "brown",
-                        fontWeight: "bold",
-                        textTransform: "uppercase",
-                        textAlign: "right",
-                      }}
-                      isFullWidth
-                      showsVerticalScrollIndicator
-                      dropdownStyle={{
-                        backgroundColor: "lightlavender",
-                      }}
-                      defaultValue={compareStat}
-                      options={statOptions}
-                      onSelect={(e: Number) => {
-                        return setCompareStat(statOptions[e]);
-                      }}
-                      renderRightComponent={() => <Text>🔻</Text>}
-                    />
-                  </DataTable.Title>
-                </DataTable.Header>
-                {isLoading ? (
-                  <Text
-                    style={{
-                      textAlign: "center",
-                      paddingTop: 30,
-                    }}
-                  >
-                    Loading
-                  </Text>
-                ) : (
-                  statsTable()
-                )}
-              </DataTable>
-            </ScrollView>
-          </View>
+	function formattedComparisonStats(stats) {
+		let { formattedStats } = formatUserStats(stats, comparisonCoefficient);
+		return formattedStats;
+	}
 
-          {isLoadingGraph ? (
-            <Text
-              style={{
-                textAlign: "center",
-                paddingTop: 30,
-              }}
-            >
-              Loading
-            </Text>
-          ) : (
-            <View style={[styles.safeArea, styles.border]}>
-              <View style={{ flex: 6 }}>
-                <VictoryChart
-                  polar
-                  theme={VictoryTheme.material}
-                  domain={{ y: [0, 1] }}
-                  padding={80}
-                  style={[styles.chart, { flex: 1 }]}
-                  animate={{
-                    duration: 500,
-                    onLoad: { duration: 500 },
-                  }}
-                  height={300}
-                  //   width={}
-                >
-                  <VictoryLegend
-                    x={125}
-                    y={0}
-                    title="Comparing"
-                    centerTitle
-                    orientation="horizontal"
-                    gutter={5}
-                    style={{
-                      border: { stroke: "none" },
-                      title: { fontSize: 20 },
-                    }}
-                    borderPadding={{ top: 10 }}
-                    data={[
-                      {
-                        name: currentUser.display_name,
-                        symbol: {
-                          fill: "brown",
-                          type: "star",
-                        },
-                      },
-                      {
-                        name: compareUser.display_name || "Average",
-                        symbol: { fill: "blue" },
-                      },
-                    ]}
-                  />
-                  <VictoryPolarAxis
-                    dependentAxis
-                    style={{
-                      axis: { stroke: "none" },
-                      tickLabels: { fill: "none" },
-                      grid: {
-                        stroke: "black",
-                        strokeDasharray: "10,10",
-                        opacity: 0.1,
-                      },
-                    }}
-                  />
-                  <VictoryPolarAxis
-                    tickValues={[
-                      "dexterity",
-                      "exploration",
-                      "perception",
-                      "stamina",
-                      "strength",
-                      "wisdom",
-                    ]}
-                    labelPlacement="vertical"
-                    tickCount={6}
-                    style={{
-                      axis: { stroke: "none" },
-                      grid: {
-                        stroke: "black",
-                        opacity: 0.7,
-                      },
-                      tickLabels: { fill: "brown" },
-                    }}
-                  />
-                  <VictoryArea
-                    interpolation="linear"
-                    style={{
-                      data: {
-                        fill: "blue",
-                        fillOpacity: 0.2,
-                        stroke: "blue",
-                        strokeWidth: 4,
-                        strokeOpacity: 0.2,
-                      },
-                    }}
-                    data={
-                      compareUser === ""
-                        ? formattedComparisonStats(averageStats)
-                        : formattedComparisonStats(compareUser.stats)
-                    }
-                  />
-                  <VictoryArea
-                    interpolation="linear"
-                    style={{
-                      data: {
-                        fill: "brown",
-                        fillOpacity: 0.5,
-                        stroke: "brown",
-                        strokeWidth: 4,
-                        strokeOpacity: 1,
-                      },
-                    }}
-                    data={formattedUserStats()}
-                  />
-                </VictoryChart>
-              </View>
-              <ModalDropdown
-                style={{ flex: 1 }}
-                textStyle={{
-                  color: "brown",
-                  fontWeight: "bold",
-                }}
-                dropdownTextStyle={{
-                  color: "brown",
-                  fontWeight: "bold",
-                  textAlign: "center",
-                }}
-                showsVerticalScrollIndicator
-                dropdownStyle={{
-                  backgroundColor: "lightlavender",
-                }}
-                defaultValue={"Click to compare to someone else..."}
-                options={allUserStats.map((user) => {
-                  return user.display_name;
-                })}
-                onSelect={(e: String) => {
-                  return setCompareUser(allUserStats[e]);
-                }}
-                renderRightComponent={() => <Text>🔻</Text>}
-              />
-            </View>
-          )}
-        </ImageBackground>
-      </ImageBackground>
-    </View>
-  );
+	if (isLoading) return <LoadingComponent />;
+	if (isError) return <ErrorComponent error={"potato error"} />;
+	return (
+		<View style={[styles.container]}>
+			<ImageBackground
+				source={require("../assets/images/stones.jpg")}
+				style={styles.container}
+				resizeMode="cover"
+			>
+				<ImageBackground
+					source={require("../assets/images/bigScroll.png")}
+					resizeMode="stretch"
+					style={styles.scroll}
+				>
+					<View style={styles.safeArea}>
+						<ScrollView style={styles.scrollableArea}>
+							<DataTable style={styles.table}>
+								<DataTable.Header style={styles.head}>
+									<DataTable.Title
+										textStyle={{
+											color: "brown",
+											fontWeight: "bold",
+											textAlign: "right",
+										}}
+									>
+										NAME
+									</DataTable.Title>
+									<DataTable.Title
+										numeric
+										textStyle={{
+											color: "brown",
+											fontWeight: "bold",
+											// textAlign: "right",
+											textAlignVertical: "top",
+										}}
+									>
+										<ModalDropdown
+											textStyle={{
+												color: "brown",
+												fontWeight: "bold",
+												textTransform: "uppercase",
+											}}
+											dropdownTextStyle={{
+												color: "brown",
+												fontWeight: "bold",
+												textTransform: "uppercase",
+												textAlign: "right",
+											}}
+											isFullWidth
+											showsVerticalScrollIndicator
+											dropdownStyle={{
+												backgroundColor: "brown",
+											}}
+											defaultValue={compareStat}
+											options={statOptions}
+											onSelect={(e: Number) => {
+												return setCompareStat(
+													statOptions[e]
+												);
+											}}
+											renderRightComponent={() => (
+												<AntDesign name="caretdown" color="brown" />
+											)}
+										/>
+									</DataTable.Title>
+								</DataTable.Header>
+								{isLoading ? (
+									<Text
+										style={{
+											textAlign: "center",
+											paddingTop: 30,
+										}}
+									>
+										Loading
+									</Text>
+								) : (
+									statsTable()
+								)}
+							</DataTable>
+						</ScrollView>
+					</View>
+
+					{isLoadingGraph ? (
+						<Text
+							style={{
+								textAlign: "center",
+								paddingTop: 30,
+							}}
+						>
+							Loading
+						</Text>
+					) : (
+						<View style={[styles.safeArea, styles.border]}>
+							<View style={{ flex: 6 }}>
+								<VictoryChart
+									polar
+									theme={VictoryTheme.material}
+									domain={{ y: [0, 1] }}
+									padding={80}
+									style={[styles.chart, { flex: 1 }]}
+									animate={{
+										duration: 500,
+										onLoad: { duration: 500 },
+									}}
+									height={300}
+									//   width={}
+								>
+									<VictoryLegend
+										x={125}
+										y={0}
+										title="Comparing"
+										centerTitle
+										orientation="horizontal"
+										gutter={5}
+										style={{
+											border: { stroke: "none" },
+											title: { fontSize: 20 },
+										}}
+										borderPadding={{ top: 10 }}
+										data={[
+											{
+												name: currentUser.display_name,
+												symbol: {
+													fill: "brown",
+													type: "star",
+												},
+											},
+											{
+												name:
+													compareUser.display_name ||
+													"Average",
+												symbol: { fill: "blue" },
+											},
+										]}
+									/>
+									<VictoryPolarAxis
+										dependentAxis
+										style={{
+											axis: { stroke: "none" },
+											tickLabels: { fill: "none" },
+											grid: {
+												stroke: "black",
+												strokeDasharray: "10,10",
+												opacity: 0.1,
+											},
+										}}
+									/>
+									<VictoryPolarAxis
+										tickValues={[
+											"dexterity",
+											"exploration",
+											"perception",
+											"stamina",
+											"strength",
+											"wisdom",
+										]}
+										labelPlacement="vertical"
+										tickCount={6}
+										style={{
+											axis: { stroke: "none" },
+											grid: {
+												stroke: "black",
+												opacity: 0.7,
+											},
+											tickLabels: { fill: "brown" },
+										}}
+									/>
+									<VictoryArea
+										interpolation="linear"
+										style={{
+											data: {
+												fill: "blue",
+												fillOpacity: 0.2,
+												stroke: "blue",
+												strokeWidth: 4,
+												strokeOpacity: 0.2,
+											},
+										}}
+										data={
+											compareUser === ""
+												? formattedComparisonStats(
+														averageStats
+												  )
+												: formattedComparisonStats(
+														compareUser.stats
+												  )
+										}
+									/>
+									<VictoryArea
+										interpolation="linear"
+										style={{
+											data: {
+												fill: "brown",
+												fillOpacity: 0.5,
+												stroke: "brown",
+												strokeWidth: 4,
+												strokeOpacity: 1,
+											},
+										}}
+										data={formattedUserStats()}
+									/>
+								</VictoryChart>
+							</View>
+							<ModalDropdown
+								style={{ flex: 1 }}
+								textStyle={{
+									color: "brown",
+									fontWeight: "bold",
+								}}
+								dropdownTextStyle={{
+									color: "brown",
+									fontWeight: "bold",
+									textAlign: "center",
+								}}
+								showsVerticalScrollIndicator
+								dropdownStyle={{
+									backgroundColor: "lightlavender",
+								}}
+								defaultValue={
+									"Click to compare to someone else..."
+								}
+								options={allUserStats.map((user) => {
+									return user.display_name;
+								})}
+								onSelect={(e: String) => {
+									return setCompareUser(allUserStats[e]);
+								}}
+								renderRightComponent={() => <AntDesign name="caretdown" color="brown" />}
+							/>
+						</View>
+					)}
+				</ImageBackground>
+			</ImageBackground>
+		</View>
+	);
 }
 
 const styles = StyleSheet.create({
