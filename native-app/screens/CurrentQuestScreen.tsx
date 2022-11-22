@@ -14,12 +14,13 @@ import { fetchQuestById } from "../utils/questApi";
 import { patchUser } from "../utils/userApi";
 import { useCurrentUser, useRegisteredUser } from "../context/Context";
 import linking from "../navigation/LinkingConfiguration";
+import { initialQuest } from "../utils/initialStates";
 
 export default function CurrentQuestScreen() {
   const { setCurrentUser } = useCurrentUser();
   const { currentUser } = useRegisteredUser();
   const navigation = useNavigation();
-  const [currentQuest, setCurrentQuest] = useState(null);
+  const [currentQuest, setCurrentQuest] = useState(initialQuest);
   const [isLoading, setIsLoading] = useState(true);
   const [location, setLocation] = useState({});
   const [currentLocation, setCurrentLocation] = useState({

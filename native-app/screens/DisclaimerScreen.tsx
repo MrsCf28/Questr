@@ -3,7 +3,11 @@ import { TouchableOpacity, StyleSheet, ImageBackground } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Text, View } from "../components/Themed";
 
-export default function DisclaimerScreen({ setPress }: any) {
+type DSProps = {
+  setPress: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export default function DisclaimerScreen({ setPress }: DSProps) {
   const navigation = useNavigation();
 
   return (
