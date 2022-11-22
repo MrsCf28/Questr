@@ -48,7 +48,7 @@ function App() {
     }, []);
 
     if (!isLoadingComplete) {
-        return null;
+        return <LoadingComponent/>
     } else if (isLoading) {
         return <LoadingComponent/>
     } else {
