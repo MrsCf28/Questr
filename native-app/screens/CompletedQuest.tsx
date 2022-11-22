@@ -11,7 +11,7 @@ import {
     useCurrentUser,
     useRegisteredUser,
 } from '../context/Context';
-
+import Votes from '../components/Votes';
 export default function CompletedQuestScreen({ route }: any) {
     const { setCurrentUser } = useCurrentUser();
     const { currentUser } = useRegisteredUser();
@@ -115,6 +115,7 @@ export default function CompletedQuestScreen({ route }: any) {
                                 Claim Rewards
                             </Text>
                         </Pressable>
+                        <Votes currentQuest={currentQuest}/>
                     </View>
                 </ImageBackground>
             </ImageBackground>
