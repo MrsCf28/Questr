@@ -52,6 +52,7 @@ export default function CurrentQuestScreen() {
       });
     navigation.navigate("TabTwo");
   }
+
   function openPhone() {
     Linking.openURL(`tel:EmergancyServices`)
 }
@@ -120,7 +121,7 @@ export default function CurrentQuestScreen() {
       <View style={styles.loadContainer}>
         <Image
           style={styles.imageLoading}
-          source={require("../assets/videos/checkingImage.gif")}
+          source={require("../assets/videos/loadingScroll.gif")}
         />
       </View>
     );
@@ -130,11 +131,14 @@ export default function CurrentQuestScreen() {
         <ImageBackground
           source={require("../assets/images/stones.jpg")}
           style={styles.container}
-          resizeMode="cover">
+          resizeMode="cover"
+        >
           <ImageBackground
             source={require("../assets/images/bigScroll.png")}
             resizeMode="cover"
-            style={styles.scroll}>
+            style={styles.scroll}
+          >
+          resizeMode="cover">
             <View style={styles.holder}>
               <Text style={styles.title}>{currentQuest.title}</Text>
               <View style={styles.container}>
@@ -162,6 +166,7 @@ export default function CurrentQuestScreen() {
                     Adventurer press the button when you have arrived
                   </Text>
                 )}
+
                 <TouchableOpacity
                   onPress={updateLocation}
                   style={styles.button}>

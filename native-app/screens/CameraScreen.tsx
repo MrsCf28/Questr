@@ -27,6 +27,7 @@ import {
   fetchImagePredictions,
 } from "../clarifaiAPI/clarifaiAPI";
 import uploadImage from "../components/ImageSelector";
+import ImageUploadingButton from "../components/ImageUploadingButton";
 
 export default function CameraScreen({ route, setQuestStepNo }: any) {
   const { currentUser } = useRegisteredUser();
@@ -75,30 +76,18 @@ export default function CameraScreen({ route, setQuestStepNo }: any) {
     })();
   }, []);
 
-  useEffect(() => {
-    if (questStatus) {
-      navigation.navigate("CompletedQuestScreen", {
-        currentQuest,
-        currentUser,
-      });
-    }
-  }, [questStatus]);
+  function addStep() {
+    setQuestStepNo((current) => current + 1);
+  }
 
   const takePicture = async () => {
+    setUploading(true);
     console.log("taking picture");
-
-    let url =
-      "https://questr-image-bucket.s3.eu-west-2.amazonaws.com/Screenshot+2022-11-20+at+17.23.22.png";
-
-    //fetchRPSPredictions
 
     if (cameraRef) {
       const data = await cameraRef.current.takePictureAsync();
-      console.log(data, data.uri);
+      // console.log(data, data.uri);
       const source = { uri: data.uri };
-      //setImage(() => setImage(source));
-
-      // S3 upload and url grab
 
       const image64 = await FileSystem.readAsStringAsync(data.uri, {
         encoding: "base64",
@@ -106,30 +95,29 @@ export default function CameraScreen({ route, setQuestStepNo }: any) {
 
       if (typeof image64 === "string") {
         uploadImage(image64).then((url) => {
-          console.log(url);
+          setUploading(() => setUploading(false));
           fetchImagePredictions(url)
             .then((res) => {
               let results = res.map((obj) => obj.name);
-
-              setPredict(() => setPredict(results));
-
-              console.log("your predictions", results);
+              setPredict(() => setPredict(results)); // Need to wait for this
               let endpoints = currentQuest.objectives[0].endpoint;
               console.log("quest endpoints", endpoints);
-              console.log("Predictions", predict);
-              Object.values(predict).forEach((concept) => {
-                if (endpoints.includes(concept.name)) {
-                  console.log("Correct term detected.", concept.name);
+              console.log("Predictions", results);
+              let status = false;
+
+              Object.values(results).forEach((concept) => {
+                console.log(concept, endpoints[2], concept === endpoints[2]);
+
+                if (endpoints.includes(concept)) {
+                  console.log("Correct term detected.", concept);
                   setQuestStatus(true);
-
+                  status = true;
+                  Alert.alert("Thee hath found", "", [
+                    { text: "Continue", onPress: addStep },
+                  ]);
                 }
-              })
-              .catch((err) => {
-                console.log("Error in fetchPredictions", err);
-                setUploading(false);
               });
-
-              if (!questStatus) {
+              if (!status) {
                 Alert.alert(
                   "Thee not hath found",
                   "Keepeth searching/retake picture",
@@ -141,11 +129,9 @@ export default function CameraScreen({ route, setQuestStepNo }: any) {
               console.log("Error in fetchPredictions", err);
               setUploading(false);
             });
-
         });
       }
     }
-    setUploading(false);
   };
 
   const flipCamera = async () => {
@@ -160,16 +146,6 @@ export default function CameraScreen({ route, setQuestStepNo }: any) {
   if (imageErr) {
     return <Text>Error sending image. Please reload and try again.</Text>;
   }
-  if (uploading) {
-    return (
-      <View style={styles.loadContainer}>
-        <Image
-          style={styles.imageLoading}
-          source={require("../assets/videos/loadingIR.gif")}
-        />
-      </View>
-    );
-  }
 
   return (
     <View style={styles.appContainer}>
@@ -183,34 +159,42 @@ export default function CameraScreen({ route, setQuestStepNo }: any) {
             ref={cameraRef}
           >
             <View style={styles.flexrow}>
-              <CameraButton
-                title={"take picture"}
-                color={"red"}
-                icon="camera"
-                onPress={takePicture}
-              />
-              <CameraButton
-                title={"flip camera"}
-                color={"blue"}
-                icon="retweet"
-                onPress={flipCamera}
-              />
-              <CameraButton
-                title={"flash"}
-                color={
-                  flash === Camera.Constants.FlashMode.off
-                    ? "yellow"
-                    : "#f1f1f1"
-                }
-                icon="flash"
-                onPress={() => {
-                  setFlash(
-                    flash === Camera.Constants.FlashMode.off
-                      ? Camera.Constants.FlashMode.on
-                      : Camera.Constants.FlashMode.off
-                  );
-                }}
-              />
+              {uploading ? (
+                <View style={styles.loadContainer}>
+                  <ImageUploadingButton />
+                </View>
+              ) : (
+                <View style={styles.flexrow}>
+                  <CameraButton
+                    title={"take picture"}
+                    color={"red"}
+                    icon="camera"
+                    onPress={takePicture}
+                  />
+                  <CameraButton
+                    title={"flip camera"}
+                    color={"blue"}
+                    icon="retweet"
+                    onPress={flipCamera}
+                  />
+                  <CameraButton
+                    title={"flash"}
+                    color={
+                      flash === Camera.Constants.FlashMode.off
+                        ? "yellow"
+                        : "#f1f1f1"
+                    }
+                    icon="flash"
+                    onPress={() => {
+                      setFlash(
+                        flash === Camera.Constants.FlashMode.off
+                          ? Camera.Constants.FlashMode.on
+                          : Camera.Constants.FlashMode.off
+                      );
+                    }}
+                  />
+                </View>
+              )}
             </View>
             <Pressable
               style={[styles.button, styles.cancel]}
@@ -258,6 +242,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  uploadingIcon: {
+    margin: 20,
+    width: "20%",
+    borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   buttonText: {
     color: "white",
   },
@@ -265,11 +256,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-  },
-  imageLoading: {
-    borderColor: "black",
-    flex: 1,
-    margin: 60,
-    width: "90%",
+    marginBottom: 300,
   },
 });
