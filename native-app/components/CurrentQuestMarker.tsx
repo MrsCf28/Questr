@@ -2,8 +2,9 @@ import React from 'react';
 import { View, Pressable, StyleSheet, Text, Image } from 'react-native';
 import MapView, { Callout, Marker } from "react-native-maps";
 import { useNavigation } from "@react-navigation/native";
+import { QuestProp } from '../types';
 
-export function CurrentQuestMarker({quest}) {
+export function CurrentQuestMarker({quest}: QuestProp) {
 
     const navigation = useNavigation()
 

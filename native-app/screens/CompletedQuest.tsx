@@ -1,19 +1,17 @@
-import React, { useContext } from 'react';
-import { StyleSheet, Button, TextInput } from 'react-native';
+import React from 'react';
+import { StyleSheet } from 'react-native';
 
 import { Pressable, ImageBackground } from 'react-native';
 import {
     useNavigation,
-    usePreventRemoveContext,
 } from '@react-navigation/native';
 import { Text, View } from '../components/Themed';
-import { useEffect } from 'react';
 import { patchUser } from '../utils/userApi';
 import {
     useCurrentUser,
     useRegisteredUser,
 } from '../context/Context';
-
+import Votes from '../components/Votes';
 export default function CompletedQuestScreen({ route }: any) {
     const { setCurrentUser } = useCurrentUser();
     const { currentUser } = useRegisteredUser();
@@ -117,6 +115,7 @@ export default function CompletedQuestScreen({ route }: any) {
                                 Claim Rewards
                             </Text>
                         </Pressable>
+                        <Votes currentQuest={currentQuest}/>
                     </View>
                 </ImageBackground>
             </ImageBackground>

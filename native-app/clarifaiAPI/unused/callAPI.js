@@ -4,10 +4,8 @@ let APP_ID = "my-first-application";
 let MODEL_ID = "general-image-recognition";
 
 MODEL_VERSION_ID = "aa7f35c01e0642fda5cf400f543e7c40";
-const IMAGE_URL = "https://samples.clarifai.com/metro-north.jpg";
 
-const postUrlClarifai = async (URL, predict, setPredict) => {
-  console.log(URL);
+const postClarifai = async (IMAGE_BYTES_STRING, predict, setPredict) => {
   const raw = JSON.stringify({
     user_app_id: {
       user_id: USER_ID,
@@ -17,13 +15,12 @@ const postUrlClarifai = async (URL, predict, setPredict) => {
       {
         data: {
           image: {
-            url: IMAGE_URL,
+            base64: IMAGE_BYTES_STRING,
           },
         },
       },
     ],
   });
-
   const requestOptions = {
     method: "POST",
     headers: {
@@ -32,8 +29,7 @@ const postUrlClarifai = async (URL, predict, setPredict) => {
     },
     body: raw,
   };
-
-  fetch(
+  const fetchPredictions = fetch(
     "https://api.clarifai.com/v2/models/" +
       MODEL_ID +
       "/versions/" +
@@ -55,4 +51,4 @@ const postUrlClarifai = async (URL, predict, setPredict) => {
     .catch((err) => console.log("error", err));
 };
 
-export default postUrlClarifai;
+export default postClarifai;

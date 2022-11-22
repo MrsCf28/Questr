@@ -1,13 +1,9 @@
-type location = {
-	longitude: number;
-	latitude: number;
-	latitudeDelta: number;
-	longitudeDelta: number;
-};
+import { Coordinate } from "../types";
+
 
 export const locationChecker = (
-	questLocation: location,
-	myLocation: location,
+	questLocation: Coordinate,
+	myLocation: Coordinate,
 	accuracy: number
 ) => {
 	const me = {

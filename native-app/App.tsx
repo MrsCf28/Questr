@@ -12,17 +12,12 @@ import { fetchUserById } from './utils/userApi';
 import { Text } from 'react-native';
 import { RegisteredUser, User } from './types';
 import { CurrentUserProvider } from './context/Context';
+import LoadingComponent from './components/LoadingComponent';
 
 Amplify.configure({
     ...awsExports,
     Analytics: {
         disabled: true,
-    },
-    Storage: {
-        AWSS3: {
-            bucket: 'questr-image-bucket', //REQUIRED -  Amazon S3 bucket name
-            region: 'eu-west-2', //OPTIONAL -  Amazon service region
-        },
     },
 });
 
@@ -55,7 +50,7 @@ function App() {
     if (!isLoadingComplete) {
         return null;
     } else if (isLoading) {
-        return <Text>Loading</Text>;
+        return <LoadingComponent/>
     } else {
         return (
             <SafeAreaProvider>

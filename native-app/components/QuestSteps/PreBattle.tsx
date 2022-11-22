@@ -4,10 +4,16 @@ import { Pressable, StyleSheet, ImageBackground, TextInput } from "react-native"
 import { Text, View } from "../Themed";
 import { patchUser } from "../../utils/userApi";
 import { useCurrentUser, useRegisteredUser } from "../../context/Context";
+import { CompletedSteps, CurrentStep } from "../../types";
 
+type PreBattleProps = {
+  completedSteps: CompletedSteps;
+  currentStep: CurrentStep;
+  questStepNo: number;
+  setPreBattle: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-
-export default function PreBattle({completedSteps, currentStep, questStepNo, setPreBattle}) {
+export default function PreBattle({completedSteps, currentStep, questStepNo, setPreBattle}: PreBattleProps) {
 
     const navigation = useNavigation();
 

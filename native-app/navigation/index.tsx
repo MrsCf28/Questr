@@ -104,10 +104,11 @@ export function RootNavigator() {
             <Stack.Group
                 screenOptions={{
                     presentation: 'modal',
+                    headerShown: false,
                 }}
             >
                 <Stack.Screen
-                    name="ActiveQuest"
+                    name="ActiveQuestScreen"
                     component={ActiveQuestScreen}
                 />
             </Stack.Group>

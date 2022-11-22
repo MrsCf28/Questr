@@ -1,13 +1,14 @@
 import React from 'react';
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 
-import { StyleSheet, Text, View, Dimensions } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import * as Location from 'expo-location'; //library used to get the location from the phone
 
 import CurrentQuestMap from '../components/CurrentQuestMap';
 import AllQuestMap from '../components/AllQuestsMap';
 import { Float } from 'react-native/Libraries/Types/CodegenTypes';
 import { useRegisteredUser } from '../context/Context';
+import LoadingComponent from '../components/LoadingComponent';
 
 type Quest = {
     latitude: Float;
@@ -53,11 +54,7 @@ export default function TabTwoScreen() {
     }, [location]);
 
     if (loading) {
-        return (
-            <View style={styles.container}>
-                <Text>Loading...</Text>
-            </View>
-        );
+        return <LoadingComponent/>
     }
 
     if (currentUser.current_quest_id === '0') {

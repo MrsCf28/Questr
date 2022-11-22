@@ -1,8 +1,20 @@
 import * as React from "react";
-import { Text, TouchableOpacity, StyleSheet } from "react-native";
+import { TouchableOpacity, StyleSheet } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 
-export default function CameraButton({ title, onPress, icon, color }) {
+type CameraButtonProps = {
+  title: string;
+  onPress: () => Promise<void>;
+  icon: string;
+  color: string;
+};
+
+export default function CameraButton({
+  title,
+  onPress,
+  icon,
+  color,
+}: CameraButtonProps) {
   return (
     <TouchableOpacity onPress={onPress} style={StyleSheet.button}>
       <Entypo
