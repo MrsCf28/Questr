@@ -20,6 +20,7 @@ export type RootStackParamList = {
     EditProfile: undefined;
     CameraScreen: undefined;
     AvatarSelector: undefined;
+    LeaderboardScreen: undefined;
     CompletedQuestScreen:
         | NavigatorScreenParams<ActiveQuestScreenParams>
         | undefined;
