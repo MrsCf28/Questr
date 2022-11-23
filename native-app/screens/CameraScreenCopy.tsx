@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useState, useEffect, useRef} from "react";
 import {
   StyleSheet,
   Text,
   View,
   useWindowDimensions,
   Alert,
-  Image,
   TouchableOpacity,
 } from "react-native";
 
@@ -16,7 +15,6 @@ import CameraButton from "../components/CameraButton";
 import * as FileSystem from "expo-file-system";
 import { fetchQuestById } from "../utils/questApi";
 import { useNavigation } from "@react-navigation/native";
-
 import { useRegisteredUser } from "../context/Context";
 
 import {
@@ -24,11 +22,7 @@ import {
 } from "../clarifaiAPI/clarifaiAPI";
 import uploadImage from "../components/ImageSelector";
 import ImageUploadingButton from "../components/ImageUploadingButton";
-<<<<<<< HEAD
-import ImageMatch from "../components/ImageMatch";
-=======
 import { initialQuest } from "../utils/initialStates";
->>>>>>> 5aa4a73b19fea53bbdcfcf271db2499b88b274b2
 
 type CameraScreenProps = {
   setQuestStepNo: React.Dispatch<React.SetStateAction<number>>;
@@ -41,26 +35,23 @@ export default function CameraScreen({ setQuestStepNo }: CameraScreenProps) {
   const [currentQuest, setCurrentQuest] = useState(initialQuest);
 
   // Camera permissions and controls
-  const [hasCameraPermission, setHasCameraPermission] = useState(null);
+  const [hasCameraPermission, setHasCameraPermission] = useState(false);
   const [type, setType] = useState(CameraType.back);
   const [flash, setFlash] = useState(FlashMode.off);
   const [isLoading, setIsLoading] = useState(true);
   const cameraRef = useRef(null);
 
   // Image, predictions and result
-  const [image, setImage] = useState({}); // ----
+  const [image, setImage] = useState({});
   const [predict, setPredict] = useState([]);
   const [imageErr, setImageErr] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [questStatus, setQuestStatus] = useState(false);
-  const video = React.useRef(null); // ----
+  const video = React.useRef(null);
 
-  const navigation = useNavigation(); // ----
+  const navigation = useNavigation();
   const { width } = useWindowDimensions();
   const height = Math.round((width * 16) / 9);
-
-  const [stepUsed, setStepUsed] = useState(false);
-  const [imageChecked, setImageChecked] = useState("null");
 
   // const { questStatus, setQuestStatus } = route.params;
 
@@ -84,6 +75,10 @@ export default function CameraScreen({ setQuestStepNo }: CameraScreenProps) {
     })();
   }, []);
 
+  function addStep() {
+    setQuestStepNo((current) => current + 1);
+  }
+
   const takePicture = async () => {
     setUploading(true);
     console.log("taking picture");
@@ -99,11 +94,10 @@ export default function CameraScreen({ setQuestStepNo }: CameraScreenProps) {
 
       if (typeof image64 === "string") {
         uploadImage(image64).then((url) => {
-          setUploading(() => setUploading(false));
+          setUploading(false);
           fetchImagePredictions(url)
             .then((res) => {
               let results = res.map((obj) => obj.name);
-              setPredict(() => setPredict(results)); // Need to wait for this
               setPredict(results);
               let endpoints = currentQuest.objectives[0].endpoint;
               console.log("quest endpoints", endpoints);
@@ -117,12 +111,17 @@ export default function CameraScreen({ setQuestStepNo }: CameraScreenProps) {
                   console.log("Correct term detected.", concept);
                   setQuestStatus(true);
                   status = true;
-                  setImageChecked("match");
-                  console.log(imageChecked);
+                  Alert.alert("Thee hath found", "", [
+                    { text: "Continue", onPress: addStep },
+                  ]);
                 }
               });
               if (!status) {
-                setImageChecked("failed");
+                Alert.alert(
+                  "Thee not hath found",
+                  "Keepeth searching/retake picture",
+                  [{ text: "OK" }]
+                );
               }
             })
             .catch((err) => {
@@ -132,7 +131,6 @@ export default function CameraScreen({ setQuestStepNo }: CameraScreenProps) {
         });
       }
     }
-    console.log(imageChecked);
   };
 
   const flipCamera = async () => {
@@ -148,19 +146,6 @@ export default function CameraScreen({ setQuestStepNo }: CameraScreenProps) {
     return <Text>Error sending image. Please reload and try again.</Text>;
   }
 
-<<<<<<< HEAD
-  {
-    return (
-      <View style={styles.appContainer}>
-        {hasCameraPermission ? (
-          <View style={styles.container}>
-            <Camera
-              ratio="16:9"
-              style={{ width: "100%", height: height }}
-              type={type}
-              flashMode={flash}
-              ref={cameraRef}
-=======
   return (
     <View style={styles.appContainer}>
       {hasCameraPermission ? (
@@ -170,8 +155,7 @@ export default function CameraScreen({ setQuestStepNo }: CameraScreenProps) {
             style={{ width: "100%", height: height }}
             type={type}
             flashMode={flash}
-            ref={cameraRef}
-          >
+            ref={cameraRef}>
             <View style={styles.flexrow}>
               {uploading ? (
                 <View style={styles.loadContainer}>
@@ -191,7 +175,7 @@ export default function CameraScreen({ setQuestStepNo }: CameraScreenProps) {
                     icon="retweet"
                     onPress={flipCamera}
                   />
-                  <CameraButton
+                    <CameraButton
                     title={"flash"}
                     color={
                       flash === FlashMode.off
@@ -212,89 +196,16 @@ export default function CameraScreen({ setQuestStepNo }: CameraScreenProps) {
             </View>
             <TouchableOpacity
               style={styles.button}
-              onPress={() => setQuestStepNo((current) => current + 1)}
->>>>>>> 5aa4a73b19fea53bbdcfcf271db2499b88b274b2
-            >
-              <View style={styles.flexrow}>
-                {uploading ? (
-                  <View style={styles.loadContainer}>
-                    <ImageUploadingButton />
-                  </View>
-                ) : imageChecked === "null" ? (
-                  <View style={styles.flexrow}>
-                    <CameraButton
-                      title={"take picture"}
-                      color={"white"}
-                      icon="camera"
-                      onPress={takePicture}
-                    />
-                    <CameraButton
-                      title={"flip camera"}
-                      color={"white"}
-                      icon="retweet"
-                      onPress={flipCamera}
-                    />
-                    <CameraButton
-                      title={"flash"}
-                      color={
-                        flash === Camera.Constants.FlashMode.off
-                          ? "white"
-                          : "yellow"
-                      }
-                      icon="flash"
-                      onPress={() => {
-                        setFlash(
-                          flash === Camera.Constants.FlashMode.off
-                            ? Camera.Constants.FlashMode.on
-                            : Camera.Constants.FlashMode.off
-                        );
-                      }}
-                    />
-                  </View>
-                ) : imageChecked === "match" ? (
-                  <View style={styles.matchContainer}>
-                    <Text style={styles.buttonText}>
-                      Thees eyes have laid upon the bounty
-                    </Text>
-                    <TouchableOpacity
-                      style={[styles.button, styles.green]}
-                      onPress={() => {
-                        setQuestStepNo((current) => current + 1);
-                      }}
-                    >
-                      <Text style={styles.butText}>Continue</Text>
-                    </TouchableOpacity>
-                  </View>
-                ) : (
-                  <View style={styles.matchContainer}>
-                    <Text style={styles.buttonText}>
-                      Thees eyes are deceived
-                    </Text>
-                    <TouchableOpacity
-                      style={[styles.button, styles.red]}
-                      onPress={() => {
-                        setImageChecked("null");
-                      }}
-                    >
-                      <Text style={styles.butText}>Retry</Text>
-                    </TouchableOpacity>
-                  </View>
-                )}
-              </View>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => setQuestStepNo((current) => current + 1)}
-              >
-                <Text style={styles.buttonText}>CHEAT!!!! COMPLETE QUEST</Text>
-              </TouchableOpacity>
-            </Camera>
-          </View>
-        ) : (
-          <Text>Camera</Text>
-        )}
-      </View>
-    );
-  }
+              onPress={() => setQuestStepNo((current) => current + 1)}>
+              <Text style={styles.buttonText}>CHEAT!!!! COMPLETE QUEST</Text>
+            </TouchableOpacity>
+          </Camera>
+        </View>
+      ) : (
+        <Text>Camera</Text>
+      )}
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -316,9 +227,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   button: {
-    margin: 10,
-    marginBottom: 5,
-    borderColor: "white",
+    margin: 20,
+    borderColor: "#7a7877",
     backgroundColor: "#014c54",
     borderWidth: 3,
     padding: 10,
@@ -326,7 +236,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     justifyContent: "center",
     alignItems: "center",
-    width: "50%",
   },
   uploadingIcon: {
     margin: 20,
@@ -344,24 +253,4 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 300,
   },
-  matchContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginRight: 100,
-    marginLeft: 100,
-    marginBottom: 200,
-    borderColor: "white",
-    backgroundColor: "#014c54",
-    borderWidth: 3,
-    padding: 10,
-    color: "white",
-    borderRadius: 20,
-  },
-  butText: {
-    color: "white",
-    fontSize: 13,
-  },
-  red: { backgroundColor: "#4a040c" },
-  green: { backgroundColor: "#01803a" },
 });

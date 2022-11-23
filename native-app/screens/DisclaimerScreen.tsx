@@ -1,10 +1,12 @@
 import React from "react";
 import { TouchableOpacity, StyleSheet, ImageBackground } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import { Text, View } from "../components/Themed";
 
-export default function DisclaimerScreen({ setPress }: any) {
-  const navigation = useNavigation();
+type DSProps = {
+  setPress: React.Dispatch<React.SetStateAction<boolean>>,
+}
+
+export default function DisclaimerScreen({ setPress }: DSProps) {
 
   return (
     <View style={styles.container}>
@@ -17,22 +19,18 @@ export default function DisclaimerScreen({ setPress }: any) {
           resizeMode="stretch"
           style={styles.scroll}>
           <View style={styles.holder}>
-
-          
-          <Text style={styles.title}>Warning</Text>
-          <Text style={styles.text}>
-            Please use this app at your own risk, be aware of your own safety
-            and surroundings. Whilst we have worked our hardest to ensure that
-            this app is as safe as posible we cannot be held resposible for any
-            actions taken when using this app.{" "}
-          </Text>
-          <TouchableOpacity style={styles.button}>
-            <Text
-              style={styles.buttonText}
-              onPress={() => setPress(true)}>
-              Accept Terms
+            <Text style={styles.title}>Warning</Text>
+            <Text style={styles.text}>
+              Please use this app at your own risk, be aware of your own safety
+              and surroundings. Whilst we have worked our hardest to ensure that
+              this app is as safe as posible we cannot be held resposible for
+              any actions taken when using this app.{" "}
             </Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => setPress(true)}
+              style={styles.button}>
+              <Text style={styles.buttonText}>Accept Terms</Text>
+            </TouchableOpacity>
           </View>
         </ImageBackground>
       </ImageBackground>
@@ -84,11 +82,11 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   holder: {
-    width: '80%',
-    backgroundColor: 'none',
-    textAlign: 'center',
+    width: "80%",
+    backgroundColor: "none",
+    textAlign: "center",
     flex: 0.5,
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });

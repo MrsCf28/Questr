@@ -27,9 +27,9 @@ export function TopTabs() {
 							height: 60,
 							paddingBottom: 10,
 							paddingTop: 10,
-							backgroundColor: "brown",
+							backgroundColor: "white"
 						},
-              tabBarActiveTintColor: 'white',            
+              tabBarActiveTintColor: 'black',            
 					}}
 				>
 					<TopTab.Screen name="Home" component={TabOneScreen}/>

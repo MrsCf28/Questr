@@ -1,14 +1,11 @@
 import * as React from "react";
-import { TouchableOpacity, StyleSheet, Image } from "react-native";
-import { Entypo } from "@expo/vector-icons";
+import { StyleSheet, Image } from "react-native";
 
-type ImageUploadingButtonProps = {
-  title: string;
-  onPress: () => Promise<void>;
-  icon: string;
-  color: string;
-};
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5aa4a73b19fea53bbdcfcf271db2499b88b274b2
 export default function ImageUploadingButton() {
   return (
     <Image

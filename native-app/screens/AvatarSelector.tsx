@@ -14,55 +14,22 @@ import {
     useRegisteredUser,
 } from '../context/Context';
 
-interface tabProp {
-    selectedTab: string;
-}
-
-const Knight = require('../assets/images/knight.png');
-const DeathKnight = require('../assets/images/deathknight.png');
-const Jester = require('../assets/images/Jester.png');
-const Bard = require('../assets/images/Bard.png');
-const BlackSmith = require('../assets/images/blacksmith.png');
-const King = require('../assets/images/king.png');
-const Mage = require('../assets/images/mage.png');
-const ManAtArms = require('../assets/images/manAtArms.png');
-const Princess = require('../assets/images/Princess.png');
-const Elf = require('../assets/images/elfknight.png');
+import { avatarInfo } from '../utils/avatarInfo';
 
 export function AvatarSelector() {
-    //This page could do with a refactor!! change alot of the buttons and conditional logic in to separate components
-
     const navigation = useNavigation();
     const { setCurrentUser } = useCurrentUser();
     const { currentUser } = useRegisteredUser();
 
-    const [avatarArray, setAvatarArray] = useState([
-        { id: 0, image: Bard, cost: 100 },
-        { id: 1, image: Jester, cost: 200 },
-        { id: 2, image: BlackSmith, cost: 300 },
-        { id: 3, image: Knight, cost: 400 },
-        { id: 4, image: ManAtArms, cost: 500 },
-        { id: 5, image: Mage, cost: 600 },
-        { id: 6, image: Elf, cost: 700 },
-        { id: 7, image: Princess, cost: 800 },
-        { id: 8, image: King, cost: 900 },
-        { id: 9, image: DeathKnight, cost: 1000 },
-    ]);
     const [currentAvatar, setCurrentAvatar] = useState(0);
     const [popup, setPopup] = useState(false);
 
     const { coins } = currentUser.stats;
 
     function avatarChecker() {
-        if (
-            currentUser.owned_avatar_ids.some(
-                avatar => avatar === avatarArray[currentAvatar].id
-            )
-        ) {
-            return true;
-        } else {
-            return false;
-        }
+        return currentUser.owned_avatar_ids.some(
+            avatar => avatar === avatarInfo[currentAvatar].id
+        );
     }
 
     function next() {
@@ -88,9 +55,8 @@ export function AvatarSelector() {
         };
 
         patchUser(updatedUser)
-            .then((user) => {
+            .then(user => {
                 setCurrentUser(user);
-                console.log('avatar updated');
             })
             .catch((err: any) => {
                 console.log("error in patching user's avatar", err);
@@ -101,13 +67,13 @@ export function AvatarSelector() {
     function buy() {
         const newBoughtAvatars = [
             ...currentUser.owned_avatar_ids,
-            avatarArray[currentAvatar].id,
+            avatarInfo[currentAvatar].id,
         ];
         const newStats = {
             ...currentUser.stats,
             coins:
                 currentUser.stats.coins -
-                avatarArray[currentAvatar].cost,
+                avatarInfo[currentAvatar].cost,
         };
 
         const updatedUser = {
@@ -117,9 +83,8 @@ export function AvatarSelector() {
         };
 
         patchUser(updatedUser)
-            .then((user) => {
+            .then(user => {
                 setCurrentUser(user);
-                console.log('patched newStats & owned_avatar_ids');
             })
             .catch((err: any) => {
                 console.log('error in patch user', err);
@@ -147,11 +112,8 @@ export function AvatarSelector() {
             };
 
             patchUser(updatedUser)
-                .then((user) => {
+                .then(user => {
                     setCurrentUser(user);
-                    console.log(
-                        'patched newStats and removed sold avatar'
-                    );
                 })
                 .catch((err: any) => {
                     console.log('error in patch user', err);
@@ -176,7 +138,7 @@ export function AvatarSelector() {
                         <Image
                             style={styles.image}
                             resizeMode="contain"
-                            source={avatarArray[currentAvatar].image}
+                            source={avatarInfo[currentAvatar].image}
                         />
                     </View>
                 </View>
@@ -184,7 +146,7 @@ export function AvatarSelector() {
                     <View style={styles.plaque}>
                         {!avatarChecker() ? (
                             <Text style={styles.text}>
-                                {avatarArray[currentAvatar].cost} Gold
+                                {avatarInfo[currentAvatar].cost} Gold
                             </Text>
                         ) : (
                             <Text style={styles.text}>
@@ -198,13 +160,11 @@ export function AvatarSelector() {
                     {!avatarChecker() ? (
                         <TouchableOpacity
                             disabled={
-                                coins <
-                                avatarArray[currentAvatar].cost
+                                coins < avatarInfo[currentAvatar].cost
                             }
                             style={[
                                 styles.button,
-                                coins <
-                                avatarArray[currentAvatar].cost
+                                coins < avatarInfo[currentAvatar].cost
                                     ? styles.disabledButton
                                     : null,
                             ]}
@@ -212,7 +172,7 @@ export function AvatarSelector() {
                         >
                             <Text style={styles.text}>
                                 {coins <
-                                avatarArray[currentAvatar].cost
+                                avatarInfo[currentAvatar].cost
                                     ? 'Insufficent Funds'
                                     : 'Buy'}
                             </Text>
@@ -246,7 +206,10 @@ export function AvatarSelector() {
                     >
                         <Text style={styles.text}>Previous</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.button} onPress={next}>
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={next}
+                    >
                         <Text style={styles.text}>Next</Text>
                     </TouchableOpacity>
                 </View>

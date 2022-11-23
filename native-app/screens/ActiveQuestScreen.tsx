@@ -74,7 +74,6 @@ export default function ActiveQuestScreen({ route }: any) {
             <BattleQuest
                 setQuestStepNo={setQuestStepNo}
                 setPreBattle={setPreBattle}
-                currentStep={currentStep}
             />
         );
     } else if (currentStep.method === 'image') {

@@ -17,6 +17,7 @@ import { CurrentQuestMarker } from './CurrentQuestMarker';
 
 import { useNavigation } from '@react-navigation/native';
 import { ExtendedCoordinate } from '../types';
+import { initialQuest } from '../utils/initialStates';
 
 type QuestMapProps = {
     currentLocation: ExtendedCoordinate;
@@ -30,21 +31,6 @@ export default function CurrentQuestMap({
     image,
 }: QuestMapProps) {
     const navigation = useNavigation();
-    const initialQuest = {
-        id: '',
-        category: '',
-        title: '',
-        description: '',
-        location: {
-            latitude: 0,
-            longitude: 0,
-            latitudeDelta: 0,
-            longitudeDelta: 0,
-        },
-        createdAt: '',
-        updatedAt: '',
-        time_limit_hours: 0,
-    };
 
     const [currentQuest, setCurrentQuest] = useState(initialQuest);
     const [isLoading, setIsLoading] = useState(true);
