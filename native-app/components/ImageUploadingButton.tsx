@@ -1,8 +1,6 @@
 import * as React from "react";
 import { StyleSheet, Image } from "react-native";
 
-
-
 export default function ImageUploadingButton() {
   return (
     <Image

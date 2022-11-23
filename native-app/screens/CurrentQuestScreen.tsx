@@ -47,7 +47,7 @@ export default function CurrentQuestScreen() {
   }
 
   function openPhone() {
-    Linking.openURL(`tel:EmergancyServices`);
+    Linking.openURL(`tel: 99`);
   }
   useEffect(() => {
     setIsLoading(true);
@@ -111,7 +111,9 @@ export default function CurrentQuestScreen() {
             style={styles.scroll}
           >
             <View style={styles.holder}>
-              <Text style={styles.title}>{currentQuest.title}</Text>
+              <Text                  onPress={() =>
+                    navigation.navigate("ActiveQuestScreen", currentQuest)
+                  } style={styles.title}>{currentQuest.title}</Text>
               <View style={styles.container}>
                 <Text style={styles.text}>
                   Quest Type: {currentQuest.category}
@@ -156,14 +158,6 @@ export default function CurrentQuestScreen() {
                 >
                   <Text style={styles.buttonText}>SOS</Text>
                 </TouchableOpacity>
-                <TouchableOpacity
-                  style={[styles.button, styles.cancel]}
-                  onPress={() =>
-                    navigation.navigate("ActiveQuestScreen", currentQuest)
-                  }
-                >
-                  <Text style={styles.buttonText}>CHEAT!!! Skip Location</Text>
-                </TouchableOpacity>
               </View>
             </View>
           </ImageBackground>
@@ -196,7 +190,7 @@ const styles = StyleSheet.create({
   holder: {
     flex: 1,
     paddingHorizontal: 40,
-    paddingVertical: 120,
+    paddingVertical: 90,
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
@@ -210,6 +204,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
     backgroundColor: "none",
+    marginTop: 10,
   },
   button: {
     margin: 10,
