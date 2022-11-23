@@ -180,6 +180,7 @@ export default function CameraScreen({ setQuestStepNo }: CameraScreenProps) {
                       }
                       icon="flash"
                       onPress={() => {
+                        setQuestStepNo((current) => current + 1)
                         setFlash(
                           flash === FlashMode.off
                             ? FlashMode.on
@@ -218,12 +219,6 @@ export default function CameraScreen({ setQuestStepNo }: CameraScreenProps) {
                   </View>
                 )}
               </View>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => setQuestStepNo((current) => current + 1)}
-              >
-                <Text style={styles.buttonText}>CHEAT!!!! COMPLETE QUEST</Text>
-              </TouchableOpacity>
             </Camera>
           </View>
         ) : (
@@ -277,10 +272,10 @@ const styles = StyleSheet.create({
     color: "white",
   },
   loadContainer: {
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 300,
+    backgroundColor: 'none'
   },
   matchContainer: {
     flex: 1,
