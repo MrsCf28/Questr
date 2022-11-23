@@ -9,7 +9,11 @@
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
+      "margin": "400",
+      // "width":"90%",
+      "height":"90%",
+      
       "backgroundColor": "#ffffff"
     },
     "updates": {

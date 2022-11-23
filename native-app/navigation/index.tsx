@@ -11,10 +11,7 @@ import {
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
-import {
-	ColorSchemeName,
-	StyleSheet,
-} from "react-native";
+import { ColorSchemeName, StyleSheet } from "react-native";
 
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
@@ -68,7 +65,7 @@ export default function Navigation({
 
 /**
  * A root stack navigator is often used for displaying modals on top of all other content.
- * https://reactnavigation.org/docs/modal
+ * https://reactnavigation.org/docs/modalhi
  */
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -178,9 +175,20 @@ function BottomTabNavigator() {
 		<BottomTab.Navigator
 			initialRouteName="TabOne"
 			screenOptions={{
-				tabBarActiveTintColor: Colors[colorScheme].tint,
 				headerShown: false,
-				tabBarStyle: { height: 80 , paddingBottom:10, paddingTop:10},
+				tabBarStyle: {
+					height: 70,
+					paddingBottom: 5,
+					backgroundColor: "#014c54",
+					borderTopWidth: 3,
+					borderTopColor: "#7a7877",
+				},
+				tabBarLabelStyle: {
+					textTransform: "capitalize",
+					letterSpacing: 2,
+				},
+				tabBarActiveTintColor: "white",
+				tabBarInactiveTintColor: "#7a7877",
 			}}
 		>
 			<BottomTab.Screen
@@ -189,11 +197,7 @@ function BottomTabNavigator() {
 				options={{
 					title: "Profile",
 					tabBarIcon: ({ color }) => (
-						<FontAwesome5
-							name="chess-king"
-							size={30}
-							color={color}
-						/>
+						<FontAwesome5 name="home" size={30} color={color} />
 					),
 				}}
 			/>
