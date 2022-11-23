@@ -48,14 +48,15 @@ export default function AcceptQuestScreen({ route }: any) {
         >
           <View style={styles.holder}>
             <Text style={styles.title}>{quest.title}</Text>
-            <View style={styles.container}>
-              <Text style={styles.text}>Quest Type: {quest.category}</Text>
-              <Text>Time Limit: {quest.time_limit_hours} hr</Text>
+
+            <View style={[styles.container, styles.type]}>
+              <Text style={styles.text}>Quest Type: </Text>
+              <Text style={styles.cat}>{quest.category}</Text>
             </View>
 
             <View style={styles.container}>
               <View style={styles.iconContainer}>
-                <Text style={styles.stat}>coins</Text>
+                <Text style={styles.stat}></Text>
                 <Image
                   source={require("../assets/videos/coins.gif")}
                   style={styles.icon}
@@ -64,17 +65,23 @@ export default function AcceptQuestScreen({ route }: any) {
                 <Text style={styles.stat}>{quest.rewards.coins}</Text>
               </View>
               <View style={styles.iconContainer}>
-                <Text style={styles.stat}>XP</Text>
+                <Text style={styles.stat}></Text>
                 <Image
                   source={require("../assets/videos/xp.gif")}
                   style={styles.icon}
                 />
                 <Text style={styles.stat}>{quest.rewards.xp}</Text>
               </View>
+              <View style={styles.iconContainer}>
+                <Image
+                  source={require("../assets/videos/stopwatch.gif")}
+                  style={styles.icon}
+                />
+                <Text style={styles.stat}>{quest.time_limit_hours} hours</Text>
+              </View>
             </View>
-
             <View style={styles.container}>
-              <Text style={styles.text}>{quest.description}</Text>
+              <Text style={[styles.text, styles.des]}>{quest.description}</Text>
             </View>
             <TouchableOpacity style={styles.button} onPress={acceptQuest}>
               <Text style={styles.buttonText}>Accept Quest</Text>
@@ -116,8 +123,11 @@ const styles = StyleSheet.create({
     backgroundColor: "none",
   },
   title: {
-    fontSize: 20,
+    fontSize: 30,
+    marginBottom: 0,
     fontWeight: "bold",
+    color: "#014c54",
+    marginTop: -20,
   },
   buttonContainer: {
     alignItems: "center",
@@ -142,10 +152,17 @@ const styles = StyleSheet.create({
   text: {
     textTransform: "capitalize",
     textAlign: "center",
+    color: "#014c54",
+  },
+  cat: {
+    textTransform: "capitalize",
+    textAlign: "center",
+    color: "red",
+    fontWeight: "bold",
   },
   stat: {
     marginTop: 25,
-    marginBottom: 15,
+    marginBottom: 10,
     marginLeft: 5,
     marginRight: 5,
     flexDirection: "row",
@@ -158,6 +175,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     backgroundColor: "transparent",
     flexBasis: "60%",
+    margin: -15,
   },
   icon: {
     backgroundColor: "transparent",
@@ -177,5 +195,11 @@ const styles = StyleSheet.create({
     paddingRight: 5,
     color: "#014c54",
     alignContent: "center",
+  },
+  des: {
+    marginTop: 25,
+  },
+  type: {
+    marginBottom: 20,
   },
 });
