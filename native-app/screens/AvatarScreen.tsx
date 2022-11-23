@@ -28,7 +28,7 @@ export function AvatarScreen({ myAvatar }: tabProp) {
 						<Image
 							style={styles.image}
 							resizeMode="contain"
-							source={{uri: myAvatar}}
+							source={myAvatar}
 						/>
 					</View>
 					<View>

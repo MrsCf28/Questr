@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-import { Camera, CameraType } from "expo-camera";
+import { Camera, CameraType, FlashMode } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
 import CameraButton from "../components/CameraButton";
 
@@ -17,26 +17,29 @@ import * as FileSystem from "expo-file-system";
 import { fetchQuestById } from "../utils/questApi";
 import { useNavigation } from "@react-navigation/native";
 
-import { Storage } from "aws-amplify";
 import { useRegisteredUser } from "../context/Context";
 
 import {
-  fetchRPSPredictions,
   fetchImagePredictions,
 } from "../clarifaiAPI/clarifaiAPI";
 import uploadImage from "../components/ImageSelector";
 import ImageUploadingButton from "../components/ImageUploadingButton";
+import { initialQuest } from "../utils/initialStates";
 
-export default function CameraScreen({ route, setQuestStepNo }: any) {
+type CameraScreenProps = {
+  setQuestStepNo: React.Dispatch<React.SetStateAction<number>>;
+}
+
+export default function CameraScreen({ setQuestStepNo }: CameraScreenProps) {
   const { currentUser } = useRegisteredUser();
 
   // Quest and user details
-  const [currentQuest, setCurrentQuest] = useState(null);
+  const [currentQuest, setCurrentQuest] = useState(initialQuest);
 
   // Camera permissions and controls
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
-  const [type, setType] = useState(Camera.Constants.Type.back);
-  const [flash, setFlash] = useState(Camera.Constants.FlashMode.off);
+  const [type, setType] = useState(CameraType.back);
+  const [flash, setFlash] = useState(FlashMode.off);
   const [isLoading, setIsLoading] = useState(true);
   const cameraRef = useRef(null);
 
@@ -70,7 +73,7 @@ export default function CameraScreen({ route, setQuestStepNo }: any) {
     (async () => {
       MediaLibrary.requestPermissionsAsync();
       const cameraStatus = await Camera.requestCameraPermissionsAsync();
-      setHasCameraPermission(cameraStatus.status === "granted");
+      setHasCameraPermission(() => cameraStatus.status === "granted");
     })();
   }, []);
 
@@ -179,16 +182,16 @@ export default function CameraScreen({ route, setQuestStepNo }: any) {
                   <CameraButton
                     title={"flash"}
                     color={
-                      flash === Camera.Constants.FlashMode.off
+                      flash === FlashMode.off
                         ? "white"
                         : "yellow"
                     }
                     icon="flash"
                     onPress={() => {
                       setFlash(
-                        flash === Camera.Constants.FlashMode.off
-                          ? Camera.Constants.FlashMode.on
-                          : Camera.Constants.FlashMode.off
+                        flash === FlashMode.off
+                          ? FlashMode.on
+                          : FlashMode.off
                       );
                     }}
                   />

@@ -138,9 +138,7 @@ export function AvatarSelector() {
                         <Image
                             style={styles.image}
                             resizeMode="contain"
-                            source={{
-                                uri: avatarInfo[currentAvatar].image,
-                            }}
+                            source={avatarInfo[currentAvatar].image}
                         />
                     </View>
                 </View>
