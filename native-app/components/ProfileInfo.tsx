@@ -26,22 +26,9 @@ export function ProfileInfo() {
             ? ranks[ranks.length - 1]
             : ranks[Math.floor(stats.xp / 100)]}
         </Text>
-
         <View style={styles.flexRow}>
-          <View style={styles.iconContainer}>
-            <Text style={styles.stat}>{stats.coins}</Text>
-            <Image
-              source={require("../assets/images/gold.png")}
-              style={styles.icon}
-            />
-          </View>
-          <View style={styles.iconContainer}>
-            <Text style={styles.stat}>{stats.coins}</Text>
-            <Image
-              source={require("../assets/images/xppng.png")}
-              style={styles.icon}
-            />
-          </View>
+          <Text style={styles.text}>XP: {stats.xp} </Text>
+          <Text style={styles.text}>Coins: {stats.coins}</Text>
         </View>
       </View>
     </View>
@@ -53,8 +40,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     paddingTop: 20,
-    borderColor: "yellow",
-    borderWidth: 2,
   },
   holder: {
     flex: 1,
@@ -89,31 +74,7 @@ const styles = StyleSheet.create({
   },
   flexRow: {
     flexDirection: "row",
-    width: "100%",
     justifyContent: "space-evenly",
-    backgroundColor: "none",
-    position: "absolute",
-  },
-  icon: {
-    backgroundColor: "transparent",
-    resizeMode: "contain",
-    height: 35,
-    width: 35,
-  },
-  iconContainer: {
-    flexDirection: "row",
-    backgroundColor: "transparent",
-
-    position: "absolute",
-    top: 0,
-    right: 0,
-  },
-  stat: {
-    marginTop: 20,
-    marginBottom: 20,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    color: "gold",
+    flex: 1,
   },
 });
