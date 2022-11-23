@@ -182,11 +182,11 @@ export default function CompletedQuestScreen({ route }: any) {
                   </View>
                 </View>
               </View>
-              <Pressable
+              <TouchableOpacity
                 style={[styles.button]}
                 onPress={() => updateUserStats()}>
                 <Text style={styles.buttonText}>Claim Rewards</Text>
-              </Pressable>
+              </TouchableOpacity>
               <Votes currentQuest={currentQuest} />
             </View>
           </View>
