@@ -5,7 +5,7 @@ export function MonoText(props: TextProps) {
     return (
         <Text
             {...props}
-            style={[props.style, { fontFamily: 'space-mono'}] }
+            style={[props.style, { fontFamily: 'inknut'}] }
         />
     );
 }

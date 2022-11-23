@@ -204,6 +204,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
     backgroundColor: "none",
+    marginTop: 10,
   },
   button: {
     margin: 10,
