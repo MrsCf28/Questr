@@ -12,14 +12,11 @@ import {
 import { formatUserStats } from "../utils/functions";
 import { useRegisteredUser } from "../context/Context";
 
-
 export function Graph() {
 	const { currentUser } = useRegisteredUser();
 
 	function formattedUserStats() {
-		let { formattedStats} = formatUserStats(
-			currentUser.stats
-		);
+		let { formattedStats } = formatUserStats(currentUser.stats);
 		return formattedStats;
 	}
 	return (
@@ -48,12 +45,12 @@ export function Graph() {
 				/>
 				<VictoryPolarAxis
 					tickValues={[
-						"dexterity",
-						"exploration",
-						"perception",
-						"stamina",
-						"strength",
-						"wisdom",
+						"Dexterity",
+						"Exploration",
+						"Perception",
+						"Stamina",
+						"Strength",
+						"Wisdom",
 					]}
 					labelPlacement="vertical"
 					tickCount={6}

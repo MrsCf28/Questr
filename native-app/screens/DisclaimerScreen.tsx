@@ -1,5 +1,5 @@
 import React from "react";
-import { TouchableOpacity, StyleSheet, ImageBackground } from "react-native";
+import { TouchableOpacity, StyleSheet, ImageBackground, StatusBar } from "react-native";
 import { Text, View } from "../components/Themed";
 import { SafeAreaView } from "react-native-safe-area-context";
 

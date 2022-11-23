@@ -22,6 +22,7 @@ export function TopTabs() {
 	function background() {
 		return <Image source={require("../assets/images/stones.jpg")} />;
 	}
+	
 	return (
 		<SafeAreaView style={{ flex: 1}}>
 			<TopTab.Navigator
@@ -32,21 +33,26 @@ export function TopTabs() {
 						paddingBottom: 5,
 						// paddingTop: 0,
 						backgroundColor: "#014c54",
-						borderBottomWidth:3,
+						borderBottomWidth:5,
 						borderColor:"#7a7877",
 					},
-					tabBarLabelStyle:{textTransform:"capitalize"},
+					tabBarLabelStyle:{textTransform:"capitalize", letterSpacing:2},
 					tabBarActiveTintColor: "white",
 					tabBarInactiveTintColor:"#7a7877",
-					tabBarIndicatorStyle: {backgroundColor: "#714431", height:0,  borderRadius:10},
+					tabBarIndicatorStyle: {height:0},
 					tabBarShowIcon:true,
-					// tabBarIconStyle:{borderColor:"brown"}
+					// tabBarIconStyle:{backgroundColor: "#7a7877",width:"180%", height:"90%" ,borderRadius:1000, alignItems:"center", justifyContent:"center",}
 				}}
 			>
 				<TopTab.Screen name="Home" component={TabOneScreen} options={{
 					title: "Profile",
 					tabBarIcon: ({ color }) => (
-						<FontAwesome5 name="home" size={24} color={color} />
+						<FontAwesome5
+							name="chess-king"
+							size={24}
+							color={color}
+						/>
+						
 					),
 				}}
 				/>
