@@ -98,6 +98,7 @@ export default function CameraScreen({ route, setQuestStepNo }: any) {
             .then((res) => {
               let results = res.map((obj) => obj.name);
               setPredict(() => setPredict(results)); // Need to wait for this
+              setPredict(results);
               let endpoints = currentQuest.objectives[0].endpoint;
               console.log("quest endpoints", endpoints);
               console.log("Predictions", results);
@@ -154,7 +155,8 @@ export default function CameraScreen({ route, setQuestStepNo }: any) {
             style={{ width: "100%", height: height }}
             type={type}
             flashMode={flash}
-            ref={cameraRef}>
+            ref={cameraRef}
+          >
             <View style={styles.flexrow}>
               {uploading ? (
                 <View style={styles.loadContainer}>
@@ -174,7 +176,7 @@ export default function CameraScreen({ route, setQuestStepNo }: any) {
                     icon="retweet"
                     onPress={flipCamera}
                   />
-                    <CameraButton
+                  <CameraButton
                     title={"flash"}
                     color={
                       flash === Camera.Constants.FlashMode.off
@@ -195,7 +197,8 @@ export default function CameraScreen({ route, setQuestStepNo }: any) {
             </View>
             <TouchableOpacity
               style={styles.button}
-              onPress={() => setQuestStepNo((current) => current + 1)}>
+              onPress={() => setQuestStepNo((current) => current + 1)}
+            >
               <Text style={styles.buttonText}>CHEAT!!!! COMPLETE QUEST</Text>
             </TouchableOpacity>
           </Camera>
