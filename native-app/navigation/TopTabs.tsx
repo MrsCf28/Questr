@@ -10,39 +10,69 @@ import { useRegisteredUser } from "../context/Context";
 import { Image, ImageBackground } from "react-native";
 import { Text } from "../components/Themed";
 
+import { FontAwesome5 } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+
 const TopTab = createMaterialTopTabNavigator();
 
 export function TopTabs() {
 	const { currentUser } = useRegisteredUser();
 
-  function background (){
-    return <Image source={require('../assets/images/stones.jpg')} />
-  }
+	function background() {
+		return <Image source={require("../assets/images/stones.jpg")} />;
+	}
 	return (
-		<SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
-				<TopTab.Navigator
-					initialRouteName="Home"
-					screenOptions={{
-						tabBarStyle: {
-							height: 60,
-							paddingBottom: 10,
-							paddingTop: 10,
-							backgroundColor: "brown",
-						},
-              tabBarActiveTintColor: 'white',            
+		<SafeAreaView style={{ flex: 1, backgroundColor: "grey" }}>
+			<TopTab.Navigator
+				initialRouteName="Home"
+				screenOptions={{
+					tabBarStyle: {
+						height: 70,
+						paddingBottom: 5,
+						paddingTop: 5,
+						backgroundColor: "grey",
+						borderBottomWidth:3,
+						borderColor:"#714431"
+						// borderTopWidth:2
+
+					},
+					tabBarLabelStyle:{textTransform:"capitalize"},
+					tabBarActiveTintColor: "#714431",
+					tabBarInactiveTintColor:"white",
+					tabBarIndicatorStyle: {backgroundColor: "#714431", height:0,  borderRadius:10},
+					tabBarShowIcon:true,
+					// tabBarIconStyle:{borderColor:"brown"}
+				}}
+			>
+				<TopTab.Screen name="Home" component={TabOneScreen} options={{
+					title: "Profile",
+					tabBarIcon: ({ color }) => (
+						<FontAwesome5 name="home" size={24} color={color} />
+					),
+				}}
+				/>
+				<TopTab.Screen name="History" component={HistoryScreen} options={{
+					title: "History",
+					tabBarIcon: ({ color }) => (
+						<MaterialIcons name="history-edu" size={24} color={color} />
+					),
+				}}/>
+				<TopTab.Screen
+					name="Current Quest"
+					component={
+						currentUser.current_quest_id !== "0"
+							? CurrentQuestScreen
+							: NoQuestScreen
+					}
+					options={{
+						title: "Current Quest",
+						tabBarIcon: ({ color }) => (
+							<MaterialCommunityIcons name="shield-sword" size={24} color={color} />
+						),
 					}}
-				>
-					<TopTab.Screen name="Home" component={TabOneScreen}/>
-					<TopTab.Screen name="History" component={HistoryScreen} />
-					<TopTab.Screen
-						name="CurrentQuest"
-						component={
-							currentUser.current_quest_id !== "0"
-								? CurrentQuestScreen
-								: NoQuestScreen
-						}
-					/>
-				</TopTab.Navigator>
+				/>
+			</TopTab.Navigator>
 			<StatusBar />
 		</SafeAreaView>
 	);
