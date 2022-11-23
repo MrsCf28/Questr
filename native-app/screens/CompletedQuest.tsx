@@ -18,7 +18,7 @@ export default function CompletedQuestScreen({ route }: any) {
   const navigation = useNavigation();
 
   let { currentQuest } = route.params;
-
+  const date = new Date().toDateString();
   const quest = currentQuest;
   function updateUserStats() {
     let currentStats = { ...currentUser.stats };
@@ -26,7 +26,7 @@ export default function CompletedQuestScreen({ route }: any) {
       quest_id: String(quest.id),
       quest_title: quest.title,
       completed_status: "complete",
-      start_time: String(Date.now()),
+      start_time: String(date),
     };
 
     Object.keys(currentStats).forEach((stat) => {
@@ -60,13 +60,11 @@ export default function CompletedQuestScreen({ route }: any) {
       <ImageBackground
         source={require("../assets/images/stones.jpg")}
         style={styles.container}
-        resizeMode="cover"
-      >
+        resizeMode="cover">
         <ImageBackground
           source={require("../assets/images/bigScroll.png")}
           resizeMode="cover"
-          style={styles.scroll}
-        >
+          style={styles.scroll}>
           <View style={styles.holder}>
             <Text style={styles.title}>
               Congratulations you completed {quest.title}
@@ -186,8 +184,7 @@ export default function CompletedQuestScreen({ route }: any) {
               </View>
               <Pressable
                 style={[styles.button]}
-                onPress={() => updateUserStats()}
-              >
+                onPress={() => updateUserStats()}>
                 <Text style={styles.buttonText}>Claim Rewards</Text>
               </Pressable>
               <Votes currentQuest={currentQuest} />

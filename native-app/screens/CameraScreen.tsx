@@ -232,6 +232,7 @@ export default function CameraScreen({ setQuestStepNo }: CameraScreenProps) {
       </View>
     );
   }
+
 }
 
 const styles = StyleSheet.create({
