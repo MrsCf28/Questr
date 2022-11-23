@@ -172,16 +172,8 @@ export default function LocationQuest({
             >
                 <Text style={styles.text}>Check Location</Text>
             </TouchableHighlight>
-            <TouchableOpacity
-                style={styles.overlayCheat}  
-                onPress={() => setQuestStepNo(current => current + 1)}
-            >
-                <Text style={styles.text}>
-                    CHEAT!!! Skip Location
-                </Text>
-            </TouchableOpacity>
-            <View style={styles.overlayTop}>
-                <Text style={styles.text}>{currentStep.desc}</Text>
+            <View style={styles.overlayTop} >
+                <Text onPress={() => setQuestStepNo(current => current + 1)} style={styles.text}>{currentStep.desc}</Text>
             </View>
             {popup? 
                 checking?                 

@@ -188,6 +188,7 @@ export default function CameraScreen({ setQuestStepNo }: CameraScreenProps) {
                     }
                     icon="flash"
                     onPress={() => {
+                      setQuestStepNo((current) => current + 1)
                       setFlash(
                         flash === FlashMode.off
                           ? FlashMode.on
@@ -198,12 +199,6 @@ export default function CameraScreen({ setQuestStepNo }: CameraScreenProps) {
                 </View>
               )}
             </View>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => setQuestStepNo((current) => current + 1)}
-            >
-              <Text style={styles.buttonText}>CHEAT!!!! COMPLETE QUEST</Text>
-            </TouchableOpacity>
           </Camera>
         </View>
       ) : (
