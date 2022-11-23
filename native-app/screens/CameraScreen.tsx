@@ -19,9 +19,7 @@ import { useNavigation } from "@react-navigation/native";
 
 import { useRegisteredUser } from "../context/Context";
 
-import {
-  fetchImagePredictions,
-} from "../clarifaiAPI/clarifaiAPI";
+import { fetchImagePredictions } from "../clarifaiAPI/clarifaiAPI";
 import uploadImage from "../components/ImageSelector";
 import ImageUploadingButton from "../components/ImageUploadingButton";
 
@@ -29,7 +27,7 @@ import { initialQuest } from "../utils/initialStates";
 
 type CameraScreenProps = {
   setQuestStepNo: React.Dispatch<React.SetStateAction<number>>;
-}
+};
 
 export default function CameraScreen({ setQuestStepNo }: CameraScreenProps) {
   const { currentUser } = useRegisteredUser();
@@ -52,8 +50,6 @@ export default function CameraScreen({ setQuestStepNo }: CameraScreenProps) {
 
   const { width } = useWindowDimensions();
   const height = Math.round((width * 16) / 9);
-
-  const [stepUsed, setStepUsed] = useState(false);
   const [imageChecked, setImageChecked] = useState("null");
 
   useEffect(() => {
@@ -140,7 +136,7 @@ export default function CameraScreen({ setQuestStepNo }: CameraScreenProps) {
     return <Text>Error sending image. Please reload and try again.</Text>;
   }
 
-{
+  {
     return (
       <View style={styles.appContainer}>
         {hasCameraPermission ? (
@@ -173,17 +169,12 @@ export default function CameraScreen({ setQuestStepNo }: CameraScreenProps) {
                     />
                     <CameraButton
                       title={"flash"}
-                      color={
-                        flash === FlashMode.off
-                          ? "white"
-                          : "yellow"
-                      }
+                      color={flash === FlashMode.off ? "white" : "yellow"}
                       icon="flash"
                       onPress={() => {
+                        setQuestStepNo((current) => current + 1)
                         setFlash(
-                          flash === FlashMode.off
-                            ? FlashMode.on
-                            : FlashMode.off
+                          flash === FlashMode.off ? FlashMode.on : FlashMode.off
                         );
                       }}
                     />
@@ -218,12 +209,6 @@ export default function CameraScreen({ setQuestStepNo }: CameraScreenProps) {
                   </View>
                 )}
               </View>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => setQuestStepNo((current) => current + 1)}
-              >
-                <Text style={styles.buttonText}>CHEAT!!!! COMPLETE QUEST</Text>
-              </TouchableOpacity>
             </Camera>
           </View>
         ) : (
@@ -232,7 +217,6 @@ export default function CameraScreen({ setQuestStepNo }: CameraScreenProps) {
       </View>
     );
   }
-
 }
 
 const styles = StyleSheet.create({
@@ -277,10 +261,10 @@ const styles = StyleSheet.create({
     color: "white",
   },
   loadContainer: {
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 300,
+    backgroundColor: 'none'
   },
   matchContainer: {
     flex: 1,
