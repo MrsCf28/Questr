@@ -243,7 +243,7 @@ const styles = StyleSheet.create({
     margin: 10,
     width: "100%",
     borderColor: "#7a7877",
-    backgroundColor: "#4a040c",
+    backgroundColor: "#014c54",
     borderWidth: 3,
     padding: 10,
     color: "white",

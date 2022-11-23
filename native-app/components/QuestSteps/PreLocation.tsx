@@ -66,7 +66,7 @@ export default function PreLocation({
                         ) : null}
                         {completedSteps.map(step => (
                             <Text
-                                key={step.desc}
+                                key={step.desc + Date.now() + 'location'}
                                 style={styles.green}
                             >
                                 {step.desc}

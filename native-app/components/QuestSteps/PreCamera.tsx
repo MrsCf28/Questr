@@ -66,7 +66,7 @@ export default function PreCamera({
                         ) : null}
                         {completedSteps.map(step => (
                             <Text
-                                key={step.desc}
+                                key={step.desc + Date.now() + 'camera'}
                                 style={styles.green}
                             >
                                 {step.desc}

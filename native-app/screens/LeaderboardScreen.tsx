@@ -70,11 +70,11 @@ export function LeaderboardScreen({ selectedTab }: tabProp) {
 		"wisdom",
 	];
 	function statsTable() {
-		return allUserStats.map((user) => {
+		return allUserStats.map((user, index) => {
 			return (
 				<DataTable.Row
 					style={styles.row}
-					key={compareStat + user.display_name}
+					key={compareStat + user.display_name + index}
 				>
 					<DataTable.Cell>{user.display_name}</DataTable.Cell>
 					<DataTable.Cell numeric>
