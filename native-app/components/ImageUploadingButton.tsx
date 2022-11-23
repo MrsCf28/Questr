@@ -1,11 +1,6 @@
 import * as React from "react";
 import { StyleSheet, Image } from "react-native";
 
-
-<<<<<<< HEAD
-=======
-
->>>>>>> 5aa4a73b19fea53bbdcfcf271db2499b88b274b2
 export default function ImageUploadingButton() {
   return (
     <Image
