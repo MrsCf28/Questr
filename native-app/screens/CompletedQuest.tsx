@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
     margin: 10,
     width: "100%",
     borderColor: "#7a7877",
-    backgroundColor: "#014c54",
+    backgroundColor: "#4a040c",
     borderWidth: 3,
     padding: 10,
     color: "white",

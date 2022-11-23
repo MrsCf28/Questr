@@ -26,6 +26,7 @@ import {
 } from "../clarifaiAPI/clarifaiAPI";
 import uploadImage from "../components/ImageSelector";
 import ImageUploadingButton from "../components/ImageUploadingButton";
+import ImageMatch from "../components/ImageMatch";
 
 export default function CameraScreen({ route, setQuestStepNo }: any) {
   const { currentUser } = useRegisteredUser();
@@ -41,16 +42,19 @@ export default function CameraScreen({ route, setQuestStepNo }: any) {
   const cameraRef = useRef(null);
 
   // Image, predictions and result
-  const [image, setImage] = useState({});
+  const [image, setImage] = useState({}); // ----
   const [predict, setPredict] = useState([]);
   const [imageErr, setImageErr] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [questStatus, setQuestStatus] = useState(false);
-  const video = React.useRef(null);
+  const video = React.useRef(null); // ----
 
-  const navigation = useNavigation();
+  const navigation = useNavigation(); // ----
   const { width } = useWindowDimensions();
   const height = Math.round((width * 16) / 9);
+
+  const [stepUsed, setStepUsed] = useState(false);
+  const [imageChecked, setImageChecked] = useState("null");
 
   // const { questStatus, setQuestStatus } = route.params;
 
@@ -73,10 +77,6 @@ export default function CameraScreen({ route, setQuestStepNo }: any) {
       setHasCameraPermission(cameraStatus.status === "granted");
     })();
   }, []);
-
-  function addStep() {
-    setQuestStepNo((current) => current + 1);
-  }
 
   const takePicture = async () => {
     setUploading(true);
@@ -111,17 +111,12 @@ export default function CameraScreen({ route, setQuestStepNo }: any) {
                   console.log("Correct term detected.", concept);
                   setQuestStatus(true);
                   status = true;
-                  Alert.alert("Thee hath found", "", [
-                    { text: "Continue", onPress: addStep },
-                  ]);
+                  setImageChecked("match");
+                  console.log(imageChecked);
                 }
               });
               if (!status) {
-                Alert.alert(
-                  "Thee not hath found",
-                  "Keepeth searching/retake picture",
-                  [{ text: "OK" }]
-                );
+                setImageChecked("failed");
               }
             })
             .catch((err) => {
@@ -131,6 +126,7 @@ export default function CameraScreen({ route, setQuestStepNo }: any) {
         });
       }
     }
+    console.log(imageChecked);
   };
 
   const flipCamera = async () => {
@@ -146,68 +142,98 @@ export default function CameraScreen({ route, setQuestStepNo }: any) {
     return <Text>Error sending image. Please reload and try again.</Text>;
   }
 
-  return (
-    <View style={styles.appContainer}>
-      {hasCameraPermission ? (
-        <View style={styles.container}>
-          <Camera
-            ratio="16:9"
-            style={{ width: "100%", height: height }}
-            type={type}
-            flashMode={flash}
-            ref={cameraRef}
-          >
-            <View style={styles.flexrow}>
-              {uploading ? (
-                <View style={styles.loadContainer}>
-                  <ImageUploadingButton />
-                </View>
-              ) : (
-                <View style={styles.flexrow}>
-                  <CameraButton
-                    title={"take picture"}
-                    color={"white"}
-                    icon="camera"
-                    onPress={takePicture}
-                  />
-                  <CameraButton
-                    title={"flip camera"}
-                    color={"white"}
-                    icon="retweet"
-                    onPress={flipCamera}
-                  />
-                  <CameraButton
-                    title={"flash"}
-                    color={
-                      flash === Camera.Constants.FlashMode.off
-                        ? "white"
-                        : "yellow"
-                    }
-                    icon="flash"
-                    onPress={() => {
-                      setFlash(
-                        flash === Camera.Constants.FlashMode.off
-                          ? Camera.Constants.FlashMode.on
-                          : Camera.Constants.FlashMode.off
-                      );
-                    }}
-                  />
-                </View>
-              )}
-            </View>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => setQuestStepNo((current) => current + 1)}
+  {
+    return (
+      <View style={styles.appContainer}>
+        {hasCameraPermission ? (
+          <View style={styles.container}>
+            <Camera
+              ratio="16:9"
+              style={{ width: "100%", height: height }}
+              type={type}
+              flashMode={flash}
+              ref={cameraRef}
             >
-              <Text style={styles.buttonText}>CHEAT!!!! COMPLETE QUEST</Text>
-            </TouchableOpacity>
-          </Camera>
-        </View>
-      ) : (
-        <Text>Camera</Text>
-      )}
-    </View>
-  );
+              <View style={styles.flexrow}>
+                {uploading ? (
+                  <View style={styles.loadContainer}>
+                    <ImageUploadingButton />
+                  </View>
+                ) : imageChecked === "null" ? (
+                  <View style={styles.flexrow}>
+                    <CameraButton
+                      title={"take picture"}
+                      color={"white"}
+                      icon="camera"
+                      onPress={takePicture}
+                    />
+                    <CameraButton
+                      title={"flip camera"}
+                      color={"white"}
+                      icon="retweet"
+                      onPress={flipCamera}
+                    />
+                    <CameraButton
+                      title={"flash"}
+                      color={
+                        flash === Camera.Constants.FlashMode.off
+                          ? "white"
+                          : "yellow"
+                      }
+                      icon="flash"
+                      onPress={() => {
+                        setFlash(
+                          flash === Camera.Constants.FlashMode.off
+                            ? Camera.Constants.FlashMode.on
+                            : Camera.Constants.FlashMode.off
+                        );
+                      }}
+                    />
+                  </View>
+                ) : imageChecked === "match" ? (
+                  <View style={styles.matchContainer}>
+                    <Text style={styles.buttonText}>
+                      Thees eyes have laid upon the bounty
+                    </Text>
+                    <TouchableOpacity
+                      style={[styles.button, styles.green]}
+                      onPress={() => {
+                        setQuestStepNo((current) => current + 1);
+                      }}
+                    >
+                      <Text style={styles.butText}>Continue</Text>
+                    </TouchableOpacity>
+                  </View>
+                ) : (
+                  <View style={styles.matchContainer}>
+                    <Text style={styles.buttonText}>
+                      Thees eyes are deceived
+                    </Text>
+                    <TouchableOpacity
+                      style={[styles.button, styles.red]}
+                      onPress={() => {
+                        setImageChecked("null");
+                      }}
+                    >
+                      <Text style={styles.butText}>Retry</Text>
+                    </TouchableOpacity>
+                  </View>
+                )}
+              </View>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => setQuestStepNo((current) => current + 1)}
+              >
+                <Text style={styles.buttonText}>CHEAT!!!! COMPLETE QUEST</Text>
+              </TouchableOpacity>
+            </Camera>
+          </View>
+        ) : (
+          <Text>Camera</Text>
+        )}
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -229,8 +255,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   button: {
-    margin: 20,
-    borderColor: "#7a7877",
+    margin: 10,
+    marginBottom: 5,
+    borderColor: "white",
     backgroundColor: "#014c54",
     borderWidth: 3,
     padding: 10,
@@ -238,6 +265,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     justifyContent: "center",
     alignItems: "center",
+    width: "50%",
   },
   uploadingIcon: {
     margin: 20,
@@ -255,4 +283,24 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 300,
   },
+  matchContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginRight: 100,
+    marginLeft: 100,
+    marginBottom: 200,
+    borderColor: "white",
+    backgroundColor: "#014c54",
+    borderWidth: 3,
+    padding: 10,
+    color: "white",
+    borderRadius: 20,
+  },
+  butText: {
+    color: "white",
+    fontSize: 13,
+  },
+  red: { backgroundColor: "#4a040c" },
+  green: { backgroundColor: "#01803a" },
 });

@@ -9,17 +9,11 @@ type ImageUploadingButtonProps = {
   color: string;
 };
 
-export default function ImageUploadingButton({
-  title,
-  onPress,
-  icon,
-  color,
-}: ImageUploadingButtonProps) {
+export default function ImageUploadingButton() {
   return (
     <Image
       source={require("../assets/videos/checkingImag.gif")}
       style={styles.image}
-      //source={{ uri: "../assets/videos/checkingImag.gif" }}
     />
   );
 }
