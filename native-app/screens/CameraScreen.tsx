@@ -140,8 +140,7 @@ export default function CameraScreen({ setQuestStepNo }: CameraScreenProps) {
     return <Text>Error sending image. Please reload and try again.</Text>;
   }
 
-<<<<<<< HEAD
-  {
+{
     return (
       <View style={styles.appContainer}>
         {hasCameraPermission ? (
@@ -152,60 +151,6 @@ export default function CameraScreen({ setQuestStepNo }: CameraScreenProps) {
               type={type}
               flashMode={flash}
               ref={cameraRef}
-=======
-  return (
-    <View style={styles.appContainer}>
-      {hasCameraPermission ? (
-        <View style={styles.container}>
-          <Camera
-            ratio="16:9"
-            style={{ width: "100%", height: height }}
-            type={type}
-            flashMode={flash}
-            ref={cameraRef}
-          >
-            <View style={styles.flexrow}>
-              {uploading ? (
-                <View style={styles.loadContainer}>
-                  <ImageUploadingButton />
-                </View>
-              ) : (
-                <View style={styles.flexrow}>
-                  <CameraButton
-                    title={"take picture"}
-                    color={"white"}
-                    icon="camera"
-                    onPress={takePicture}
-                  />
-                  <CameraButton
-                    title={"flip camera"}
-                    color={"white"}
-                    icon="retweet"
-                    onPress={flipCamera}
-                  />
-                  <CameraButton
-                    title={"flash"}
-                    color={
-                      flash === FlashMode.off
-                        ? "white"
-                        : "yellow"
-                    }
-                    icon="flash"
-                    onPress={() => {
-                      setFlash(
-                        flash === FlashMode.off
-                          ? FlashMode.on
-                          : FlashMode.off
-                      );
-                    }}
-                  />
-                </View>
-              )}
-            </View>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => setQuestStepNo((current) => current + 1)}
->>>>>>> 5aa4a73b19fea53bbdcfcf271db2499b88b274b2
             >
               <View style={styles.flexrow}>
                 {uploading ? (
@@ -229,16 +174,16 @@ export default function CameraScreen({ setQuestStepNo }: CameraScreenProps) {
                     <CameraButton
                       title={"flash"}
                       color={
-                        flash === Camera.Constants.FlashMode.off
+                        flash === FlashMode.off
                           ? "white"
                           : "yellow"
                       }
                       icon="flash"
                       onPress={() => {
                         setFlash(
-                          flash === Camera.Constants.FlashMode.off
-                            ? Camera.Constants.FlashMode.on
-                            : Camera.Constants.FlashMode.off
+                          flash === FlashMode.off
+                            ? FlashMode.on
+                            : FlashMode.off
                         );
                       }}
                     />
