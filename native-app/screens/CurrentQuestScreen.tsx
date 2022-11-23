@@ -13,13 +13,13 @@ import { locationChecker } from "../utils/functions";
 import { fetchQuestById } from "../utils/questApi";
 import { patchUser } from "../utils/userApi";
 import { useCurrentUser, useRegisteredUser } from "../context/Context";
-import linking from "../navigation/LinkingConfiguration";
+import { initialQuest } from "../utils/initialStates";
 
 export default function CurrentQuestScreen() {
   const { setCurrentUser } = useCurrentUser();
   const { currentUser } = useRegisteredUser();
   const navigation = useNavigation();
-  const [currentQuest, setCurrentQuest] = useState(null);
+  const [currentQuest, setCurrentQuest] = useState(initialQuest);
   const [isLoading, setIsLoading] = useState(true);
   const [location, setLocation] = useState({});
   const [currentLocation, setCurrentLocation] = useState({
@@ -35,13 +35,6 @@ export default function CurrentQuestScreen() {
       id: currentUser.id,
       current_quest_id: "0",
     };
-    //     setCurrentUser({ ...currentUser, current_quest_id: '0' });
-
-    // const updatedUser = {
-    //   id: currentUser.id,
-    //   age: currentUser.age,
-    //   current_quest_id: '0',
-    // };
 
     patchUser(updatedUser)
       .then((user) => {
@@ -67,27 +60,6 @@ export default function CurrentQuestScreen() {
         console.log(err, "error");
       });
   }, []);
-
-  // useEffect(() => {
-  //   (async () => {
-  //     setIsLoading(true)
-  //     let { status } = await Location.requestForegroundPermissionsAsync(); //asks the phone for permission to use location
-  //     if (status !== "granted") {
-  //       return;
-  //     }
-  //     let location = await Location.getCurrentPositionAsync({}); //gets the last known location this is quicker than  requesting the current location the alternative is to use Location.getCurrentPositionAsync(options)
-  //     if (location !== null) {
-  //       setLocation(location);
-  //       setCurrentLocation({
-  //         latitude: location.coords.latitude,
-  //         longitude: location.coords.longitude,
-  //         latitudeDelta: 0.01,
-  //         longitudeDelta: 0.01,
-  //       });
-  //     }
-  //     setIsLoading(false);
-  //   })();
-  // }, [])
 
   const updateLocation = () => {
     (async () => {

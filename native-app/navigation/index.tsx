@@ -178,21 +178,18 @@ function BottomTabNavigator() {
 		<BottomTab.Navigator
 			initialRouteName="TabOne"
 			screenOptions={{
-				// tabBarActiveTintColor: Colors[colorScheme].tint,
 				headerShown: false,
 				tabBarStyle: {
-					height: 60,
+					height: 70,
 					paddingBottom: 5,
-					paddingTop: 5,
-					backgroundColor: "grey",
+					backgroundColor: "#014c54",
 					borderTopWidth:3,
-					borderTopColor:"#714431",
-					alignItems:"center",
-					justifyContent:"top"
+					borderTopColor:"#7a7877",
+
 				},
-				tabBarActiveTintColor: "#714431",
-				tabBarInactiveTintColor:"white",
-				// tabBarIndicatorStyle: {backgroundColor: "#714431", height:5,  borderRadius:10}
+				tabBarLabelStyle:{textTransform:"capitalize"},
+				tabBarActiveTintColor: "white",
+				tabBarInactiveTintColor:"#7a7877",
 			}}
 		>
 			<BottomTab.Screen

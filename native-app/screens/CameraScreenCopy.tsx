@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useState, useEffect, useRef} from "react";
 import {
   StyleSheet,
   Text,
   View,
   useWindowDimensions,
   Alert,
-  Image,
   TouchableOpacity,
 } from "react-native";
 
@@ -16,7 +15,6 @@ import CameraButton from "../components/CameraButton";
 import * as FileSystem from "expo-file-system";
 import { fetchQuestById } from "../utils/questApi";
 import { useNavigation } from "@react-navigation/native";
-
 import { useRegisteredUser } from "../context/Context";
 
 import {
@@ -37,7 +35,7 @@ export default function CameraScreen({ setQuestStepNo }: CameraScreenProps) {
   const [currentQuest, setCurrentQuest] = useState(initialQuest);
 
   // Camera permissions and controls
-  const [hasCameraPermission, setHasCameraPermission] = useState(null);
+  const [hasCameraPermission, setHasCameraPermission] = useState(false);
   const [type, setType] = useState(CameraType.back);
   const [flash, setFlash] = useState(FlashMode.off);
   const [isLoading, setIsLoading] = useState(true);
@@ -96,11 +94,10 @@ export default function CameraScreen({ setQuestStepNo }: CameraScreenProps) {
 
       if (typeof image64 === "string") {
         uploadImage(image64).then((url) => {
-          setUploading(() => setUploading(false));
+          setUploading(false);
           fetchImagePredictions(url)
             .then((res) => {
               let results = res.map((obj) => obj.name);
-              setPredict(() => setPredict(results)); // Need to wait for this
               setPredict(results);
               let endpoints = currentQuest.objectives[0].endpoint;
               console.log("quest endpoints", endpoints);
@@ -158,8 +155,7 @@ export default function CameraScreen({ setQuestStepNo }: CameraScreenProps) {
             style={{ width: "100%", height: height }}
             type={type}
             flashMode={flash}
-            ref={cameraRef}
-          >
+            ref={cameraRef}>
             <View style={styles.flexrow}>
               {uploading ? (
                 <View style={styles.loadContainer}>
@@ -179,7 +175,7 @@ export default function CameraScreen({ setQuestStepNo }: CameraScreenProps) {
                     icon="retweet"
                     onPress={flipCamera}
                   />
-                  <CameraButton
+                    <CameraButton
                     title={"flash"}
                     color={
                       flash === FlashMode.off
@@ -200,8 +196,7 @@ export default function CameraScreen({ setQuestStepNo }: CameraScreenProps) {
             </View>
             <TouchableOpacity
               style={styles.button}
-              onPress={() => setQuestStepNo((current) => current + 1)}
-            >
+              onPress={() => setQuestStepNo((current) => current + 1)}>
               <Text style={styles.buttonText}>CHEAT!!!! COMPLETE QUEST</Text>
             </TouchableOpacity>
           </Camera>

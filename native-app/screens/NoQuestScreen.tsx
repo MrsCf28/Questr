@@ -11,7 +11,7 @@ export default function NoQuestScreen() {
         resizeMode="cover">
         <ImageBackground
           source={require("../assets/images/bigScroll.png")}
-          resizeMode="cover"
+          resizeMode="stretch"
           style={styles.scroll}>
           <Text style={styles.title}>You are not on a Quest</Text>
         </ImageBackground>
@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
+    height:"100%"
   },
   title: {
     fontSize: 20,

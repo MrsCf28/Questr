@@ -14,46 +14,22 @@ import {
 } from './BattleLogic';
 import { useRegisteredUser } from '../../context/Context';
 import { CurrentStep } from '../../types';
-
-const Knight = require('../../assets/images/knight.png');
-const DeathKnight = require('../../assets/images/deathknight.png');
-const Jester = require('../../assets/images/Jester.png');
-const Bard = require('../../assets/images/Bard.png');
-const BlackSmith = require('../../assets/images/blacksmith.png');
-const King = require('../../assets/images/king.png');
-const Mage = require('../../assets/images/mage.png');
-const ManAtArms = require('../../assets/images/manAtArms.png');
-const Princess = require('../../assets/images/Princess.png');
-const Elf = require('../../assets/images/elfknight.png');
+import { avatarInfo } from '../../utils/avatarInfo';
 
 type BattleQuestProps = {
     setQuestStepNo: React.Dispatch<React.SetStateAction<number>>;
     setPreBattle: React.Dispatch<React.SetStateAction<boolean>>;
-    currentStep: CurrentStep;
 };
 
 export default function BattleQuest({
     setQuestStepNo,
     setPreBattle,
-    currentStep,
 }: BattleQuestProps) {
     const { currentUser } = useRegisteredUser();
     const avatar = Number(currentUser.avatar_uri);
 
-    const [avatarArray, setAvatarArray] = useState([
-        { id: 0, image: Bard, cost: 100 },
-        { id: 1, image: Jester, cost: 200 },
-        { id: 2, image: BlackSmith, cost: 300 },
-        { id: 3, image: Knight, cost: 400 },
-        { id: 4, image: ManAtArms, cost: 500 },
-        { id: 5, image: Mage, cost: 600 },
-        { id: 6, image: Elf, cost: 700 },
-        { id: 7, image: Princess, cost: 800 },
-        { id: 8, image: King, cost: 900 },
-        { id: 9, image: DeathKnight, cost: 1000 },
-    ]);
     const [myAvatar, setMyAvatar] = useState(
-        avatarArray[avatar].image
+        avatarInfo[avatar].image
     );
 
     const {
@@ -96,7 +72,7 @@ export default function BattleQuest({
     const [help, sethelp] = useState(false);
 
     useEffect(() => {
-        setMyAvatar(avatarArray[avatar].image);
+        setMyAvatar(avatarInfo[avatar].image);
     }, [currentUser.avatar_uri]);
 
     useEffect(() => {

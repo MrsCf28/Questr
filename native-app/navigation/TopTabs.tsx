@@ -23,23 +23,21 @@ export function TopTabs() {
 		return <Image source={require("../assets/images/stones.jpg")} />;
 	}
 	return (
-		<SafeAreaView style={{ flex: 1, backgroundColor: "grey" }}>
+		<SafeAreaView style={{ flex: 1}}>
 			<TopTab.Navigator
 				initialRouteName="Home"
 				screenOptions={{
 					tabBarStyle: {
 						height: 70,
 						paddingBottom: 5,
-						paddingTop: 5,
-						backgroundColor: "grey",
+						// paddingTop: 0,
+						backgroundColor: "#014c54",
 						borderBottomWidth:3,
-						borderColor:"#714431"
-						// borderTopWidth:2
-
+						borderColor:"#7a7877",
 					},
 					tabBarLabelStyle:{textTransform:"capitalize"},
-					tabBarActiveTintColor: "#714431",
-					tabBarInactiveTintColor:"white",
+					tabBarActiveTintColor: "white",
+					tabBarInactiveTintColor:"#7a7877",
 					tabBarIndicatorStyle: {backgroundColor: "#714431", height:0,  borderRadius:10},
 					tabBarShowIcon:true,
 					// tabBarIconStyle:{borderColor:"brown"}
@@ -59,7 +57,7 @@ export function TopTabs() {
 					),
 				}}/>
 				<TopTab.Screen
-					name="Current Quest"
+					name="CurrentQuest"
 					component={
 						currentUser.current_quest_id !== "0"
 							? CurrentQuestScreen

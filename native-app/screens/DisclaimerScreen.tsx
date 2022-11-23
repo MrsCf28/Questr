@@ -1,12 +1,13 @@
 import React from "react";
 import { TouchableOpacity, StyleSheet, ImageBackground } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import { Text, View } from "../components/Themed";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function DisclaimerScreen({ setPress }: any) {
-	const navigation = useNavigation();
+type DSProps = {
+	setPress: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
+export default function DisclaimerScreen({ setPress }: DSProps) {
 	return (
 		<SafeAreaView style={{ flex: 1 }}>
 			<View style={styles.container}>
@@ -30,11 +31,11 @@ export default function DisclaimerScreen({ setPress }: any) {
 								resposible for any actions taken when using this
 								app.{" "}
 							</Text>
-							<TouchableOpacity style={styles.button}>
-								<Text
-									style={styles.buttonText}
-									onPress={() => setPress(true)}
-								>
+							<TouchableOpacity
+								onPress={() => setPress(true)}
+								style={styles.button}
+							>
+								<Text style={styles.buttonText}>
 									Accept Terms
 								</Text>
 							</TouchableOpacity>
@@ -61,7 +62,7 @@ const styles = StyleSheet.create({
 		width: "100%",
 	},
 	title: {
-		fontSize: 40,
+		fontSize: 60,
 		fontWeight: "bold",
 	},
 	buttonContainer: {
@@ -88,6 +89,7 @@ const styles = StyleSheet.create({
 		padding: 40,
 		fontSize: 20,
 		textAlign: "center",
+    letterSpacing:1
 	},
 	holder: {
 		width: "80%",
