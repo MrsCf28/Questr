@@ -27,8 +27,20 @@ export function ProfileInfo() {
             : ranks[Math.floor(stats.xp / 100)]}
         </Text>
         <View style={styles.flexRow}>
-          <Text style={styles.text}>XP: {stats.xp} </Text>
-          <Text style={styles.text}>Coins: {stats.coins}</Text>
+          <View style={styles.iconContainer}>
+            <Text style={styles.stat}>{currentUser.stats.coins}</Text>
+            <Image
+              source={require("../assets/images/gold.png")}
+              style={styles.icon}
+            />
+          </View>
+          <View style={styles.iconContainer}>
+            <Text style={styles.stat}>{currentUser.stats.xp}</Text>
+            <Image
+              source={require("../assets/images/xppng.png")}
+              style={styles.icon}
+            />
+          </View>
         </View>
       </View>
     </View>
@@ -73,8 +85,32 @@ const styles = StyleSheet.create({
     borderColor: "#d4d4d4",
   },
   flexRow: {
+    display: "flex",
     flexDirection: "row",
-    justifyContent: "space-evenly",
-    flex: 1,
+  },
+  icon: {
+    backgroundColor: "transparent",
+    resizeMode: "contain",
+    height: 35,
+    width: 35,
+    marginTop: 10,
+    marginBottom: 10,
+
+    flexDirection: "column",
+    justifyContent: "center",
+  },
+  iconContainer: {
+    flexDirection: "row",
+    backgroundColor: "transparent",
+    marginRight: 10,
+  },
+  stat: {
+    marginTop: 20,
+    marginBottom: 20,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    color: "gold",
+    fontStyle: "celandine",
   },
 });
