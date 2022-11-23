@@ -24,11 +24,8 @@ import {
 } from "../clarifaiAPI/clarifaiAPI";
 import uploadImage from "../components/ImageSelector";
 import ImageUploadingButton from "../components/ImageUploadingButton";
-<<<<<<< HEAD
-import ImageMatch from "../components/ImageMatch";
-=======
+
 import { initialQuest } from "../utils/initialStates";
->>>>>>> 5aa4a73b19fea53bbdcfcf271db2499b88b274b2
 
 type CameraScreenProps = {
   setQuestStepNo: React.Dispatch<React.SetStateAction<number>>;
@@ -48,21 +45,16 @@ export default function CameraScreen({ setQuestStepNo }: CameraScreenProps) {
   const cameraRef = useRef(null);
 
   // Image, predictions and result
-  const [image, setImage] = useState({}); // ----
   const [predict, setPredict] = useState([]);
   const [imageErr, setImageErr] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [questStatus, setQuestStatus] = useState(false);
-  const video = React.useRef(null); // ----
 
-  const navigation = useNavigation(); // ----
   const { width } = useWindowDimensions();
   const height = Math.round((width * 16) / 9);
 
   const [stepUsed, setStepUsed] = useState(false);
   const [imageChecked, setImageChecked] = useState("null");
-
-  // const { questStatus, setQuestStatus } = route.params;
 
   useEffect(() => {
     setIsLoading(true);
