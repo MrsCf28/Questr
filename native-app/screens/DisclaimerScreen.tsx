@@ -10,6 +10,9 @@ type DSProps = {
 export default function DisclaimerScreen({ setPress }: DSProps) {
 	return (
 		<SafeAreaView style={{ flex: 1 }}>
+			<StatusBar         backgroundColor="#014c54"
+        barStyle="light-content"		
+		/>
 			<View style={styles.container}>
 				<ImageBackground
 					source={require("../assets/images/stones.jpg")}

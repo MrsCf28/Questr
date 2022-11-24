@@ -33,7 +33,7 @@ export default function Votes({ currentQuest }: any) {
     return (
       <View style={styles.container}>
         <View style={styles.buttonContainer}>
-          <Text style={styles.buttonLiked}>{votes.toString()} Likes</Text>
+          <Text style={disliked? styles.resultDisliked : styles.resultLiked}>{votes.toString()} Likes</Text>
         </View>
       </View>
     );
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderWidth: 3,
   },
-  buttonLiked: {
+  resultLiked: {
     width: "100%",
     margin: 10,
     borderColor: "#7a7877",
@@ -113,6 +113,23 @@ const styles = StyleSheet.create({
     alignItems: "center",
     textAlign:"center",
     borderWidth: 3,
+    color: "white",
+    backgroundColor: "#01803a",
+
+  },
+  resultDisliked: {
+    width: "100%",
+    margin: 10,
+    borderColor: "#7a7877",
+    padding: 10,
+    borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    textAlign:"center",
+    borderWidth: 3,
+    color: "white",
+    backgroundColor: "#4a040c",
+
   },
   buttonText: {
     color: "white",

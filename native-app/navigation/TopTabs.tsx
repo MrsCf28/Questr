@@ -1,14 +1,13 @@
 import React, { useContext } from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import { StatusBar } from "expo-status-bar";
+import { SafeAreaView } from "react-native-safe-area-context";
+import {  } from "expo-status-bar";
 import TabOneScreen from "../screens/ProfilePage";
 import CurrentQuestScreen from "../screens/CurrentQuestScreen";
 import NoQuestScreen from "../screens/NoQuestScreen";
 import { HistoryScreen } from "../components/HistoryScreen";
 import { useRegisteredUser } from "../context/Context";
-import { Image, ImageBackground } from "react-native";
-import { Text } from "../components/Themed";
+import { Image, StatusBar } from "react-native";
 
 import { FontAwesome5 } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -25,6 +24,9 @@ export function TopTabs() {
 	
 	return (
 		<SafeAreaView style={{ flex: 1}}>
+			<StatusBar         backgroundColor="#014c54"
+        barStyle="light-content"		
+		/>
 			<TopTab.Navigator
 				initialRouteName="Home"
 				screenOptions={{

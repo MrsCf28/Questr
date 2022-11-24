@@ -358,7 +358,9 @@ export function LeaderboardScreen({ selectedTab }: tabProp) {
 								</VictoryChart>
 							</View>
 							<ModalDropdown
-								style={{ flex: 1 }}
+								style={{
+									flex: 1,
+								}}
 								textStyle={{
 									color: "brown",
 									fontWeight: "bold",
@@ -373,6 +375,7 @@ export function LeaderboardScreen({ selectedTab }: tabProp) {
 								isFullWidth={true}
 								showsVerticalScrollIndicator
 								dropdownStyle={{
+									width: 215,
 									backgroundColor: "brown",
 									borderRadius: 10,
 								}}
@@ -427,13 +430,10 @@ const styles = StyleSheet.create({
 	safeArea: {
 		height: "36%",
 		width: "65%",
-		// flex: 1,
 		justifyContent: "center",
 		alignItems: "center",
-		// borderWidth: 10,
 		backgroundColor: "none",
 	},
-	// border: { borderTopWidth: 5 },
 	text: {
 		color: "white",
 	},
@@ -445,7 +445,6 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 0,
 		width: "100%",
 	},
-	// head: { height: 50, borderBottomWidth: 5, borderBottomColor: "white" },
 	row: { height: 40 },
 	cell: { color: "white" },
 	blue: {

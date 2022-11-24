@@ -34,7 +34,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     margin: 20,
-    borderRadius: 20,
   },
   icon: {
     padding: 20,
@@ -44,5 +43,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     borderRadius: 38,
     margin: 10,
+    textAlignVertical:"center",
+    textAlign:"center"
   },
 });
