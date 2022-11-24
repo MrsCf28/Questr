@@ -74,7 +74,7 @@ export function LeaderboardScreen({ selectedTab }: tabProp) {
 			return (
 				<DataTable.Row
 					style={styles.row}
-					// style={user.display_name === currentUser.display_name ? styles.user: styles.row}
+					onPress={()=>{return setCompareUser(user)}}
 					key={compareStat + user.display_name + index}
 				>
 					<DataTable.Cell
@@ -417,6 +417,7 @@ export function LeaderboardScreen({ selectedTab }: tabProp) {
 										return user.display_name;
 									})}
 									onSelect={(e: String) => {
+										console.log('e: ', e);
 										return setCompareUser(allUserStats[e]);
 									}}
 									renderRightComponent={() => (
