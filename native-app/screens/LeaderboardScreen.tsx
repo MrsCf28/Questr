@@ -57,7 +57,7 @@ export function LeaderboardScreen({ selectedTab }: tabProp) {
 				setIsLoading(false);
 				setError(err);
 			});
-	}, []);
+	}, [compareStat]);
 
 	const statOptions = [
 		"xp",
@@ -74,10 +74,26 @@ export function LeaderboardScreen({ selectedTab }: tabProp) {
 			return (
 				<DataTable.Row
 					style={styles.row}
+					// style={user.display_name === currentUser.display_name ? styles.user: styles.row}
 					key={compareStat + user.display_name + index}
 				>
-					<DataTable.Cell>{user.display_name}</DataTable.Cell>
-					<DataTable.Cell numeric>
+					<DataTable.Cell
+						textStyle={
+							user.display_name === currentUser.display_name
+								? styles.user
+								: ""
+						}
+					>
+						{user.display_name}
+					</DataTable.Cell>
+					<DataTable.Cell
+						numeric
+						textStyle={
+							user.display_name === currentUser.display_name
+								? styles.user
+								: ""
+						}
+					>
 						{user.stats[compareStat]}
 					</DataTable.Cell>
 				</DataTable.Row>
@@ -280,12 +296,17 @@ export function LeaderboardScreen({ selectedTab }: tabProp) {
 													fill: "brown",
 													type: "star",
 												},
+												labels: { fill: "brown" },
 											},
 											{
 												name:
 													compareUser.display_name ||
 													"Average",
-												symbol: { fill: "blue" },
+												symbol: {
+													fill: "blue",
+													type: "diamond",
+												},
+												labels: { fill: "blue" },
 											},
 										]}
 									/>
@@ -357,47 +378,58 @@ export function LeaderboardScreen({ selectedTab }: tabProp) {
 									/>
 								</VictoryChart>
 							</View>
-							<ModalDropdown
+							<View
 								style={{
-									flex: 1,
+									height: 40,
+									alignItems: "center",
+									justifyContent: "center",
 								}}
-								textStyle={{
-									color: "brown",
-									fontWeight: "bold",
-								}}
-								dropdownTextStyle={{
-									backgroundColor: "none",
-									opacity: 0.8,
-									color: "white",
-									fontWeight: "bold",
-									textAlign: "center",
-								}}
-								isFullWidth={true}
-								showsVerticalScrollIndicator
-								dropdownStyle={{
-									width: 215,
-									backgroundColor: "brown",
-									borderRadius: 10,
-								}}
-								defaultValue={
-									"Click to compare to someone else..."
-								}
-								options={allUserStats.map((user) => {
-									return user.display_name;
-								})}
-								onSelect={(e: String) => {
-									return setCompareUser(allUserStats[e]);
-								}}
-								renderRightComponent={() => (
-									<>
-										<Text> </Text>
-										<AntDesign
-											name="caretdown"
-											color="brown"
-										/>
-									</>
-								)}
-							/>
+							>
+								<ModalDropdown
+									style={{
+										flex: 1,
+										width: 215,
+									}}
+									textStyle={{
+										width: 215,
+										textAlign: "center",
+										color: "brown",
+										fontWeight: "bold",
+									}}
+									dropdownTextStyle={{
+										backgroundColor: "none",
+										opacity: 0.8,
+										color: "white",
+										fontWeight: "bold",
+										textAlign: "center",
+									}}
+									isFullWidth={true}
+									showsVerticalScrollIndicator
+									dropdownStyle={{
+										width: 215,
+										backgroundColor: "brown",
+										borderRadius: 10,
+									}}
+									defaultValue={
+										"Click to compare to someone else..."
+									}
+									options={allUserStats.map((user) => {
+										return user.display_name;
+									})}
+									onSelect={(e: String) => {
+										return setCompareUser(allUserStats[e]);
+									}}
+									renderRightComponent={() => (
+										<>
+											<Text> </Text>
+											<AntDesign
+												name="caretdown"
+												color="brown"
+											/>
+										</>
+									)}
+								/>
+							</View>
 						</View>
 					)}
 				</ImageBackground>
@@ -437,6 +469,7 @@ const styles = StyleSheet.create({
 	text: {
 		color: "white",
 	},
+	user: { color: "brown", fontWeight: "bold" },
 	options: { marginVertical: "50%" },
 	chart: { width: 30, height: 30 },
 	table: {
