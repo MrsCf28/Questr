@@ -28,6 +28,7 @@ An orienteering app that incentivises getting out and about exploring your local
 - [React-native](https://reactnative.dev/docs/getting-started)
 - [Expo](https://expo.dev/)
 <img src='planning/techStack.png' alt='QUESTER logo' width=400px align='right' style="margin-left: 20px">
+
 - [TypeScript](https://www.typescriptlang.org/)
 - [AWS DynamoDB](https://aws.amazon.com/dynamodb/)
 - [graphQL](https://graphql.org/)
