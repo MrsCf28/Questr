@@ -47,7 +47,7 @@ export default function CurrentQuestScreen() {
   }
 
   function openPhone() {
-    Linking.openURL(`tel:EmergancyServices`);
+    Linking.openURL(`tel: 99`);
   }
   useEffect(() => {
     setIsLoading(true);
@@ -111,18 +111,38 @@ export default function CurrentQuestScreen() {
             style={styles.scroll}
           >
             <View style={styles.holder}>
-              <Text style={styles.title}>{currentQuest.title}</Text>
-              <View style={styles.container}>
-                <Text style={styles.text}>
-                  Quest Type: {currentQuest.category}
-                </Text>
-                <Text>Time Limit: {currentQuest.time_limit_hours} hrs</Text>
+              <Text
+                onPress={() =>
+                  navigation.navigate("ActiveQuestScreen", currentQuest)
+                }
+                style={styles.title}
+              >
+                {currentQuest.title}
+              </Text>
+              <View style={styles.flexRow}>
+                <View style={styles.iconContainer}>
+                  <Text style={styles.stat}>{currentQuest.rewards.coins}</Text>
+                  <Image
+                    source={require("../assets/videos/coins.gif")}
+                    style={styles.icon}
+                  />
+                </View>
+                <View style={styles.iconContainer}>
+                  <Text style={styles.stat}>{currentQuest.rewards.xp}</Text>
+                  <Image
+                    source={require("../assets/videos/xp.gif")}
+                    style={styles.icon}
+                  />
+                </View>
               </View>
-              <View style={styles.container}>
-                <Text>
-                  {currentQuest.rewards.coins} Coins {currentQuest.rewards.xp}{" "}
-                  XP
+              <View style={styles.iconContainer}>
+                <Text style={styles.stat}>
+                  {currentQuest.time_limit_hours} hours
                 </Text>
+                <Image
+                  source={require("../assets/videos/stopwatch.gif")}
+                  style={styles.icon}
+                />
               </View>
               <View style={styles.container}>
                 <Text style={styles.text}>{currentQuest.description}</Text>
@@ -134,7 +154,7 @@ export default function CurrentQuestScreen() {
                   </Text>
                 ) : (
                   <Text style={styles.blueText}>
-                    Adventurer press the button when you have arrived
+                    Adventurer, press the button when you have arrived
                   </Text>
                 )}
 
@@ -155,14 +175,6 @@ export default function CurrentQuestScreen() {
                   onPress={() => openPhone()}
                 >
                   <Text style={styles.buttonText}>SOS</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={[styles.button, styles.cancel]}
-                  onPress={() =>
-                    navigation.navigate("ActiveQuestScreen", currentQuest)
-                  }
-                >
-                  <Text style={styles.buttonText}>CHEAT!!! Skip Location</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -196,20 +208,22 @@ const styles = StyleSheet.create({
   holder: {
     flex: 1,
     paddingHorizontal: 40,
-    paddingVertical: 120,
+    paddingVertical: 90,
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
     backgroundColor: "none",
   },
   title: {
-    fontSize: 20,
+    fontSize: 25,
     fontWeight: "bold",
+    color: "#014c54",
   },
   buttonContainer: {
     alignItems: "center",
     width: "100%",
     backgroundColor: "none",
+    marginTop: 10,
   },
   button: {
     margin: 10,
@@ -243,6 +257,7 @@ const styles = StyleSheet.create({
   text: {
     textTransform: "capitalize",
     textAlign: "center",
+    color: "#014c54",
   },
   loadContainer: {
     flex: 1,
@@ -253,5 +268,35 @@ const styles = StyleSheet.create({
     borderColor: "black",
     flex: 1,
     width: "100%",
+  },
+  icon: {
+    backgroundColor: "transparent",
+    resizeMode: "contain",
+    height: 35,
+    width: 35,
+    marginTop: 10,
+    marginBottom: 10,
+
+    flexDirection: "column",
+    justifyContent: "center",
+  },
+  iconContainer: {
+    flexDirection: "row",
+    backgroundColor: "transparent",
+    marginRight: 10,
+  },
+  stat: {
+    marginTop: 20,
+    marginBottom: 10,
+    margin: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    color: "#014c54",
+  },
+  flexRow: {
+    display: "flex",
+    flexDirection: "row",
+    backgroundColor: "none",
   },
 });

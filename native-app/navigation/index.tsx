@@ -11,10 +11,7 @@ import {
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
-import {
-	ColorSchemeName,
-	StyleSheet,
-} from "react-native";
+import { ColorSchemeName, StatusBar, StyleSheet } from "react-native";
 
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
@@ -68,7 +65,7 @@ export default function Navigation({
 
 /**
  * A root stack navigator is often used for displaying modals on top of all other content.
- * https://reactnavigation.org/docs/modal
+ * https://reactnavigation.org/docs/modalhi
  */
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -77,6 +74,7 @@ export function RootNavigator() {
 
 	return (
 		<Stack.Navigator>
+			
 			<Stack.Screen
 				name="Root"
 				component={BottomTabNavigator}
@@ -85,7 +83,13 @@ export function RootNavigator() {
 			<Stack.Screen
 				name="NotFound"
 				component={NotFoundScreen}
-				options={{ title: "Oops!" }}
+				options={{
+					title: "Oops!",
+					headerTintColor: "white",
+					headerStyle: {
+						backgroundColor: "#014c54",
+					},
+				}}
 			/>
 			<Stack.Group
 				screenOptions={{
@@ -95,6 +99,13 @@ export function RootNavigator() {
 				<Stack.Screen
 					name="AvatarSelector"
 					component={AvatarSelector}
+					options={{
+						title: "Avatar Selector",
+						headerTintColor: "white",
+						headerStyle: {
+							backgroundColor: "#014c54",
+						},
+					}}
 				/>
 			</Stack.Group>
 
@@ -106,6 +117,7 @@ export function RootNavigator() {
 							? CurrentQuestScreen
 							: NoQuestScreen
 					}
+					
 				/>
 			</Stack.Group>
 
@@ -118,6 +130,13 @@ export function RootNavigator() {
 				<Stack.Screen
 					name="ActiveQuestScreen"
 					component={ActiveQuestScreen}
+					options={{
+						title: "Current Quest",
+						headerTintColor: "white",
+						headerStyle: {
+							backgroundColor: "#014c54",
+						},
+					}}
 				/>
 			</Stack.Group>
 			<Stack.Group
@@ -136,6 +155,13 @@ export function RootNavigator() {
 				<Stack.Screen
 					name="CompletedQuestScreen"
 					component={CompletedQuestScreen}
+					options={{
+						title: "A Champion's Reward",
+						headerTintColor: "white",
+						headerStyle: {
+							backgroundColor: "#014c54",
+						},
+					}}
 				/>
 			</Stack.Group>
 
@@ -143,12 +169,26 @@ export function RootNavigator() {
 				<Stack.Screen
 					name="AcceptQuest"
 					component={AcceptQuestScreen}
+					options={{
+						title: "Confirm Quest",
+						headerTintColor: "white",
+						headerStyle: {
+							backgroundColor: "#014c54",
+						},
+					}}
 				/>
 			</Stack.Group>
 			<Stack.Group screenOptions={{ presentation: "modal" }}>
 				<Stack.Screen
 					name="EditProfile"
 					component={EditProfileScreen}
+					options={{
+						title: "Edit Profile",
+						headerTintColor: "white",
+						headerStyle: {
+							backgroundColor: "#014c54",
+						},
+					}}
 				/>
 			</Stack.Group>
 			<Stack.Group
@@ -159,6 +199,13 @@ export function RootNavigator() {
 				<Stack.Screen
 					name="LeaderboardScreen"
 					component={LeaderboardScreen}
+					options={{
+						title: "Leaderboard",
+						headerTintColor: "white",
+						headerStyle: {
+							backgroundColor: "#014c54",
+						},
+					}}
 				/>
 			</Stack.Group>
 		</Stack.Navigator>
@@ -178,9 +225,20 @@ function BottomTabNavigator() {
 		<BottomTab.Navigator
 			initialRouteName="TabOne"
 			screenOptions={{
-				tabBarActiveTintColor: Colors[colorScheme].tint,
 				headerShown: false,
-				tabBarStyle: { height: 80 , paddingBottom:10, paddingTop:10},
+				tabBarStyle: {
+					height: 70,
+					paddingBottom: 5,
+					backgroundColor: "#014c54",
+					borderTopWidth: 3,
+					borderTopColor: "#7a7877",
+				},
+				tabBarLabelStyle: {
+					textTransform: "capitalize",
+					letterSpacing: 2,
+				},
+				tabBarActiveTintColor: "white",
+				tabBarInactiveTintColor: "#7a7877",
 			}}
 		>
 			<BottomTab.Screen
@@ -189,11 +247,7 @@ function BottomTabNavigator() {
 				options={{
 					title: "Profile",
 					tabBarIcon: ({ color }) => (
-						<FontAwesome5
-							name="chess-king"
-							size={30}
-							color={color}
-						/>
+						<FontAwesome5 name="home" size={30} color={color} />
 					),
 				}}
 			/>

@@ -16,9 +16,8 @@ export default function CameraButton({
   color,
 }: CameraButtonProps) {
   return (
-    <TouchableOpacity
-      onPress={onPress}
-      style={styles.button}>
+    <TouchableOpacity onPress={onPress} style={styles.button}>
+
       <Entypo
         name={icon}
         size={28}
@@ -35,15 +34,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     margin: 20,
-    borderRadius: 20,
   },
   icon: {
     padding: 20,
-    borderColor: "#7a7877",
+    borderColor: "white",
     backgroundColor: "#014c54",
     borderWidth: 3,
     overflow: "hidden",
     borderRadius: 38,
     margin: 10,
+    textAlignVertical:"center",
+    textAlign:"center"
   },
 });
