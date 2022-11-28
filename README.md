@@ -2,6 +2,8 @@
 
 Questr is the prototype app created by our team, Artificial Responsibility, as the final project of our [Northcoders](https://northcoders.com/) 13-week long bootcamp.
 
+Find our presentation video [here](https://drive.google.com/file/d/1NuHfz4eULYMSjwAALL0iqV710GY6HGvC/view)
+
 ### Initial Idea
 <img src='planning/QUESTRlogo.png' alt='QUESTER logo' width=110px align='right' style="margin-left: 20px">
 An orienteering app that incentivises getting out and about exploring your local vicinity in the form of accepting and completing quests. The quests would be a variety of problem-solving riddles, puzzles, minigames involving AR and location based tasks that would accrue rewards as both coins and XP.
